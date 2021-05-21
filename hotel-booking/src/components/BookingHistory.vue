@@ -1,7 +1,13 @@
 <template>
     <div class="booking-history">
-        {{ info}}
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam vitae nulla voluptatibus earum cumque iure, reprehenderit, voluptatem veniam consequuntur explicabo dicta aperiam totam nostrum. Esse earum facilis quos. Adipisci, consequuntur?
+        <tr>
+            <th>Name</th>
+            <th>Meaage</th>
+        </tr>
+        <tr v-for="item in listApi" v-bind:key="item.id">
+            <td>{{item.name}}</td>
+            <td>{{item.message}}</td>
+        </tr>
     </div>
 </template>
 
@@ -14,12 +20,17 @@ export default {
     name: 'booking-hietory',
     data() {
         return {
-            info: null
+            info: null,
+            listApi : undefined
+
         }
     }, 
     mounted () {
         Vue.axios.get('https://hotels-booking-server.herokuapp.com/apiList')
-            .then(response => (this.info = response.data))
+            .then((respone)=> {
+                this.listApi = respone.data;
+                console.warn(respone)
+            })
     }
 }
 </script>

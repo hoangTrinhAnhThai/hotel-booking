@@ -1,30 +1,28 @@
 <template>
     <div class="home-comp">
-        <search-comp/>
-        <infor-home/>
+        <header-comp/>
+        <router-view/> 
     </div>
 </template>
 
 <script>
-import Search from "./Search.vue";
-import InforHome from "./InforHome.vue";
+import Header from './Header.vue'
+
 export default {
     name: 'home-comp',
     data() {
         return {
-
+            login: 'Login',
+            signup: 'SignUp'
         }
     },
     components: {
-        'search-comp': Search,
-        'infor-home': InforHome
+        'header-comp': Header
     }
 }
 </script>
 
 <style scoped>
-    .infor-home {
-        margin-top: 10vh;
-    }
+    
 
 </style>

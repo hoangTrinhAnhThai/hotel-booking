@@ -39,6 +39,10 @@ export default {
 </script>
 
 <style scoped>
+.infor-home {
+        margin-top: 10vh;
+    }
+
 .infor-home .contain1 h1 {
     margin-left: 5.2vw;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

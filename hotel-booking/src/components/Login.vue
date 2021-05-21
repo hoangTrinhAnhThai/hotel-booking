@@ -16,7 +16,7 @@
                 </ul>
             </div>
             <h6>Ensure your email for registration</h6>
-            <form action="https://hotels-booking-server.herokuapp.com" v-on:submit="handelSubmitForm">
+            <form @submit.prevent="postDataLogin" method="post">
                 <div class="login-form">
                     <div class="email">
                         <ul>
@@ -25,7 +25,7 @@
                             </li>
                             <li>
                                 <input 
-                                    type="text" name="username"
+                                    type="text" name="username" v-model="loginData.username"
                                 />
                             </li>
                         </ul>
@@ -36,7 +36,7 @@
                                 <i class="fas fa-lock"></i>
                             </li>
                             <li>
-                                <input type="password" name="password" id="">
+                                <input type="password" name="password" v-model="loginData.password" id="">
                             </li>
                         </ul>
                     </div>
@@ -44,7 +44,7 @@
                         <h6>Forgot your password?</h6>
                     </div>
                     <div class="btn">
-                        <input type="submit" value="SIGN IN">
+                        <button type="submit">Login</button>
                     </div>
                 </div>
             </form>
@@ -58,21 +58,39 @@
 </template>
 
 <script>
+// import axios from 'axios'
+// import VueAxios from 'vue'
+
 export default {
     name: 'login-comp',
     data() {
         return {
-            details: {
+            loginData: {
                 username: null,
                 password: null
+            },
+            messLogin: {
+                id: null,
+                username: null,
+                tokenType: null,
+                accessToken: null,
+                email: null,
+                roles: null 
             }
         }
     },
     methods: {
-        handelSubmitForm(e) {
-            console.log(e);
-        } 
-    }
+        postDataLogin() {
+            this.axios.post("https://hotels-booking-server.herokuapp.com/signin/", this.loginData)
+            .then((result) => {
+                if(result.data.id != null) {
+                    localStorage.setItem('token', result.data.tokenType + ' '+ result.data.accessToken );
+                    this.$router.push('/user');
+                }
+            })
+        }
+    },
+    
     // mounted() {
     // this.$store.commit("setErrors", {});
 //   },
@@ -80,6 +98,7 @@ export default {
 </script>
 
 <style scoped>
+    
     .login-comp {
         width: 55vw;
         height: 58vh;

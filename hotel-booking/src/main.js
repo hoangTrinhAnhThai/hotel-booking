@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-// import axios from 'axios'
-// import VueAxios from 'vue-axios'
 
-import Home from './components/Home.vue'
+import Home from './components/Home1.vue'
 import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
+import Blog from './components/Blog.vue'
+
+import UserAccount from './components/UserAccount.vue'
 import User from './components/User.vue'
+import UserBookingHistory from './components/UserBookingHistory.vue'
 
 // import ForgotPassword from './components/ForgotPassword.vue'
 
@@ -20,7 +22,12 @@ const routes= [
   {path: '/', component: Home},
   {path: '/login', component: Login},
   {path: '/signup', component: Signup},
-  {path: '/blog', component: User},
+  {path: '/blog', component: Blog},
+  {path: '/user/account', component: UserAccount},
+  {path: '/user/booking-history', component: UserBookingHistory},
+  {path: '/user/', component: User},
+  
+
 
   // {path: '/forgot-password', component: ForgotPassword }
 ]

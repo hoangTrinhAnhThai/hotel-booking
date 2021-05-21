@@ -1,23 +1,25 @@
 <template>
   <div id="app">
-    <header-comp/>
-    <router-view/>
-    <!-- <login-comp/> -->
+    <home-comp/>
+    <!-- <header-comp/> -->
+    <!-- <router-view/> -->
+    <!-- <user-comp/> -->
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-// import Home from './components/Home.vue'
-// import Login from './components/Login.vue'
+import Home from './components/Home.vue'
+// import Header from './Header.vue'
+
+// import User from './components/User.vue'
 
 
 export default {
   name: 'App',
   components: {
-    'header-comp': Header
-    // 'home-comp': Home,
-    // 'login-comp': Login
+    'home-comp': Home,
+    // 'user-comp': User,
+    // 'header-comp': Header
   }
 }
 </script>
