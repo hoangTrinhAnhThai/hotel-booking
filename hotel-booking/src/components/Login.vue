@@ -1,4 +1,6 @@
 <template>
+<div class="login">
+<header-comp/>
     <div class="login-comp">
         <div class="form">
             <h1>Sign In to IrtAoh</h1>
@@ -55,11 +57,15 @@
             <span><router-link to="/signup">Signup</router-link></span>
         </div>
     </div>
+</div>
+    
 </template>
 
 <script>
 // import axios from 'axios'
 // import VueAxios from 'vue'
+import Header from './Header.vue'
+
 
 export default {
     name: 'login-comp',
@@ -90,6 +96,9 @@ export default {
             })
         }
     },
+    components: {
+        'header-comp': Header
+    }
     
     // mounted() {
     // this.$store.commit("setErrors", {});
@@ -188,18 +197,18 @@ export default {
         padding: 0.9vh 0.55vw;
     }
 
-    [type="text"]  {
+    [type="text"], [type="password"]  {
         border: 0;
         border-bottom: 1px solid black;
         width: 28vw;
     }
 
-    .btn [type="button"] {
+    button {
         border-radius: 40px;
         border: 1px solid white;
         background-color: rgb(133,176,210);
         color: white;
-        padding: 1vh 1.2vh;
+        padding: 1vh 3.2vh;
         text-align: center;
         margin-left: 15.5vw;
     }

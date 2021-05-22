@@ -37,10 +37,10 @@
 <script>
 export default {
     name: 'header-comp',
-    // props: {
-    //     login: String,
-    //     signup: String
-    // },
+    props: {
+        // login: String,
+        // signup: String
+    },
 
     data() {
         return {

@@ -2,10 +2,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 
-import Home from './components/Home1.vue'
+import Home from './components/Home.vue'
 import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
 import Blog from './components/Blog.vue'
+import Search from './components/SearchListHotel.vue'
+import SearchListHotel from './components/SearchListHotel.vue'
+
+
 
 import UserAccount from './components/UserAccount.vue'
 import User from './components/User.vue'
@@ -25,7 +29,11 @@ const routes= [
   {path: '/blog', component: Blog},
   {path: '/user/account', component: UserAccount},
   {path: '/user/booking-history', component: UserBookingHistory},
-  {path: '/user/', component: User},
+  {path: '/user', component: User},
+  {path: '/search', component: Search},
+  {path: '/search/list-hotel', component: SearchListHotel},
+
+
   
 
 

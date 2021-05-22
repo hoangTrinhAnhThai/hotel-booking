@@ -1,5 +1,7 @@
 <template>
-    <div class="login-comp">
+    <div class="signup">
+        <header-comp/>
+        <div class="login-comp">
         <div class="back">
             <h1 id="first">Welcome</h1>
             <h1> Back!</h1>
@@ -61,10 +63,17 @@
             </div>
         </div>
     </div>
+    </div>
 </template>
 
 <script>
+import Header from './Header.vue'
+
 export default {
+    name: 'signup',
+    components: {
+        'header-comp': Header
+    }
 
 }
 </script>

@@ -1,14 +1,11 @@
 <template>
   <div id="app">
-    <home-comp/>
-    <!-- <header-comp/> -->
-    <!-- <router-view/> -->
-    <!-- <user-comp/> -->
+   <router-view/>
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
+// import Home from './components/Home.vue'
 // import Header from './Header.vue'
 
 // import User from './components/User.vue'
@@ -17,7 +14,7 @@ import Home from './components/Home.vue'
 export default {
   name: 'App',
   components: {
-    'home-comp': Home,
+    // 'home-comp': Home,
     // 'user-comp': User,
     // 'header-comp': Header
   }

@@ -1,18 +1,13 @@
 <template>
     <div class="user-comp">
-        <!-- <header-comp v-bind:login="login" v-bind:signup="signup" v-bind:signupRouter="signupRouter" v-bind:loginRouter="loginRouter" /> -->
-        <home1-comp />
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, cumque dolore repellat tempora quo non, error molestiae ex, velit saepe illum porro est! Quia aperiam, quisquam asperiores consequatur voluptas ullam?
-        <!-- <user-header/> -->
-        <!-- <user-account/> -->
-        <!-- <router-view/> -->
-        <img :src="imgInf.image">
+       <header-comp/>
+        <home1-comp/>
     </div>
 </template>
 
 <script>
 
-// import Header from './Header.vue'
+import Header from './Header.vue'
 import Home1 from './Home1.vue'
 
 // import BookingHistory from './BookingHistory.vue'
@@ -43,7 +38,7 @@ export default {
         }
     },
     components: {
-    // 'header-comp': Header,
+    'header-comp': Header,
     'home1-comp': Home1,
 
         // 'booking-history': BookingHistory
@@ -83,17 +78,5 @@ export default {
     img {
         height: 15vh;
     }
-    .user-header {
-        float: left;
-        width: 20vw;
-        height: 100vh;
-        background-color: rgb(114,167,207);
-        position: fixed;
-    }
     
-    .user-account {
-         width: 74vw;
-        position: absolute;
-        left: 24vw;
-    }
 </style>

@@ -1,5 +1,6 @@
 <template>
     <div class="user-account">
+        <user-header/>
         <div class="container">
             <div class="container1">
                 <div class="title">
@@ -75,13 +76,30 @@
 </template>
 
 <script>
+import UserHeader from './UserHeader.vue'
 export default {
-
+    name: 'user-account',
+    components: {
+        'user-header': UserHeader
+    }
 }
 </script>
 
 <style scoped>
+    .user-header {
+        float: left;
+        width: 20vw;
+        height: 100vh;
+        background-color: rgb(114,167,207);
+        position: fixed;
+    }
     
+    .user-account .container {
+        width: 74vw;
+        position: absolute;
+        left: 24vw;
+    }
+
     .title h1 {
         margin: 5vh 0;
     }
