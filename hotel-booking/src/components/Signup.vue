@@ -1,6 +1,6 @@
 <template>
     <div class="signup">
-        <header-comp/>
+        <!-- <header-comp/> -->
         <div class="login-comp">
         <div class="back">
             <h1 id="first">Welcome</h1>
@@ -67,12 +67,12 @@
 </template>
 
 <script>
-import Header from './Header.vue'
+// import Header from './Header.vue'
 
 export default {
     name: 'signup',
     components: {
-        'header-comp': Header
+        // 'header-comp': Header
     }
 
 }

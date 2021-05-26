@@ -127,6 +127,7 @@ export default {
             .then((result) => {
                 console.warn(result.data)
             })
+            localStorage.setItem('disableHeader', false);
         }, 
         changePassword() {
             if(this.password.newPasswordAgain == this.password.newPassword) {
@@ -149,11 +150,12 @@ export default {
             }
             
         }
-    }
+    },
 }
 </script>
 
 <style scoped>
+    
     .user-header {
         float: left;
         width: 20vw;

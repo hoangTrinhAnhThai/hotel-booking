@@ -1,5 +1,5 @@
 <template>
-    <div class="header-comp" :class="{change_color: scrollPosition > 20}" >
+    <div class="header-comp" :class="{change_color: scrollPosition > 20}" v-show="disableHeader" >
         <div class="logo">
             <router-link to="/">
                 <span style="font-size: 30px">IrtAoh</span>
@@ -18,9 +18,17 @@
                         <option value="ja">Japanese</option>
                     </select>
                 </li> -->
-                <li id="login"><router-link to="/login">{{login}}</router-link></li>
-                <li id="signup" ><router-link to="/signup">{{signup}}</router-link></li>
-                                <!-- <li id="fb">
+                <span v-if="user">
+                    <li id="login"><router-link to="/user/account">Hi, {{user.userDetail.nameUserDetail}}</router-link></li>
+                    <li id="signup" ><router-link to="/">Logout</router-link></li>
+                </span>
+                <span v-if="!user">
+                    <li id="login"><router-link to="/login">Login</router-link></li>
+                    <li id="signup" ><router-link to="/signup">Signup</router-link></li>
+                </span>
+                
+                
+                <!-- <li id="fb">
                     <i class="fab fa-facebook"></i>
                 </li>
                 <li id="ins">
@@ -37,16 +45,13 @@
 <script>
 export default {
     name: 'header-comp',
-    props: {
-        // login: String,
-        // signup: String
-    },
+    props: ['user'],
 
     data() {
         return {
             scrollPosition: null,
-            login: 'Login',
-            signup: 'Sign up'
+            name: null, 
+            disableHeader: localStorage.getItem('disableHeader')
         }
     }, 
     methods: {
@@ -56,10 +61,8 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
-
-        this.login = localStorage.getItem('login');
-        this.signup = localStorage.getItem('signup');
     }
+
 }
 </script>
 

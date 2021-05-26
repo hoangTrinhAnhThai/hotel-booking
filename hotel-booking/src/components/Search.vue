@@ -52,16 +52,27 @@ export default {
     data() {
         return {
             listCity: null,
-            hotel: {
-
-            },
+            // hotel: {
+            //     'address': 
+            //     'hOwner': (...)
+            //     'id': (...)
+            //     'images': (...)
+            //     'name': (...)
+            //     'rating': (...)
+            //     'rooms': Array(1)
+            //     'standard': 
+            // },
             selected: null,
             search: {
                 cityName: "Đà Nẵng", 
                 start: null,
                 end: null,
                 capacity: 1
-            }
+            }, 
+            listSearch: {
+
+            },
+            hotel: null
         }
     },
     components: {
@@ -94,9 +105,10 @@ export default {
         handleSearch() {
             this.axios.post('https://hotels-booking-server.herokuapp.com/search', this.search)
             .then((response) => {
-                console.warn(response.data)
-                localStorage.setItem('listSearch', response.data)
+                // console.warn(response.data)
+                // localStorage.setItem("listSearch", JSON.stringify(response.data));
                 localStorage.setItem("listSearch", JSON.stringify(response.data));
+
                 this.$router.push('/search/list-hotel');
             })
         }

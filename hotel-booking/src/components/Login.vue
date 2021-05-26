@@ -1,6 +1,6 @@
 <template>
 <div class="login">
-<header-comp/>
+<!-- <header-comp/> -->
     <div class="login-comp">
         <div class="form">
             <h1>Sign In to IrtAoh</h1>
@@ -62,10 +62,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
-// import VueAxios from 'vue'
-import Header from './Header.vue'
-
 
 export default {
     name: 'login-comp',
@@ -74,14 +70,6 @@ export default {
             loginData: {
                 username: null,
                 password: null
-            },
-            messLogin: {
-                id: null,
-                username: null,
-                tokenType: null,
-                accessToken: null,
-                email: null,
-                roles: null 
             }
         }
     },
@@ -91,18 +79,12 @@ export default {
             .then((result) => {
                 if(result.data.id != null) {
                     localStorage.setItem('token', result.data.tokenType + ' '+ result.data.accessToken );
-                    this.$router.push('/user');
+                    this.$router.push('/');
                 }
             })
         }
-    },
-    components: {
-        'header-comp': Header
     }
     
-    // mounted() {
-    // this.$store.commit("setErrors", {});
-//   },
 }
 </script>
 
