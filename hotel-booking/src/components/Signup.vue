@@ -67,12 +67,10 @@
 </template>
 
 <script>
-// import Header from './Header.vue'
 
 export default {
     name: 'signup',
     components: {
-        // 'header-comp': Header
     }
 
 }
@@ -86,7 +84,6 @@ export default {
         top: 20vh;
         left: 22.5vw;
         border-radius: 8px;
-        /* border: 1px solid grey; */
         box-shadow: 8px 8px 3px grey;
     }
 

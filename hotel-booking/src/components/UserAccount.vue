@@ -139,11 +139,11 @@ export default {
                 .then((result) => {
                     console.warn(result.data.message);
                     window.alert(result.data.message);
-                    // if(result.data == 'change password successfully') {
-                    //     window.alert(result.data.message);
-                    // } else {
-                    //     window.alert(result.data.message);
-                    // }
+                    if(result.data == 'change password successfully') {
+                        window.alert(result.data.message);
+                    } else {
+                        window.alert(result.data.message);
+                    }
                 })
             } else {
                 window.alert("new password is wrong");

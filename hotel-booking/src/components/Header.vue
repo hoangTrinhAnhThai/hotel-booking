@@ -20,7 +20,7 @@
                 </li> -->
                 <span v-if="user">
                     <li id="login"><router-link to="/user/account">Hi, {{user.userDetail.nameUserDetail}}</router-link></li>
-                    <li id="signup" ><router-link to="/">Logout</router-link></li>
+                    <li id="signup" ><a href="javascript:void(0)" @click="handelLogoutClick">Logout</a></li>
                 </span>
                 <span v-if="!user">
                     <li id="login"><router-link to="/login">Login</router-link></li>
@@ -51,12 +51,17 @@ export default {
         return {
             scrollPosition: null,
             name: null, 
-            disableHeader: localStorage.getItem('disableHeader')
+            disableHeader: localStorage.getItem('disableHeader'),
+            nameuser: localStorage.getItem('')
         }
     }, 
     methods: {
         updateScroll() {
             this.scrollPosition = window.scrollY
+        },
+        handelLogoutClick() {
+            localStorage.removeItem('token')
+            this.$router.push('/')
         }
     },
     mounted() {

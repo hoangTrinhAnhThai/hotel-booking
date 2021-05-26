@@ -76,9 +76,10 @@ export default {
     methods: {
         postDataLogin() {
             this.axios.post("https://hotels-booking-server.herokuapp.com/signin/", this.loginData)
-            .then((result) => {
-                if(result.data.id != null) {
-                    localStorage.setItem('token', result.data.tokenType + ' '+ result.data.accessToken );
+            .then((response) => {
+                if(response.data.id != null) {
+                    localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken );
+                    localStorage.setItem('user', JSON.stringify(response.data))
                     this.$router.push('/');
                 }
             })

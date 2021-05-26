@@ -20,16 +20,16 @@ export default {
     components: {
         'home1-comp': Home1
     }, 
-    async created() {
-      this.axios.get('https://hotels-booking-server.herokuapp.com/user/', {
-            headers: {
-                Authorization: localStorage.getItem('token')
-            }
-        })
-        .then((response) => {
-            this.user = response.data
-        })
-  },
+    // async created() {
+    //     this.axios.get('https://hotels-booking-server.herokuapp.com/user/', {
+    //         headers: {
+    //             Authorization: localStorage.getItem('token')
+    //         }
+    //     })
+    //     .then((response) => {
+    //         this.user = response.data
+    //     })
+    // },
     
 }
 </script>

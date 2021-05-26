@@ -58,10 +58,8 @@ export default {
     mounted () {
         this.axios.get('https://hotels-booking-server.herokuapp.com/list-hotel/13')
         .then((response)=> {
-            // this.listHotel = response.data;
             this.infImg.img = 'data:image/jpeg;base64,' + response.data.images[0].img;
             console.warn(JSON.parse(this.listHotel)[0].hotel.name)
-            // console.warn('hotel----: '+ localStorage.getItem("listSearch")[0])
         })
         
     }
