@@ -10,7 +10,7 @@
                         <img src="https://i.pinimg.com/736x/af/0c/9c/af0c9ceb293e88198bc2f9924952f89c.jpg" alt="">
                     </li>
                     <li id="and">
-                        <div class="name">AnhThai</div>
+                        <div class="name">{{userName}}</div>
                         <div class="since">Since: 3 March</div>
                     </li>
                 </ul>
@@ -20,7 +20,7 @@
                 <ul>
                     <li>
                         <i class="	far fa-id-badge"></i>
-                        <router-link to="/user"> Account</router-link></li>
+                        <router-link to="/user/account"> Account</router-link></li>
                     <li>
                         <i class="far fa-clock"></i>
                         <router-link to="/user/booking-history">Booking History</router-link>
@@ -41,7 +41,15 @@
 
 <script>
 export default {
-
+    name: 'user-header',
+    data() {
+        return {
+            userName: null
+        }
+    },
+    mounted() {
+        this.userName = localStorage.getItem('userName')
+    }
 }
 </script>
 

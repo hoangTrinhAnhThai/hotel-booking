@@ -13,11 +13,19 @@
 
 export default {
   name: 'App',
+  data() {
+    return{
+
+    }
+
+  },
   components: {
     // 'home-comp': Home,
     // 'user-comp': User,
     // 'header-comp': Header
-  }
+  }, 
+  computed() {
+    }
 }
 </script>
 

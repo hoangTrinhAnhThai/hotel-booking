@@ -56,6 +56,9 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
+
+        this.login = localStorage.getItem('login');
+        this.signup = localStorage.getItem('signup');
     }
 }
 </script>
@@ -81,8 +84,10 @@ export default {
     }
 
     .header-comp .menu {
-        margin-left: 55%;
+        /* margin-left: 55%; */
         margin-top: 2vh;
+        float: right;
+        margin-right: 2vw;
     }
 
     .header-comp .menu ul {

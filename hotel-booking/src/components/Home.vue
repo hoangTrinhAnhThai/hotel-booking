@@ -20,6 +20,10 @@ export default {
     components: {
         'header-comp': Header,
         'home1-comp': Home1
+    }, 
+    computed() {
+        localStorage.setItem('login', "Login");
+        localStorage.setItem('signup', 'Signup');
     }
 }
 </script>

@@ -6,70 +6,75 @@
                 <div class="title">
                     <h1>Account Setting</h1>
                 </div>
-                <div class="content">
-                    <div class="information">
-                        <h4>Personal information</h4>
-                        <div class="group1">
-                            <div class="name">
-                            <label for="name">Name</label><br>
-                            <input type="text">
+                <form @submit.prevent="changeInf" method="post">
+                    <div class="content">
+                        <div class="information">
+                            <h4>Personal information</h4>
+                            <div class="group1">
+                                <div class="name">
+                                <label for="name">Name</label><br>
+                                <input type="text" v-model="user.userDetail.nameUserDetail">
+                            </div>
+                            <div class="email">
+                                <label for="email">Email</label><br>
+                                <input type="text" name="" id="" v-model="user.email" >
+                            </div>
+                            <div class="numberphone">
+                                <label for="email">Phone</label><br>
+                                <input type="text" name="" id="" v-model="user.userDetail.phoneNumber">
+                            </div>
+                            <div class="birthday">
+                                <label for="email">Birthday</label><br>
+                                <input type="date" v-model="user.userDetail.birth">
+                            </div>
+                            </div>
+                            <div class="about-yourself">
+                                <label for="about-yourself">About Yourself</label><br>
+                                <textarea name="" id="" cols="40" rows="5"></textarea>
+                            </div>
                         </div>
-                        <div class="email">
-                            <label for="email">Email</label><br>
-                            <input type="text" name="" id="">
-                        </div>
-                        <div class="numberphone">
-                            <label for="email">Phone</label><br>
-                            <input type="text" name="" id="">
-                        </div>
-                        <div class="birthday">
-                            <label for="email">Birthday</label><br>
-                            <input type="date">
-                        </div>
-                        </div>
-                        <div class="about-yourself">
-                            <label for="about-yourself">About Yourself</label><br>
-                            <textarea name="" id="" cols="40" rows="5"></textarea>
+                        <div class="avt">
+                            <ul>
+                                <li>
+                                    <img src="https://i.pinimg.com/736x/af/0c/9c/af0c9ceb293e88198bc2f9924952f89c.jpg" alt="">
+                                </li>
+                                <li id="text">
+                                    <span>Change your avatar</span><br>
+                                    <span>JPN or PNG</span>
+                                </li>
+                                <li>
+                                    <input type="file">
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="avt">
-                        <ul>
-                            <li>
-                                <img src="https://i.pinimg.com/736x/af/0c/9c/af0c9ceb293e88198bc2f9924952f89c.jpg" alt="">
-                            </li>
-                            <li id="text">
-                                <span>Change your avatar</span><br>
-                                <span>JPN or PNG</span>
-                            </li>
-                            <li>
-                                <input type="file">
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="save">
-                    <input type="button" value="SAVE CHANGES">
-                    <hr>
-                </div>
-                <div class="change-password">
-                    <div class="current-password">
-                        <label for="current">Current Password</label><br>
-                        <input type="text" name="" id="">
-                    </div>
-                    <div class="new-password">
-                        <label for="new-password">New Password</label><br>
-                        <input type="text" name="" id="">
-                    </div>
-                    <div class="password-again">
-                        <label for="password-again">New Password again</label><br>
-                        <input type="text" name="" id="">
-                    </div>
-                    <div class="saveP">
-                        <input type="button" value="SAVE CHANGES">
+                    <div class="save">
+                        <button type="submit">SAVE CHANGES</button>
                         <hr>
                     </div>
-                    <!-- <booking-history/> -->
-                </div>
+                </form>
+                <form @submit.prevent="changePassword" method="post">
+                    <div class="change-password">
+                        <div class="current-password">
+                            <label for="current">Current Password</label><br>
+                            <input type="password" name="" id="" v-model="password.oldPassword">
+                        </div>
+                        <div class="new-password">
+                            <label for="new-password">New Password</label><br>
+                            <input type="password" name="" id="" v-model="password.newPasswordAgain">
+                        </div>
+                        <div class="password-again">
+                            <label for="password-again">New Password again</label><br>
+                            <input type="password" name="" id="" v-model="password.newPassword">
+                        </div>
+                        <div class="saveP">
+                            <button type="submit">SAVE CHANGES</button>
+                            <hr>
+                        </div>
+                        <!-- <booking-history/> -->
+                    </div>
+                </form>
+                
             </div>
         </div>
     </div>
@@ -79,8 +84,71 @@
 import UserHeader from './UserHeader.vue'
 export default {
     name: 'user-account',
+    data() {
+        return {
+            user: {
+                userDetail: {
+                    birth: null,
+                    nameUserDetail: null,
+                    phoneNumber: null
+                }
+            },
+            password: {
+                oldPassword: null,
+                newPasswordAgain: null,
+                newPassword: null
+            }
+        }
+    },
     components: {
         'user-header': UserHeader
+    },
+    mounted() {
+
+        this.axios.get('https://hotels-booking-server.herokuapp.com/user/', {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        })
+        .then((response) => {
+            console.warn(response.data)
+            this.user.userDetail.nameUserDetail = response.data.userDetail.nameUserDetail;
+            this.user.userDetail.birth = response.data.userDetail.birth;
+            this.user.userDetail.phoneNumber = response.data.userDetail.phoneNumber;
+        })
+    }, 
+    methods: {
+        changeInf() {
+            this.axios.post('https://hotels-booking-server.herokuapp.com/update-information/save', this.user.userDetail, {
+                headers: {
+                    Authorization: localStorage.getItem('token')
+                }
+            })
+            .then((result) => {
+                console.warn(result.data)
+            })
+        }, 
+        changePassword() {
+            if(this.password.newPasswordAgain == this.password.newPassword) {
+                this.axios.post('https://hotels-booking-server.herokuapp.com/update-information/save-password', this.password, {
+                    headers: {
+                        Authorization: localStorage.getItem('token')
+                    }
+                })
+                .then((result) => {
+                    console.warn(result.data.message);
+                    window.alert(result.data.message);
+                    // if(result.data == 'change password successfully') {
+                    //     window.alert(result.data.message);
+                    // } else {
+                    //     window.alert(result.data.message);
+                    // }
+                })
+            } else {
+                window.alert("new password is wrong");
+            }
+            
+        }
     }
 }
 </script>
@@ -165,7 +233,7 @@ export default {
 
     }
 
-    .save input {
+    button {
         border-radius: 20px;
         padding: 0.5vh 0.8vw;
         background-color: rgb(114,167,207);
@@ -189,7 +257,7 @@ export default {
         width: 17vw;
     }
 
-    .saveP input {
+    .saveP button {
         border-radius: 20px;
         padding: 0.5vh 0.8vw;
         background-color: rgb(114,167,207);

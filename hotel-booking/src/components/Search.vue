@@ -5,40 +5,43 @@
                 You will be making a wise business decision when choosing the <span style="color: rgb(248,219,172)">IrtAoh --iah_thna</span>
             </h1>
         </div>
-        <div class="search-form">
-            <div class="where">
-                <div class="label">Where are you going?</div>
-                <div class="render">
-                    <select name="" id="">
-                        <option value="dalat">Da Lat</option>
-                        <option value="danang">Da Nang</option>
-                        <option value="hochiminh">Ho Chi Minh</option>
-                        <option value="hanoi">Ha Noi</option>
-                    </select>
+        <form @submit.prevent="handleSearch" method="post">
+            <div class="search-form">
+                <div class="where">
+                    <div class="label">Where are you going?</div>
+                    <div class="render">
+                        <select v-model="search.cityName" aria-placeholder="Choose here">
+                            <option value="" selected disabled hidden>Choose here</option>
+                            <option v-for="(option) in listCity" v-bind:key="option">
+                                {{ option }}
+                            </option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="from">
-                <div class="label">From</div>
-                <div class="render">
-                    <input type="date">
+                <div class="from">
+                    <div class="label">From</div>
+                    <div class="render">
+                        <input type="date" v-model="search.start">
+                    </div>
                 </div>
-            </div>
-            <div class="to">
-                <div class="label">To</div>
-                <div class="render">
-                    <input type="date">
+                <div class="to">
+                    <div class="label">To</div>
+                    <div class="render">
+                        <input type="date" v-model="search.end">
+                    </div>
                 </div>
-            </div>
-            <div class="guest">
-                <div class="label">Guest</div>
-                <div class="render">
-                    <input type="number" min="1" value="1">
+                <div class="guest">
+                    <div class="label">Guest</div>
+                    <div class="render">
+                        <input type="number" min="1" value="1" v-model="search.capacity">
+                    </div>
                 </div>
+                <div class="search">
+                    <button type="submit">Search</button>
+                </div>
+                
             </div>
-            <div class="search">
-                <input type="button" value="SEARCH">
-            </div>
-        </div>
+        </form>
     </div>
 </template>
 
@@ -48,11 +51,55 @@ export default {
     name: 'search-comp',
     data() {
         return {
+            listCity: null,
+            hotel: {
 
+            },
+            selected: null,
+            search: {
+                cityName: "Đà Nẵng", 
+                start: null,
+                end: null,
+                capacity: 1
+            }
         }
     },
     components: {
         
+    },
+    mounted() {
+        this.axios.get('https://hotels-booking-server.herokuapp.com/all-cities')
+        .then((response) => {
+            console.warn(response.data)
+            this.listCity = response.data
+        })
+        let today= new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd;
+        } 
+        if(mm<10){
+            mm='0'+mm;
+        } 
+
+    today = yyyy+'-'+mm+'-'+dd;                
+    // document.getElementById("idFdate").defaultValue =today+"";
+    this.search.start = today;
+    this.search.end = yyyy+'-'+mm+'-'+ (dd+1)
+
+    },
+    methods: {
+        handleSearch() {
+            this.axios.post('https://hotels-booking-server.herokuapp.com/search', this.search)
+            .then((response) => {
+                console.warn(response.data)
+                localStorage.setItem('listSearch', response.data)
+                localStorage.setItem("listSearch", JSON.stringify(response.data));
+                this.$router.push('/search/list-hotel');
+            })
+        }
     }
 }
 </script>

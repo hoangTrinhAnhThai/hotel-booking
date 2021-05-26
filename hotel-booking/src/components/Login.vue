@@ -108,6 +108,8 @@ export default {
 
 <style scoped>
     
+    
+
     .login-comp {
         width: 55vw;
         height: 58vh;
