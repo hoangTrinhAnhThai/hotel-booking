@@ -32,7 +32,7 @@
                 <ul>
                     <li>
                         <i class="fas fa-sign-in-alt"></i>
-                        <router-link to="/">Log out</router-link>
+                        <a href="javascript:void(0)" @click="handelLogoutClick">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -47,8 +47,12 @@ export default {
             userName: null
         }
     },
-    mounted() {
-        this.userName = localStorage.getItem('userName')
+    methods: {
+        handelLogoutClick() {
+            localStorage.removeItem('token')
+            this.$store.dispatch('user', null)
+            this.$router.push('/')
+        }
     }
 }
 </script>

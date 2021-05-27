@@ -1,35 +1,23 @@
 <template>
   <div id="app">
-    <header-comp :user='user'/>
-    <router-view :user='user'/>
+    <header-comp/>
+    <router-view/>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import Header from './components/Header.vue'
 
 export default {
   name: 'App',
-  data() {
-    return{
-      user: null
-    }
-  },
+  
   async created() {
-      localStorage.setItem('disableHeader', true);
-      this.axios.get('https://hotels-booking-server.herokuapp.com/user/' , {
-            headers: {
-                Authorization: localStorage.getItem('token')
-            }
-      })
-      .then((response) => {
-        this.user = response.data
-      })
-      
+    const response = await axios('user/');
+    this.$store.dispatch('headerShow', true)
+    this.$store.dispatch('user', response.data)
   },
   components: {
-    // 'home-comp': Home,
-    // 'user-comp': User,
     'header-comp': Header
   }
 

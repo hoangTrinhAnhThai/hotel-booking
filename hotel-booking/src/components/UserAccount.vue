@@ -103,8 +103,8 @@ export default {
     components: {
         'user-header': UserHeader
     },
-    mounted() {
-
+    async created() {
+        this.$store.dispatch('headerShow', false)
         this.axios.get('https://hotels-booking-server.herokuapp.com/user/', {
             headers: {
                 Authorization: localStorage.getItem('token')

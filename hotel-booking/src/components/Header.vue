@@ -1,5 +1,5 @@
 <template>
-    <div class="header-comp" :class="{change_color: scrollPosition > 20}" v-show="disableHeader" >
+        <div class="header-comp" :class="{change_color: scrollPosition > 20}" v-if="headerShow">
         <div class="logo">
             <router-link to="/">
                 <span style="font-size: 30px">IrtAoh</span>
@@ -19,14 +19,13 @@
                     </select>
                 </li> -->
                 <span v-if="user">
-                    <li id="login"><router-link to="/user/account">Hi, {{user.userDetail.nameUserDetail}}</router-link></li>
+                    <li id="login"><router-link to="/user/account">Hi, {{user.username}}</router-link></li>
                     <li id="signup" ><a href="javascript:void(0)" @click="handelLogoutClick">Logout</a></li>
                 </span>
                 <span v-if="!user">
                     <li id="login"><router-link to="/login">Login</router-link></li>
                     <li id="signup" ><router-link to="/signup">Signup</router-link></li>
                 </span>
-                
                 
                 <!-- <li id="fb">
                     <i class="fab fa-facebook"></i>
@@ -43,16 +42,13 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
     name: 'header-comp',
-    props: ['user'],
 
     data() {
         return {
             scrollPosition: null,
-            name: null, 
-            disableHeader: localStorage.getItem('disableHeader'),
-            nameuser: localStorage.getItem('')
         }
     }, 
     methods: {
@@ -61,13 +57,17 @@ export default {
         },
         handelLogoutClick() {
             localStorage.removeItem('token')
+            this.$store.dispatch('user', null)
             this.$router.push('/')
         }
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
+    },
+    computed: {
+        ...mapGetters(['user']),
+        ...mapGetters(['headerShow'])
     }
-
 }
 </script>
 

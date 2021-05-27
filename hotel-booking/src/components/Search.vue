@@ -52,16 +52,6 @@ export default {
     data() {
         return {
             listCity: null,
-            // hotel: {
-            //     'address': 
-            //     'hOwner': (...)
-            //     'id': (...)
-            //     'images': (...)
-            //     'name': (...)
-            //     'rating': (...)
-            //     'rooms': Array(1)
-            //     'standard': 
-            // },
             selected: null,
             search: {
                 cityName: "Đà Nẵng", 
@@ -72,7 +62,6 @@ export default {
             listSearch: {
 
             },
-            hotel: null
         }
     },
     components: {
@@ -83,6 +72,8 @@ export default {
         .then((response) => {
             console.warn(response.data)
             this.listCity = response.data
+            localStorage.setItem('city', JSON.stringify( this.listCity))
+            console.warn('list city: ' + this.listCity)
         })
         let today= new Date();
         var dd = today.getDate();
@@ -108,11 +99,12 @@ export default {
                 // console.warn(response.data)
                 // localStorage.setItem("listSearch", JSON.stringify(response.data));
                 localStorage.setItem("listSearch", JSON.stringify(response.data));
-
+                localStorage.setItem("search", JSON.stringify(this.search));
                 this.$router.push('/search/list-hotel');
             })
         }
-    }
+    },
+    
 }
 </script>
 

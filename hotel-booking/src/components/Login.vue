@@ -1,67 +1,69 @@
 <template>
-<div class="login">
-<!-- <header-comp/> -->
-    <div class="login-comp">
-        <div class="form">
-            <h1>Sign In to IrtAoh</h1>
-            <div class="icon">
-                <ul>
-                    <li id="fb">
-                        <i class="fab fa-facebook"></i>
-                    </li>
-                    <li id="google">
-                        <i class="fab fa-google-plus"></i>
-                    </li>
-                    <li id="ins">
-                        <i class="fab fa-instagram"></i>
-                    </li>
-                </ul>
-            </div>
-            <h6>Ensure your email for registration</h6>
-            <form @submit.prevent="postDataLogin" method="post">
-                <div class="login-form">
-                    <div class="email">
-                        <ul>
-                            <li>
-                                <i class="fas fa-user"></i>
-                            </li>
-                            <li>
-                                <input 
-                                    type="text" name="username" v-model="loginData.username"
-                                />
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="password">
-                        <ul>
-                            <li>
-                                <i class="fas fa-lock"></i>
-                            </li>
-                            <li>
-                                <input type="password" name="password" v-model="loginData.password" id="">
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="forgot-password">
-                        <h6>Forgot your password?</h6>
-                    </div>
-                    <div class="btn">
-                        <button type="submit">Login</button>
-                    </div>
+    <div class="login">
+        <!-- <header-comp/> -->
+        <div class="login-comp">
+            <div class="form">
+                <h1>Sign In to IrtAoh</h1>
+                <div class="icon">
+                    <ul>
+                        <li id="fb">
+                            <i class="fab fa-facebook"></i>
+                        </li>
+                        <li id="google">
+                            <i class="fab fa-google-plus"></i>
+                        </li>
+                        <li id="ins">
+                            <i class="fab fa-instagram"></i>
+                        </li>
+                    </ul>
                 </div>
-            </form>
-        </div>
-        <div class="back">
-            <h1 id="first">Hello, Friends</h1>
-            <h6>Enter your personal details and start joumay with us</h6>
-            <span><router-link to="/signup">Signup</router-link></span>
-        </div>
+                <h6>Ensure your email for registration</h6>
+                <form @submit.prevent="postDataLogin" method="post">
+                    <div class="login-form">
+                        <div class="email">
+                            <ul>
+                                <li>
+                                    <i class="fas fa-user"></i>
+                                </li>
+                                <li>
+                                    <input 
+                                        type="text" name="username" v-model="loginData.username" required
+                                    />
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="password">
+                            <ul>
+                                <li>
+                                    <i class="fas fa-lock"></i>
+                                </li>
+                                <li>
+                                    <input type="password" name="password" v-model="loginData.password" required id="">
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="forgot-password">
+                            <h6>Forgot your password?</h6>
+                        </div>
+                        <div class="btn">
+                            <button type="submit">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="back">
+                <h1 id="first">Hello, Friends</h1>
+                <h6>Enter your personal details and start joumay with us</h6>
+                <span><router-link to="/signup">Signup</router-link></span>
+            </div>
     </div>
 </div>
-    
+   
 </template>
 
 <script>
+// import Header from './Header.vue'
+// import axios from 'axios'
 
 export default {
     name: 'login-comp',
@@ -74,16 +76,19 @@ export default {
         }
     },
     methods: {
-        postDataLogin() {
+        async postDataLogin() {
             this.axios.post("https://hotels-booking-server.herokuapp.com/signin/", this.loginData)
             .then((response) => {
-                if(response.data.id != null) {
-                    localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken );
-                    localStorage.setItem('user', JSON.stringify(response.data))
-                    this.$router.push('/');
-                }
+                console.warn(response.data)
+                localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken);
+                this.$store.dispatch('user', response.data)
+                this.$router.push('/')
             })
         }
+    },
+    components: {
+        // 'header-comp' : Header
+
     }
     
 }
@@ -91,7 +96,9 @@ export default {
 
 <style scoped>
     
-    
+    h1 {
+        font-weight: bolder;
+    }
 
     .login-comp {
         width: 55vw;

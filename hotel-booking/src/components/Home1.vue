@@ -13,10 +13,6 @@ export default {
     components: {
         'seach-comp': Search,
         'infor-home': InforHome
-    },
-    computed() {
-        localStorage.setItem('login', "Login");
-        localStorage.setItem('signup', 'Signup');
     }
 }
 </script>

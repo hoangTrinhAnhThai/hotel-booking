@@ -1,36 +1,27 @@
 <template>
     <div class="home-comp">
+        <!-- <header-comp/> -->
         <home1-comp/>
-        
     </div>
 </template>
 
 <script>
 import Home1 from './Home1.vue'
+// import Header from './Header.vue'
 
 export default {
     name: 'home-comp',
     data() {
         return {
-            user: null
         }
     },
-    
-
     components: {
-        'home1-comp': Home1
-    }, 
-    // async created() {
-    //     this.axios.get('https://hotels-booking-server.herokuapp.com/user/', {
-    //         headers: {
-    //             Authorization: localStorage.getItem('token')
-    //         }
-    //     })
-    //     .then((response) => {
-    //         this.user = response.data
-    //     })
-    // },
-    
+        'home1-comp': Home1,
+        // 'header-comp' : Header
+    },
+    async created () {
+        this.$store.dispatch('headerShow', true)
+    }
 }
 </script>
 
