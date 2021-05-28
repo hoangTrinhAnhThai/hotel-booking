@@ -3,6 +3,9 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import './axios'
 import store from './vuex'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import './city.json'
+import VueLazyload from 'vue-lazyload'
 
 import Home from './components/Home.vue'
 import Login from './components/Login.vue'
@@ -11,11 +14,14 @@ import Blog from './components/Blog.vue'
 import Search from './components/SearchListHotel.vue'
 import SearchListHotel from './components/SearchListHotel.vue'
 import ViewRoomSearch from './components/ViewRoomSearch.vue'
-
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import UserAccount from './components/UserAccount.vue'
 import User from './components/User.vue'
 import UserBookingHistory from './components/UserBookingHistory.vue'
+
+import Director from './components/Director.vue'
 
 // import ForgotPassword from './components/ForgotPassword.vue'
 
@@ -35,6 +41,7 @@ const routes= [
   {path: '/search', component: Search},
   {path: '/search/list-hotel', component: SearchListHotel},
   {path: '/search/list-hotel/viewrooms', component: ViewRoomSearch},
+  {path: '/director', component: Director},
 
 
   // {path: '/forgot-password', component: ForgotPassword }
@@ -42,7 +49,9 @@ const routes= [
 
 
 Vue.use(VueRouter);
-// Vue.use(VueAxios, axios)
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
+Vue.use(VueLazyload)
 Vue.config.productionTip = false
 
 const router = new VueRouter({

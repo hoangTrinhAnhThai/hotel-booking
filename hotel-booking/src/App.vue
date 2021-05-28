@@ -2,6 +2,7 @@
   <div id="app">
     <header-comp/>
     <router-view/>
+    <!-- <director-comp/> -->
   </div>
 </template>
 
@@ -18,12 +19,14 @@ export default {
     this.$store.dispatch('user', response.data)
   },
   components: {
-    'header-comp': Header
+    'header-comp': Header,
+    // 'director-comp': Director
   }
 
 }
 </script>
 
-<style>
+<style scoped>
+
 
 </style>

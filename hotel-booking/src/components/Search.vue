@@ -70,10 +70,8 @@ export default {
     mounted() {
         this.axios.get('https://hotels-booking-server.herokuapp.com/all-cities')
         .then((response) => {
-            console.warn(response.data)
             this.listCity = response.data
             localStorage.setItem('city', JSON.stringify( this.listCity))
-            console.warn('list city: ' + this.listCity)
         })
         let today= new Date();
         var dd = today.getDate();

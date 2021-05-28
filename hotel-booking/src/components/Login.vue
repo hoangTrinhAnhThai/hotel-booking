@@ -82,7 +82,7 @@ export default {
                 console.warn(response.data)
                 localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken);
                 this.$store.dispatch('user', response.data)
-                this.$router.push('/')
+                this.$router.push('/director')
             })
         }
     },
