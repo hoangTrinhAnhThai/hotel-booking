@@ -4,11 +4,11 @@
                 <b-button id="show-btn" @click="$bvModal.show('bv-modal-example')">Add new hotel</b-button>
                 <b-modal id="bv-modal-example" hide-footer>
                     <div class="add">
-                        <form @submit.prevent="addNewHotel">
+                        <form @submit.prevent="addNewHotel" method="post" enctype="multipart/form-data">
                             <label for="">Ten Khach San</label><br>
-                            <input type="text" v-model="hotel.name" required><br>
+                            <input type="text" v-model="hotelRequest.name" required><br>
                             <label for="">Standar</label><br>
-                            <input required type="text" v-model="hotel.standard" @keypress="onlyNumber"><br>
+                            <input required type="text" v-model="hotelRequest.standard" @keypress="onlyNumber"><br>
 
                             <label for="">Province</label><br>
                             <select required v-model="selectedProvince" @change="fetchDistricts" :disabled="!provinces.length">
@@ -37,19 +37,35 @@
                             </select><br>
 
                             <label for="">Dia chi cu the</label><br>
-                            <input type="text" required v-model="hotel.localization.street">
+                            <input type="text" required v-model="hotelRequest.localization.street">
                             <!-- <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Close Me</b-button> -->
-
-                            <vue-upload-multiple-image
-                                @upload-success="uploadImageSuccess"
-                                @before-remove="beforeRemove"
-                                @edit-image="editImage"
-                                :data-images="images"
-                                >
-                            </vue-upload-multiple-image>
-
+                            <div class="img">
+                                <!-- <input type="button" v-on:click="selectFile" class="choose-img" /> -->
+                                <input 
+                                    type="file" 
+                                    ref="files" 
+                                    class="file-input"
+                                    @change="selectFile"
+                                    multiple
+                                />
+                                
+                            </div>
+                            <div v-if="files" class="field">
+                                <div v-for="(file, index) in files" :key="index" class="level">
+                                    <div class="level-left">
+                                        <!-- <div v-if="file.name.length > 14" class="level-item">{{file.name.slice(0,6)}}...{{file.name.slice(-7)}}</div> -->
+                                        <div class="level-item">{{file.name}}</div>
+                                    </div>
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <a class="delete">click</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <button type="submit">Add</button>
                         </form>
+                        
                     </div>
                     
                 </b-modal>
@@ -62,14 +78,14 @@
 
 <script>
 import json from '../city.json'
-import VueUploadMultipleImage from 'vue-upload-multiple-image'
+// import VueUploadMultipleImage from 'vue-upload-multiple-image'
 
 export default {
     name: 'director',
     data() {
         return {
             
-            hotel: {
+            hotelRequest: {
                 name: null,
                 standard: null,
                 localization: {
@@ -85,7 +101,8 @@ export default {
             selectedProvince: null,
             selectedDistrict: null,
             selectedCity: null,
-            myJson: json
+            myJson: json,
+            files: []
         
         }
     },
@@ -122,33 +139,38 @@ export default {
                 $event.preventDefault();
             }
         },
+
         addNewHotel() {
-            console.warn("---------------")
+            this.hotelRequest.localization.city = this.selectedProvince.Name;
+            this.hotelRequest.localization.street += ', ' + this.selectedCity.Name + ', ' +  this.selectedDistrict.Name
+            const formDatas = new FormData();
+
+            for( var i = 0; i < this.files.length; i++ ){
+                formDatas.append('images', this.files[i]);
+            }
+
+            formDatas.append('hotelRequest', JSON.stringify(this.hotelRequest))
+            this.axios.post('http://localhost:8081/director/hotel/new-hotel', formDatas,  {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+            }) 
+            .then((response) => {
+                console.warn(response);
+            })
         },
-        uploadImageSuccess(formData, index, fileList) {
-      console.log('data', formData, index, fileList)
-      // Upload image api
-      // axios.post('http://your-url-upload', formData).then(response => {
-      //   console.log(response)
-      // })
-    },
-    beforeRemove (index, done, fileList) {
-      console.log('index', index, fileList)
-      var r = confirm("remove image")
-      if (r == true) {
-        done()
-      } else {
-      }
-    },
-    editImage (formData, index, fileList) {
-      console.log('edit data', formData, index, fileList)
-    }
+
+        selectFile() {
+            const files = this.$refs.files.files;
+            this.files = [...this.files, ...files ];
+
+        },
+        
     },
     mounted() {
         this.fetchProvinces();
     },
     components: {
-        VueUploadMultipleImage
     }
     
 }
@@ -162,35 +184,60 @@ export default {
         border: 1px solid rgb(206, 203, 203);
     }
 
-    #show-btn {
-        background-color: aqua;
-        color: blue;
+    .add {
+        width: 80%;
+        margin: 0 auto;
+        font-family: 'Dancing Script', cursive;
     }
 
-    form label {
-        margin: 1vh auto;
+    .add form {
+        margin: 2vh auto;
+        /* background-color: aqua */
     }
 
-    form input, select {
-        width: 35vw;
+    .add button {
+        margin: 4vh 35% 2vh;
+        width: 30%;
+        border: 1px solid white;
+        background-color: rgb(20, 20, 20);
+        color: white;
+        padding: 1.5vh 0;
+        
+    }
+
+    .add label {
+        margin: 1.5vh 0 1vh;
+    }
+
+    .add input, select {
+        width: 100%;
+        border: 1px solid rgb(175, 174, 174);
+        border-radius: 5px;
         height: 6vh;
     }
 
-    [type="submit"] {
-        width: 15vw;
-        margin-top: 2vh;
-        margin-left: 10vw;
-        padding: 1vh 2vw;
-        border: 1px solid grey;
+    .add .img {
+        margin: 3vh 0;
+    }
+
+    .field {
+        background-color: rgb(210, 210, 214);
         border-radius: 10px;
     }
-    #my-strictly-unique-vue-upload-multiple-image {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
+
+    .level {
+        display: flex;
+        /* border: 0.5px solid rgb(218, 213, 213); */
+        padding: 2vh 2vw;
     }
+
+    .level .level-left {
+        flex-basis: 90%;
+        float: left;
+        /* background-color: brown; */
+        
+    }
+
+
 
 </style>
