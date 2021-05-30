@@ -1,6 +1,9 @@
 <template>
     <div class="director">
-        <div class="add-new-hotel">
+        <director-header/>
+        <div class="container">
+            <h1>Danh sach cac khach san</h1>
+            <div class="add-new-hotel">
                 <b-button id="show-btn" @click="$bvModal.show('bv-modal-example')">Add new hotel</b-button>
                 <b-modal id="bv-modal-example" hide-footer>
                     <div class="add">
@@ -58,7 +61,7 @@
                                     </div>
                                     <div class="level-right">
                                         <div class="level-item">
-                                            <a class="delete">click</a>
+                                            <a v-on:click="deleteImg(index)" class="delete">click</a>
                                         </div>
                                     </div>
                                 </div>
@@ -69,15 +72,41 @@
                     </div>
                     
                 </b-modal>
-        </div>
-        <div class="hotel-list">
-
+            </div>
+            <div class="hotel-list">
+                <div class="list">
+                    <ul class="hotel" v-for="item in listHotel" v-bind:key="item.id">
+                        <li id="imgHotel">
+                            <img :src="'data:image/jpeg;base64,' + item.images[0].img">
+                            <!-- <img src="https://hoangviettravel.vn/wp-content/uploads/2019/12/homestay-da-lat-co-view-dep06-min.jpg" alt=""> -->
+                        </li>
+                        <li style="flex: 0 35vw">
+                            <div class="content">
+                                <ul>
+                                    <li id="nameHotel">Ten Khach san: {{item.name}}</li>
+                                    <li>Dia chi: {{item.address.street}} - {{item.address.city}}</li>
+                                    <li>Tieu chuan: {{item.standard}}</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li id="btn">
+                            <button v-on:click="viewroom(item.id)"  type="submit">View rooms</button>
+                            <div class="chucnang">
+                                <a href="#"><i class="fas fa-edit"></i></a>
+                                <a href="#"><i class="far fa-trash-alt"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 import json from '../city.json'
+import DirectorHeader from './DirectorHeader.vue'
 // import VueUploadMultipleImage from 'vue-upload-multiple-image'
 
 export default {
@@ -102,8 +131,9 @@ export default {
             selectedDistrict: null,
             selectedCity: null,
             myJson: json,
-            files: []
-        
+            files: [],
+            listHotel: null,
+            imgHotel: null,
         }
     },
     methods: {
@@ -150,7 +180,7 @@ export default {
             }
 
             formDatas.append('hotelRequest', JSON.stringify(this.hotelRequest))
-            this.axios.post('http://localhost:8081/director/hotel/new-hotel', formDatas,  {
+            this.axios.post('/director/hotel/new-hotel', formDatas,  {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
@@ -166,30 +196,64 @@ export default {
 
         },
         
+        deleteImg(index) {
+            for(var i =0; i < this.files.length; i ++) {
+                if(i == index) {
+                    this.files.pop()
+                    console.warn('oke luon' + i)
+                }
+            }
+        },
     },
     mounted() {
         this.fetchProvinces();
+        
     },
     components: {
-    }
+        'director-header': DirectorHeader
+    },
+    async created() {
+        this.$store.dispatch('headerShow', false)
+        
+        const response = await axios.get('/director/hotel', {
+            headers: {
+                Authorization: localStorage.getItem('token') 
+            }
+        })
+        this.listHotel = response.data
+        
+    },
     
 }
 </script>
 
 <style scoped>
-    .director {
-        padding-top: 12vh;
-    }
-    table tr th, td {
-        border: 1px solid rgb(206, 203, 203);
+    .director .container {
+        /* padding-top: 12vh; */
+        margin-left: 18vw;
     }
 
-    .add {
+    .director-header {
+        float: left;
+        width: 20vw;
+        height: 100vh;
+        background-color: rgb(114,167,207);
+        position: fixed;
+    }
+    .add {                                             
+        
         width: 80%;
         margin: 0 auto;
         font-family: 'Dancing Script', cursive;
     }
+    #show-btn, h1 {
+        /* float: right; */
+        margin-left: 5vw;
+    }
 
+    #show-btn {
+        width: 10vw;
+    }
     .add form {
         margin: 2vh auto;
         /* background-color: aqua */
@@ -236,6 +300,65 @@ export default {
         float: left;
         /* background-color: brown; */
         
+    }
+/* ------------------------------------ */  
+    .hotel-list {
+        width: 80vw;
+        /* background-color: blueviolet; */
+    }
+
+    .list {
+        margin: 0 5vw;
+    }
+
+    ul {    
+        list-style: none;
+        
+    }
+    
+
+    .list > ul {
+        border: 1px solid #92b6c5;
+        border-radius: 10px;
+        padding: 2vh 3vw 5vh;
+        margin-top: 5vh;
+    }
+
+    .hotel {
+        display: flex;
+        margin-top: 3vh;
+        /* background-color: aqua; */
+        width: 70vw;
+    }
+
+    ul li {
+        margin-top: 3vh;
+    }
+
+    #imgHotel img{
+        width: 22vw;   
+        height: 28vh;
+    }
+
+    #nameHotel {
+        font-weight: bolder;
+    }
+    button {
+        font-size: 1.2vw;
+        border: 0.5px solid gray;
+        background-color: #92b6c5;
+        border-radius: 10px;
+        padding: 1vh;
+        width: 8vw
+    }
+
+    .chucnang {
+        margin-top: 14vh;
+    }
+
+    .chucnang i {
+        margin: 0 1vw;
+        font-size: 2vw;
     }
 
 

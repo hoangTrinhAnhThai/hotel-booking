@@ -16,12 +16,6 @@ export default new Vuex.Store({
         },
         headerShow: (state) => {
             return state.headerShow
-        },
-        listHotel: (state) => {
-            return state.listHotel
-        },
-        city: (state) => {
-            return state.city
         }
     },
     
@@ -31,12 +25,6 @@ export default new Vuex.Store({
         },
         headerShow(context, headerShow) {
             context.commit('headerShow', headerShow)
-        },
-        listHotel(context, listHotel) {
-            context.commit('listHotel', listHotel)
-        },
-        city(context, city) {
-            context.commit('city', city)
         }
     },
     mutations: {
@@ -45,12 +33,6 @@ export default new Vuex.Store({
         },
         headerShow(state, headerShow) {
             state.headerShow = headerShow;
-        },
-        listHotel(state, listHotel) {
-            state.listHotel = listHotel;
-        },
-        city(state, city) {
-            state.city = city;
         }
     }
 })

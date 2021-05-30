@@ -1,5 +1,5 @@
 <template>
-    <div class="user-header">
+    <div class="director-header">
             <div class="logo">
                 <router-link to="/">IrtAoh --iah_thna </router-link>
             </div>
@@ -10,7 +10,7 @@
                         <img src="https://i.pinimg.com/736x/af/0c/9c/af0c9ceb293e88198bc2f9924952f89c.jpg" alt="">
                     </li>
                     <li id="and">
-                        <div class="name">{{userName}}</div>
+                        <div class="name">{{directorName}}</div>
                         <div class="since">Since: 3 March</div>
                     </li>
                 </ul>
@@ -20,10 +20,15 @@
                 <ul>
                     <li>
                         <i class="	far fa-id-badge"></i>
-                        <router-link to="/user/account"> Account</router-link></li>
+                        <router-link to="/director/account"> Account</router-link>
+                        </li>
                     <li>
-                        <i class="far fa-clock"></i>
-                        <router-link to="/user/booking-history">Booking History</router-link>
+                        <i class="fas fa-hotel"></i>
+                        <router-link to="/director/booking-history">Hotel</router-link>
+                    </li>
+                    <li>
+                        <i class="fas fa-list"></i>
+                        <router-link to="/director/booking-history">Booking list</router-link>
                     </li>
                 </ul>
             </div>
@@ -41,16 +46,15 @@
 
 <script>
 export default {
-    name: 'user-header',
+    name: 'director-header',
     data() {
         return {
-            userName: localStorage.getItem('nameUser')
+            directorName: localStorage.getItem('nameUser')
         }
     },
     methods: {
         handelLogoutClick() {
-            localStorage.clear()
-            // localStorage.removeItem('token')
+            localStorage.removeItem('token')
             this.$store.dispatch('user', null)
             this.$router.push('/')
         }
@@ -59,16 +63,16 @@ export default {
 </script>
 
 <style scoped>
-    .user-header .logo {
+    .director-header .logo {
         margin: 5vh ;
         margin-left: 3vw;
     }
 
-    .user-header .infor {
+    .director-header .infor {
         margin: 4vh 0 5vh;
     }
 
-    .user-header .infor img {
+    .director-header .infor img {
         float: left;
         margin-right: 1.2vw;
         position: relative;
@@ -80,16 +84,16 @@ export default {
         border-radius: 50%;
     }
 
-    .user-header .infor #and {
+    .director-header .infor #and {
         position: relative;
         top: 1vh;
     }
 
-    .user-header i {
+    .director-header i {
         margin-right: 1vw;
     }
 
-    .user-header a {
+    .director-header a {
         text-decoration: none;
         color: black;
     }
@@ -98,13 +102,13 @@ export default {
         list-style: none;
     }
 
-    .user-header .menu {
+    .director-header .menu {
         clear: both;
         margin-top: 5vh;
         margin-bottom: 5vh;
     }
 
-    .user-header .menu ul li{
+    .director-header .menu ul li{
         margin-top: 2vh
     }
 

@@ -11,7 +11,6 @@
                     <div class="label">Where are you going?</div>
                     <div class="render">
                         <select v-model="search.cityName" aria-placeholder="Choose here">
-                            <option value="" selected disabled hidden>Choose here</option>
                             <option v-for="(option) in listCity" v-bind:key="option">
                                 {{ option }}
                             </option>
@@ -54,7 +53,7 @@ export default {
             listCity: null,
             selected: null,
             search: {
-                cityName: "Đà Nẵng", 
+                cityName: null, 
                 start: null,
                 end: null,
                 capacity: 1
@@ -68,7 +67,7 @@ export default {
         
     },
     mounted() {
-        this.axios.get('https://hotels-booking-server.herokuapp.com/all-cities')
+        this.axios.get('all-cities')
         .then((response) => {
             this.listCity = response.data
             localStorage.setItem('city', JSON.stringify( this.listCity))
@@ -92,7 +91,7 @@ export default {
     },
     methods: {
         handleSearch() {
-            this.axios.post('https://hotels-booking-server.herokuapp.com/search', this.search)
+            this.axios.post('search', this.search)
             .then((response) => {
                 // console.warn(response.data)
                 // localStorage.setItem("listSearch", JSON.stringify(response.data));

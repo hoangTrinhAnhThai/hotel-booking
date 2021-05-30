@@ -25,13 +25,13 @@ export default {
 
 
     async created() {
-         this.axios.get('https://hotels-booking-server.herokuapp.com/user/', {
+         this.axios.get('user/', {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
         })
 
-        this.axios.get('https://hotels-booking-server.herokuapp.com/director/hotel/13/getImg')
+        this.axios.get('director/hotel/13/getImg')
         .then((result) => {
             localStorage.setItem('img', result.data[0].img)
 

@@ -56,6 +56,7 @@ export default {
             this.scrollPosition = window.scrollY
         },
         handelLogoutClick() {
+            localStorage.clear();
             localStorage.removeItem('token')
             this.$store.dispatch('user', null)
             this.$router.push('/')

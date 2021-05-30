@@ -82,6 +82,7 @@
 
 <script>
 import UserHeader from './UserHeader.vue'
+import {mapGetters} from 'vuex'
 export default {
     name: 'user-account',
     data() {
@@ -105,7 +106,7 @@ export default {
     },
     async created() {
         this.$store.dispatch('headerShow', false)
-        this.axios.get('https://hotels-booking-server.herokuapp.com/user/', {
+        this.axios.get('user/', {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
@@ -119,7 +120,7 @@ export default {
     }, 
     methods: {
         changeInf() {
-            this.axios.post('https://hotels-booking-server.herokuapp.com/update-information/save', this.user.userDetail, {
+            this.axios.post('update-information/save', this.user.userDetail, {
                 headers: {
                     Authorization: localStorage.getItem('token')
                 }
@@ -131,7 +132,7 @@ export default {
         }, 
         changePassword() {
             if(this.password.newPasswordAgain == this.password.newPassword) {
-                this.axios.post('https://hotels-booking-server.herokuapp.com/update-information/save-password', this.password, {
+                this.axios.post('update-information/save-password', this.password, {
                     headers: {
                         Authorization: localStorage.getItem('token')
                     }
@@ -151,6 +152,9 @@ export default {
             
         }
     },
+    mounted: {
+        ...mapGetters(['user'])
+    }
 }
 </script>
 

@@ -37,7 +37,7 @@
                                 <input type="text" v-model="fullName.lastName" name="" id="lastName" placeholder="last name" required>
                             </li>
                             <li>
-                                <input type="text" v-model="fullName.fisrtName" name="" id="firstName" placeholder="first name" required>
+                                <input type="text" v-model="fullName.firstName" name="" id="firstName" placeholder="first name" required>
                             </li>
                         </ul>
                     </div>  
@@ -145,7 +145,7 @@ export default {
             this.errors.push('password required.');
         }
             this.register.userDetail.nameUserDetail = this.fullName.lastName + ' ' + this.fullName.firstName;
-                this.axios.post("https://hotels-booking-server.herokuapp.com/signup/", this.register)
+                this.axios.post("signup/", this.register)
                 .then((response) => {
                     console.warn(response.data)
                     this.$router.push('/login')

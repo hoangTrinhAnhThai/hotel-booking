@@ -61,7 +61,54 @@
                                         <td>{{i.price}}</td>
                                         <td>{{i.capacity}}</td>
                                         <td>
-                                            <button v-on:click="bookroom(i.id)" type="submit">Book Room</button>
+                                            <b-button id="show-btn" v-b-modal="modalId(index)">Book room</b-button>
+                                            <b-modal :id="'modal'+index" hide-footer title="Booking room">    
+                                                <div class="bv-modal-example">
+                                                    <form @submit.prevent="bookingroom(i.id)">
+                                                        <table v-if="user">
+                                                            <tr>
+                                                                <td>Ten phong: </td>
+                                                                <td>{{i.id}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Loai: </td>
+                                                                <td>{{i.type}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Check-in:</td>
+                                                                <td>
+                                                                    <!-- <input type="date" v-model="search.start" disabled> -->
+                                                                    {{search.start}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Check-out: </td>
+                                                                <td>
+                                                                    <!-- <input type="date" v-model="search.end" disabled> -->
+                                                                    {{search.end}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Tong tien: </td>
+                                                                <td>{{i.price}}</td>
+                                                            </tr>
+                                                        </table>
+                                                        <div v-if="!user" class="notlogin">
+                                                            <h1>Ban chua dang nhap</h1>
+                                                            <h6>Dang nhap de dat phong</h6>
+                                                        </div>
+                                                        <div class="bookBtn">
+                                                            <div class="btn">
+                                                                <button v-if="user" type="submit">Book</button>
+                                                                <span v-if="!user"><router-link to="/login">Login</router-link></span>
+                                                                <button class="mt-3" block @click="$bvModal.hide('modal' + index)">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </b-modal>
+
                                         </td>
                                     <!-- </form> -->
                                 </tr>
@@ -109,6 +156,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 
 export default {
     name: 'view-room-search',
@@ -130,7 +178,7 @@ export default {
             console.warn("idroom: " + idRoom)
         },
         handleSearch() {
-            this.axios.post('https://hotels-booking-server.herokuapp.com/search', this.search)
+            this.axios.post('search', this.search)
             .then((response) => {
                 // console.warn(response.data)
                 // localStorage.setItem("listSearch", JSON.stringify(response.data));
@@ -138,11 +186,25 @@ export default {
                 localStorage.setItem('search', JSON.stringify(this.search))
                 this.$router.push('/search/list-hotel');
             })
+        },
+        modalId(i) {
+            return 'modal' + i;
+        },
+        bookingroom(roomId) {
+            console.warn(roomId);
+            // if(user == null) {
+            //     console.warn('chua dang nhap')
+            // } else {
+            //     console.warn('da dang nhap')
+            // }
         }
     },
     mounted() {
         this.search= JSON.parse(localStorage.getItem('search'))
         console.warn(this.listHotel)
+    },
+    computed: {
+        ...mapGetters(['user'])
     }
 }
 </script>
@@ -208,6 +270,44 @@ export default {
         padding: 2vh 1vw;
     }
 
+    .bv-modal-example table {
+        width: 35vw;
+        margin: 0 auto;
+    }
+
+    .bv-modal-example .bookBtn {
+        width: 50vw;
+        margin: 3vh auto;
+    }
+
+    .bv-modal-example .bookBtn .btn{
+        margin: 0 20%;
+    }
+
+    .bv-modal-example .bookBtn button, a {
+        margin: 0 1.5vw;
+        /* width: 6.5vw; */
+        text-decoration: none;
+        font-size: 1.3vw;
+        background-color: rgb(133,176,210);
+    }
+
+    .bv-modal-example .bookBtn a {
+        padding: 1.05vh 1.1vw;
+        border-radius: 10px;
+        border: 1px solid rgb(80, 79, 79);
+        color: white;
+    }
+
+    .bv-modal-example .bookBtn .mt-3{
+        background-color: rgb(233, 81, 81);
+        color: white;
+    }
+
+    .bv-modal-example input {
+        width: 12vw;
+    }
+
     #name {
         width: 15vw;
     }
@@ -240,16 +340,19 @@ export default {
     .search form button {
         width: 18vw;
         margin-top: 5vh;
-        border: 0.5px solid grey;
         padding: 1.2vh 1vw;
         background-color: #e4d56a;
     }
 
     button {
-        border: 1px solid grey;
+        border: 1px solid rgb(80, 79, 79);
         font-size: 1vw;
         padding: 1vh 0.7vw;
         border-radius: 10px;
+    }
+
+    .bv-modal-example h1, h6 {
+        text-align: center
     }
 
 </style>

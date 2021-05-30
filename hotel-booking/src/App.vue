@@ -15,8 +15,8 @@ export default {
   
   async created() {
     const response = await axios('user/');
-    this.$store.dispatch('headerShow', true)
     this.$store.dispatch('user', response.data)
+    console.warn(response.data)
   },
   components: {
     'header-comp': Header,

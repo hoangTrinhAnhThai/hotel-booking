@@ -100,7 +100,7 @@ export default {
         }
     }, 
     mounted () {
-        this.axios.get('https://hotels-booking-server.herokuapp.com/user/history-booking-after', {
+        this.axios.get('user/history-booking-after', {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
@@ -109,7 +109,7 @@ export default {
                 this.listBookingAfter = response.data;
                 console.warn(response.data)
             }),
-        this.axios.get('https://hotels-booking-server.herokuapp.com/user/history-booking-before', {
+        this.axios.get('user/history-booking-before', {
             headers: {
                 Authorization: localStorage.getItem('token')
             }

@@ -76,13 +76,25 @@ export default {
         }
     },
     methods: {
-        async postDataLogin() {
-            this.axios.post("https://hotels-booking-server.herokuapp.com/signin/", this.loginData)
+         postDataLogin() {
+            this.axios.post("signin/", this.loginData)
             .then((response) => {
+
                 console.warn(response.data)
-                localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken);
                 this.$store.dispatch('user', response.data)
-                this.$router.push('/director')
+                localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken);
+                localStorage.setItem('nameUser', response.data.userDetail.nameUserDetail)
+                if(response.data.roles[0] == 'ROLE_USER') {
+                    this.$router.push('/')
+                } else if(response.data.roles[0] == 'ROLE_DIRECTOR') {
+                    // this.$router.go('/director')
+                    this.$router.push('/director')
+                } else if (response.data.roles[0] == 'ROLE_ADMIN') {
+                    this.$router.push('/admin')
+                } else {
+                    console.warn('error')
+                }
+                
             })
         }
     },
