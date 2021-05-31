@@ -58,6 +58,9 @@ export default {
             this.$store.dispatch('user', null)
             this.$router.push('/')
         }
+    },
+    async created() {
+        this.$store.dispatch('headerShow', false)
     }
 }
 </script>

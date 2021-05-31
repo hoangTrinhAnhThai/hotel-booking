@@ -58,7 +58,7 @@
                                      <td>{{index + 1}}</td>
                                         <td>{{i.name}}</td>
                                         <td>{{i.type}}</td>
-                                        <td>{{i.price}}</td>
+                                        <td>{{formatPrice(i.price)}}</td>
                                         <td>{{i.capacity}}</td>
                                         <td>
                                             <b-button id="show-btn" v-b-modal="modalId(index)">Book room</b-button>
@@ -90,7 +90,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td>Tong tien: </td>
-                                                                <td>{{i.price}}</td>
+                                                                <td>{{priceTotal(i.price)}}</td>
                                                             </tr>
                                                         </table>
                                                         <div v-if="!user" class="notlogin">
@@ -99,18 +99,15 @@
                                                         </div>
                                                         <div class="bookBtn">
                                                             <div class="btn">
-                                                                <button v-if="user" type="submit">Book</button>
+                                                                <button v-if="user" @click="$bvModal.hide('modal' + index)" type="submit">Book</button>
                                                                 <span v-if="!user"><router-link to="/login">Login</router-link></span>
                                                                 <button class="mt-3" block @click="$bvModal.hide('modal' + index)">Cancel</button>
                                                             </div>
                                                         </div>
                                                     </form>
                                                 </div>
-
                                             </b-modal>
-
                                         </td>
-                                    <!-- </form> -->
                                 </tr>
 
                             </table>
@@ -170,13 +167,16 @@ export default {
                 end: null,
                 capacity: 1
             },
-            city: JSON.parse(localStorage.getItem('city'))
+            city: JSON.parse(localStorage.getItem('city')),
+            bookingRequest: {
+                idRoom: null,
+                start: null,
+                end: null
+            },
+            priceTotalB: null
         }
     },
     methods: {
-        bookroom(idRoom) {
-            console.warn("idroom: " + idRoom)
-        },
         handleSearch() {
             this.axios.post('search', this.search)
             .then((response) => {
@@ -191,20 +191,33 @@ export default {
             return 'modal' + i;
         },
         bookingroom(roomId) {
-            console.warn(roomId);
-            // if(user == null) {
-            //     console.warn('chua dang nhap')
-            // } else {
-            //     console.warn('da dang nhap')
-            // }
+            this.bookingRequest.idRoom = roomId;
+            this.bookingRequest.start = this.search.start
+            this.bookingRequest.end = this.search.end
+            this.axios.post('user/booking', this.bookingRequest)
+        },
+
+        priceTotal(price) {
+
+            const date1 = new Date(this.search.start);
+            const date2 = new Date(this.search.end);
+            const oneDay = 1000 * 60 * 60 * 24;
+            const diffInTime = date2.getTime() - date1.getTime();
+            const diffInDays = Math.round(diffInTime / oneDay);
+            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(price*diffInDays)
+        },
+
+        formatPrice(price) {
+            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(price)
         }
     },
     mounted() {
         this.search= JSON.parse(localStorage.getItem('search'))
-        console.warn(this.listHotel)
+        this.$store.dispatch('headerShow', true)
     },
     computed: {
-        ...mapGetters(['user'])
+        ...mapGetters(['user']),
+        
     }
 }
 </script>

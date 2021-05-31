@@ -20,10 +20,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import UserAccount from './components/UserAccount.vue'
 import User from './components/User.vue'
 import UserBookingHistory from './components/UserBookingHistory.vue'
-
 import Director from './components/Director.vue'
+import ForgotPassword from './components/ForgotPassword.vue'
+import ResetPassword from './components/ResetPassword.vue'
 
-// import ForgotPassword from './components/ForgotPassword.vue'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'axios/dist/axios'
@@ -42,6 +42,8 @@ const routes= [
   {path: '/search/list-hotel', component: SearchListHotel},
   {path: '/search/list-hotel/viewrooms', component: ViewRoomSearch},
   {path: '/director', component: Director},
+  {path: '/forgot-password', component: ForgotPassword},
+  {path: '/reset-password/:tokenPassword', component: ResetPassword},
 
 
   // {path: '/forgot-password', component: ForgotPassword }

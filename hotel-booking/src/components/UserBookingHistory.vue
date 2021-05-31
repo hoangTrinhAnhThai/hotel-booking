@@ -17,6 +17,9 @@ export default {
     components: {
         'user-header': UserHeader,
         'booking-history': BookingHistory
+    },
+    async created() {
+        this.$store.dispatch('headerShow', false)
     }
 }
 </script>

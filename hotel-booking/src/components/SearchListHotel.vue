@@ -86,6 +86,7 @@ export default {
         }
     },
     mounted () {
+        this.$store.dispatch('headerShow', true)
         this.axios.get('list-hotel/13')
         .then((response)=> {
             this.infImg.img = 'data:image/jpeg;base64,' + response.data.images[0].img;

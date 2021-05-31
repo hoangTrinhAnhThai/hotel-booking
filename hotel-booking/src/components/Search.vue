@@ -67,6 +67,7 @@ export default {
         
     },
     mounted() {
+        this.$store.dispatch('headerShow', true)
         this.axios.get('all-cities')
         .then((response) => {
             this.listCity = response.data
@@ -76,17 +77,70 @@ export default {
         var dd = today.getDate();
         var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
-        if(dd<10){
-            dd='0'+dd;
-        } 
-        if(mm<10){
-            mm='0'+mm;
-        } 
 
-    today = yyyy+'-'+mm+'-'+dd;                
+        
+        if(dd<10){
+            var ddF='0'+dd;
+        } else {
+            ddF = dd;
+        }
+        if(mm<10){
+            var mmF = '0'+mm;
+        } else {
+            
+            mmF = mm;
+        }
+        this.search.start = yyyy +'-'+ mmF +'-' + ddF;
+        switch(mm) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12: 
+                if(dd == 31 && mm == 12) {
+                    mm = 1;
+                    dd =1;
+                    yyyy += 1;
+                } else if (dd == 31 && mm !=12) {
+                    mm +=1;
+                    dd =1; 
+                } else {
+                    dd +=1;
+                }
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                if(dd == 30) {
+                    mm +=1;
+                    dd= 1;
+                } else {
+                    dd +=1
+                }
+                break;
+            default : 
+                if(dd == 28 || dd == 29) {
+                    mm +=1;
+                    dd = 1
+                } else {
+                    dd+=1;
+                }
+        }
+        if(dd<10){
+             dd='0'+dd;
+        }
+        if(mm<10){
+             mm = '0'+mm;
+        } 
+        this.search.end = yyyy+'-'+mm+'-'+dd;
+        
+
+                    
     // document.getElementById("idFdate").defaultValue =today+"";
-    this.search.start = today;
-    this.search.end = yyyy+'-'+mm+'-'+ (dd+1)
+    
 
     },
     methods: {

@@ -99,7 +99,8 @@ export default {
             listBookingCaceled: null
         }
     }, 
-    mounted () {
+    async created() {
+        
         this.axios.get('user/history-booking-after', {
             headers: {
                 Authorization: localStorage.getItem('token')

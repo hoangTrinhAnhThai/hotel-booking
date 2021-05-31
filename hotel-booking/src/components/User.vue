@@ -25,6 +25,7 @@ export default {
 
 
     async created() {
+        this.$store.dispatch('headerShow', true)
          this.axios.get('user/', {
             headers: {
                 Authorization: localStorage.getItem('token')

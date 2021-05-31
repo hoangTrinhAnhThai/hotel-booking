@@ -42,8 +42,11 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="inc">
+                            <span v-show="incorrect">Your username or password is incorrect!</span>
+                        </div>
                         <div class="forgot-password">
-                            <h6>Forgot your password?</h6>
+                            <h6><router-link to="/forgot-password">Forgot your password?</router-link></h6>
                         </div>
                         <div class="btn">
                             <button type="submit">Login</button>
@@ -71,29 +74,35 @@ export default {
         return {
             loginData: {
                 username: null,
-                password: null
+                password: null,
+                incorrect: null
             }
         }
     },
     methods: {
-         postDataLogin() {
+        postDataLogin() {
             this.axios.post("signin/", this.loginData)
             .then((response) => {
-
-                console.warn(response.data)
-                this.$store.dispatch('user', response.data)
-                localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken);
-                localStorage.setItem('nameUser', response.data.userDetail.nameUserDetail)
-                if(response.data.roles[0] == 'ROLE_USER') {
-                    this.$router.push('/')
-                } else if(response.data.roles[0] == 'ROLE_DIRECTOR') {
-                    // this.$router.go('/director')
-                    this.$router.push('/director')
-                } else if (response.data.roles[0] == 'ROLE_ADMIN') {
-                    this.$router.push('/admin')
+                    console.warn(response.data.message)
+                if(response.data.message == 'incorrect') {
+                    this.incorrect = true;
+                    console.warn(this.incorrect)
                 } else {
-                    console.warn('error')
+                    this.$store.dispatch('user', response.data)
+                    localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken);
+                    localStorage.setItem('nameUser', response.data.userDetail.nameUserDetail)
+                    if(response.data.roles[0] == 'ROLE_USER') {
+                        this.$router.push('/')
+                    } else if(response.data.roles[0] == 'ROLE_DIRECTOR') {
+                        // this.$router.go('/director')
+                        this.$router.push('/director')
+                    } else if (response.data.roles[0] == 'ROLE_ADMIN') {
+                        this.$router.push('/admin')
+                    } else {
+                        console.warn('error')
+                    }
                 }
+                    
                 
             })
         }
@@ -101,6 +110,10 @@ export default {
     components: {
         // 'header-comp' : Header
 
+    },
+    async created() {
+        this.$store.dispatch('headerShow', true);
+        this.incorrect = false;
     }
     
 }
@@ -119,7 +132,6 @@ export default {
         top: 20vh;
         left: 22.5vw;
         border-radius: 8px;
-        /* border: 1px solid grey; */
         box-shadow: 8px 8px 3px grey;
     }
 
@@ -221,5 +233,8 @@ export default {
         text-align: center;
     }
 
+    #incorrect {
+        margin: 1vh auto;
+    }
     
 </style>

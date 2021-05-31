@@ -132,6 +132,7 @@ export default {
     },
     methods: {
         async postDataSignup() {
+            this.$store.dispatch('headerShow', true)
             if (this.name && this.age) {
             return true;
         }
@@ -147,7 +148,8 @@ export default {
             this.register.userDetail.nameUserDetail = this.fullName.lastName + ' ' + this.fullName.firstName;
                 this.axios.post("signup/", this.register)
                 .then((response) => {
-                    console.warn(response.data)
+                    console.warn(response)
+                    window.alert('Sign up successfully!!' + '\n' + 'Login?')
                     this.$router.push('/login')
                 })
             },

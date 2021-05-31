@@ -172,7 +172,7 @@ export default {
 
         addNewHotel() {
             this.hotelRequest.localization.city = this.selectedProvince.Name;
-            this.hotelRequest.localization.street += ', ' + this.selectedCity.Name + ', ' +  this.selectedDistrict.Name
+            this.hotelRequest.localization.street += ' - ' + this.selectedCity.Name + ' - ' +  this.selectedDistrict.Name
             const formDatas = new FormData();
 
             for( var i = 0; i < this.files.length; i++ ){
