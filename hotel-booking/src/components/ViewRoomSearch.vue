@@ -195,6 +195,7 @@ export default {
             this.bookingRequest.start = this.search.start
             this.bookingRequest.end = this.search.end
             this.axios.post('user/booking', this.bookingRequest)
+            // this.handleSearch();
         },
 
         priceTotal(price) {

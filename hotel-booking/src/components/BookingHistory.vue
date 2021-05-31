@@ -33,7 +33,9 @@
                             <td>{{item.room.capacity}}</td>
                             <td>{{item.start}}</td>
                             <td>{{item.end}}</td>
-                            <td><button type="submit">Cancel</button></td>
+                            <td>
+                                <button v-on:click="cancel(item.id)" type="submit">Cancel</button>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -96,27 +98,25 @@ export default {
             activeItem: 'incomplete',
             listBookingAfter: null, 
             listBookingBefore: null, 
-            listBookingCaceled: null
+            listBookingCanceled: null
         }
     }, 
     async created() {
         
-        this.axios.get('user/history-booking-after', {
-            headers: {
-                Authorization: localStorage.getItem('token')
-            }
-        })
+        this.axios.get('user/history-booking-after')
             .then((response)=> {
                 this.listBookingAfter = response.data;
                 console.warn(response.data)
             }),
-        this.axios.get('user/history-booking-before', {
-            headers: {
-                Authorization: localStorage.getItem('token')
-            }
-        })
+        this.axios.get('user/history-booking-before')
             .then((response)=> {
                 this.listBookingBefore = response.data; 
+                console.warn(response.data)
+            }),
+        this.axios.get('user/cancelBooking')
+            .then((response)=> {
+                this.listBookingCanceled = response.data; 
+                console.warn(response.data)
             })
     }, 
     methods: {
@@ -125,6 +125,14 @@ export default {
         },
         setActive (menuItem) {
             this.activeItem = menuItem
+        },
+        cancel(idBK) {
+            this.axios.delete(`user/cancelBooking/${idBK}`)
+            .then((response) => {
+                console.warn(response.data)
+                this.$router.go()
+
+            })
         }
     }
 }

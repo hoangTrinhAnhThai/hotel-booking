@@ -18,6 +18,9 @@
                     </ul>
                 </div>
                 <h6>Ensure your email for registration</h6>
+                <div class="inc">
+                    <!-- <span v-show="incorrect">Your username or password is incorrect!</span> -->
+                </div>
                 <form @submit.prevent="postDataLogin" method="post">
                     <div class="login-form">
                         <div class="email">
@@ -42,9 +45,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="inc">
-                            <span v-show="incorrect">Your username or password is incorrect!</span>
-                        </div>
+                        
                         <div class="forgot-password">
                             <h6><router-link to="/forgot-password">Forgot your password?</router-link></h6>
                         </div>
@@ -87,6 +88,7 @@ export default {
                 if(response.data.message == 'incorrect') {
                     this.incorrect = true;
                     console.warn(this.incorrect)
+                    window.alert('incorrect')
                 } else {
                     this.$store.dispatch('user', response.data)
                     localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken);
