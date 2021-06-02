@@ -87,7 +87,6 @@ export default {
                     console.warn(response.data.message)
                 if(response.data.message == 'incorrect') {
                     this.incorrect = true;
-                    console.warn(this.incorrect)
                     window.alert('incorrect')
                 } else {
                     this.$store.dispatch('user', response.data)

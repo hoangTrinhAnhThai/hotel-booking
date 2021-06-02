@@ -23,6 +23,8 @@ import UserBookingHistory from './components/UserBookingHistory.vue'
 import Director from './components/Director.vue'
 import ForgotPassword from './components/ForgotPassword.vue'
 import ResetPassword from './components/ResetPassword.vue'
+import Admin from './components/Admin.vue'
+import DirectorHotel from './components/DirectorHotel.vue'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -44,6 +46,11 @@ const routes= [
   {path: '/director', component: Director},
   {path: '/forgot-password', component: ForgotPassword},
   {path: '/reset-password/:tokenPassword', component: ResetPassword},
+  {path: '/admin', component: Admin},
+  {path: '/director-hotel', component: DirectorHotel},
+
+
+
 
 
   // {path: '/forgot-password', component: ForgotPassword }

@@ -1,57 +1,40 @@
 <template>
-    <div class="admin">
-        <li id="btn">
+    <div class="director-hotel">
+        <div class="hotel-list">
+                <div class="list">
+                    <ul class="hotel" v-for="(item, index) in listHotel" v-bind:key="item.id">
+                        
+                        <!-- <li style="flex: 0 35vw">name
+                            <div class="content">
+                                <ul>
+                                    <li id="nameHotel">Ten Khach san: {{item.name}}</li>
+                                    <li>Dia chi: {{item.address.street}} - {{item.address.city}}</li>
+                                    <li>Tieu chuan: {{item.standard}}</li>
+                                </ul>
+                            </div>
+                        </li> -->
+                        <li id="btn">
                             <button v-on:click="viewroom(item.id)"  type="submit">View rooms</button>
                             <div class="chucnang">
                                 <b-button id="show-btn" v-on:click="editHotel(index)"  v-b-modal="modalId(index)">Add new hotel</b-button>
                                 <b-modal :id="'modal'+ index" hide-footer>
                                     <div class="add">
                                         <form @submit.prevent="addNewHotel" method="post" enctype="multipart/form-data">
-                                            <label for="">Ten Khach San</label><br>
-                                            <input type="text" v-model="hotelRequest.name" required><br>
-                                            <label for="">Standar</label><br>
-                                            <input required type="text" v-model="hotelRequest.standard" @keypress="onlyNumber"><br>
 
-                                            <label for="">Province</label><br>
-                                            <select required v-model="selectedProvince" @change="fetchDistricts" :disabled="!provinces.length">
-                                                <option
-                                                v-for="province in provinces"
-                                                :key="province.id"
-                                                :value="province"
-                                                >{{ province.Name }}</option>
-                                            </select><br>
-                                            
-                                            <label for="">Districts</label><br>
-                                            <select required v-model="selectedDistrict" @change="fetchCities" :disabled="!districts.length">
-                                                <option
-                                                v-for="district in districts"
-                                                :key="district.id"
-                                                :value="district"
-                                                >{{ district.Name }}</option>
-                                            </select><br>
-
-                                            <label for="">Ward</label><br>
-                                            <select required v-model="selectedCity" :disabled="!cities.length">
-                                                <option value="" selected disabled>Select a city</option>
-                                                <option 
-                                                    v-for="city in cities" 
-                                                    :key="city.id" 
-                                                    :value="city">{{ city.Name }}</option>
-                                            </select><br>
-
-                                            <label for="">Dia chi cu the</label><br>
-                                            <input type="text" required v-model="hotelRequest.localization.street">
                                             <div class="img">
-                                                <input 
+                                                <!-- <input 
                                                     type="file" 
                                                     ref="files" 
                                                     class="file-input"
                                                     @change="selectFile"
                                                     multiple
-                                                />
+                                                /> -->
                                                 <!-- <input type="file" @change="previewFiles" multiple> -->
+                                        
+                                                <input id="image" v-on:change="selectFile" type="file">
+                                                 
                                             </div>
-                                            <div class="field">
+                                            <div v-if="files" class="field">
                                                 <div v-for="(file, index) in files" :key="index" class="level">
                                                     <div class="level-left">
                                                         <img :src="convert(file)" alt="">
@@ -63,27 +46,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            <div v-for="(item,index) in imgHotel" class="level" v-bind:key="item.id" >
-                                                <div class="level-left">
-                                                    <img :src="'data:image/jpeg;base64,' + item.img">
-                                                </div>
-                                                <div class="level-right">
-                                                    <div class="level-item">
-                                                        <a v-on:click="deleteImg(index)" class="delete">click</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <button type="submit">Add</button>
                                         </form>
-                                        
                                     </div>
                                 </b-modal>
-                                <a href="#"><i class="fas fa-edit"></i></a>
-                                <a href="#"><i class="far fa-trash-alt"></i></a>
                             </div>
                         </li>
+                    </ul>
+                </div>
+            </div>
     </div>
 </template>
 
@@ -91,8 +61,9 @@
 import axios from 'axios'
 import json from '../city.json'
 export default {
-    data() {
+data() {
         return {
+            
             hotelRequest: {
                 name: null,
                 standard: null,
@@ -129,7 +100,45 @@ export default {
             selectedne: " "
         }
     },
-methods: {
+    methods: {
+        selectFile(e) {
+            // console.warn('vo duoc ma')
+            // const files = this.$refs.files.files;
+            // console.warn(files)
+            // this.files = ([...this.files, ...files ]);
+
+
+            var files = e.target.files || e.dataTransfer.files;
+            console.warn(files)
+            this.files = ([...this.files, ...files ]);
+        },
+        blobToFile(theBlob, fileName){
+            //A Blob() is almost a File() - it's just missing the two properties below which we will add
+            theBlob.lastModifiedDate = new Date();
+            theBlob.name = fileName;
+            return theBlob;
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         async fetchProvinces() {
             this.provinces = this.myJson
         },
@@ -177,22 +186,12 @@ methods: {
             // this.$router.go()
         },
 
-        selectFile() {
-            console.warn('vo duoc ma')
-            const files = this.$refs.files.files;
-            console.warn(files)
-            this.files = ([...this.files, ...files ]);
-            // this.files.push(files)
-            console.warn(this.files[0])
-        },
-
-        
         deleteImg(index) {
             (this.files).splice(index, 1);
         },
 
-        modalId(i) {
-            return 'modal' + i;
+        modalId(index) {
+            return 'modal'+index
         },
 
         editHotel(index) {
@@ -231,7 +230,18 @@ methods: {
             }
             this.hotelRequest.localization.street = this.address[0]
             // this.files = JSON.stringify(this.listHotel[index].images)
-            this.imgHotel = this.listHotel[index].images
+            this.imgage = this.listHotel[index].images[0]
+
+            var byteString = atob(this.imgage.img);
+
+            var ia = new Uint8Array(byteString.length);
+            for (var l = 0; l < byteString.length; l++) {
+                ia[l] = byteString.charCodeAt(l);
+            }
+            console.warn(new Blob([ia], {type:'image/jpeg'}));
+
+            var myFile = this.blobToFile(new Blob([ia], {type:'image/jpeg'}), "my-image.png");
+            console.warn(myFile)
         },
 
         convert(file) {
@@ -242,7 +252,6 @@ methods: {
         this.fetchProvinces();
         
     },
-    
     async created() {
         this.$store.dispatch('headerShow', false)
         
@@ -252,7 +261,6 @@ methods: {
             }
         })
         this.listHotel = response.data
-        console.warn(this.listHotel[3])
         
     },
 }

@@ -42,26 +42,20 @@
                         </ul>
                         <div class="content">
                             <div class="phongtrong">
-                            <h2>Phong trong</h2>
-                            <table>
-                                <tr>
-                                    <th >STT</th>
-                                    <th id="name">Room name</th>
-                                    <th id="type">Type</th>
-                                    <th id="price">Price</th>
-                                    <th id="capacity">Capacity</th>
-                                    <th></th>
-                                </tr>
-                                
-                                <tr v-for="(i, index) in item.hotel.rooms" v-bind:key="i.id">
-                                    <!-- <form action=""> -->
-                                     <td>{{index + 1}}</td>
-                                        <td>{{i.name}}</td>
-                                        <td>{{i.type}}</td>
-                                        <td>{{formatPrice(i.price)}}</td>
-                                        <td>{{i.capacity}}</td>
-                                        <td>
-                                            <b-button id="show-btn" v-b-modal="modalId(index)">Book room</b-button>
+                                <h2>Phong trong</h2>
+                                <div v-for="i in item.hotel.rooms" v-bind:key="i.id" class="showphong">
+                                    <div class="img">
+                                        <!-- <img :src="'data:image/jpeg;base64,' + i.images[0].img"/> -->
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPpkYg1zz3HDe9JfM6qIP7IHMmj4PNUPJZhA&usqp=CAU" alt="">
+                                    </div>
+                                    <div class="infor">
+                                        <h3>{{i.name}}</h3>
+                                        <h6>{{i.type}}</h6>
+                                        <h6>{{i.price}}</h6>
+                                        <h6>Capacity: {{i.capacity}}</h6>
+                                    </div>
+                                    <div class="chucnang">
+                                        <b-button id="show-btn" v-b-modal="modalId(index)">Book room</b-button>
                                             <b-modal :id="'modal'+index" hide-footer title="Booking room">    
                                                 <div class="bv-modal-example">
                                                     <form @submit.prevent="bookingroom(i.id)">
@@ -77,14 +71,12 @@
                                                             <tr>
                                                                 <td>Check-in:</td>
                                                                 <td>
-                                                                    <!-- <input type="date" v-model="search.start" disabled> -->
                                                                     {{search.start}}
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Check-out: </td>
                                                                 <td>
-                                                                    <!-- <input type="date" v-model="search.end" disabled> -->
                                                                     {{search.end}}
                                                                 </td>
                                                             </tr>
@@ -107,10 +99,8 @@
                                                     </form>
                                                 </div>
                                             </b-modal>
-                                        </td>
-                                </tr>
-
-                            </table>
+                                    </div>
+                                </div>
                         </div>
                         <div class="search">
                     <form @submit.prevent="handleSearch" method="post">
@@ -180,8 +170,6 @@ export default {
         handleSearch() {
             this.axios.post('search', this.search)
             .then((response) => {
-                // console.warn(response.data)
-                // localStorage.setItem("listSearch", JSON.stringify(response.data));
                 localStorage.setItem("listSearch", JSON.stringify(response.data));
                 localStorage.setItem('search', JSON.stringify(this.search))
                 this.$router.push('/search/list-hotel');
@@ -366,7 +354,49 @@ export default {
     }
 
     .bv-modal-example h1, h6 {
-        text-align: center
+        /* text-align: center */
     }
 
+
+/* ------------- */
+
+    .phongtrong .showphong {
+        /* background-color: aqua; */
+        overflow: hidden;
+        border: 1px solid rgb(209, 206, 206);
+        padding: 4vh 3vw;
+        border-radius: 10px;
+        margin-top: 5vh;
+    }
+
+    .phongtrong .img img {
+        height: 25vh;
+        width: 18vw;
+    }
+
+    .phongtrong .img {
+        float: left;
+    }
+
+    .phongtrong .infor {
+        float: left;
+        margin: 0vh 3vw;
+        width: 22vw;
+    }
+
+    .phongtrong .chucnang {
+        float: right;
+        width: 3vw;
+        margin-bottom: 2vh;
+    }
+
+    .phongtrong .infor h3 {
+        border-bottom: 2px solid rgb(224, 112, 112);
+        padding-bottom: 2vh;
+    }
+
+    .phongtrong .infor h6 {
+        text-align: start;
+        margin-top: 2vh;
+    }
 </style>

@@ -24,7 +24,7 @@
                         </li>
                     <li>
                         <i class="fas fa-hotel"></i>
-                        <router-link to="/director/booking-history">Hotel</router-link>
+                        <router-link to="/director">Hotel</router-link>
                     </li>
                     <li>
                         <i class="fas fa-list"></i>
