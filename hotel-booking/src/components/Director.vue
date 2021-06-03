@@ -2,71 +2,9 @@
     <div class="director">
         <director-header/>
         <div class="container">
-            <h1>Danh sach cac khach san</h1>
             <div class="add-new-hotel">
-                <b-button id="show-btn" @click="$bvModal.show('bv-modal-example')">Add new hotel</b-button>
-                <b-modal id="bv-modal-example" hide-footer>
-                    <div class="add">
-                        <form @submit.prevent="addNewHotel" method="post" enctype="multipart/form-data">
-                            <label for="">Ten Khach San</label><br>
-                            <input type="text" v-model="hotelRequest.name" required><br>
-                            <label for="">Standar</label><br>
-                            <input required type="text" v-model="hotelRequest.standard" @keypress="onlyNumber"><br>
-
-                            <label for="">Province</label><br>
-                            <select required v-model="selectedProvince" @change="fetchDistricts" :disabled="!provinces.length">
-                                <option value="" selected disabled>Select a province</option>
-                                <option
-                                v-for="province in provinces"
-                                :key="province.id"
-                                :value="province"
-                                >{{ province.Name }}</option>
-                            </select><br>
-                            
-                            <label for="">Districts</label><br>
-                            <select required v-model="selectedDistrict" @change="fetchCities" :disabled="!districts.length">
-                                <option value="" selected disabled>Select a district</option>
-                                <option
-                                v-for="district in districts"
-                                :key="district.id"
-                                :value="district"
-                                >{{ district.Name }}</option>
-                            </select><br>
-
-                            <label for="">Ward</label><br>
-                            <select required v-model="selectedCity" :disabled="!cities.length">
-                                <option value="" selected disabled>Select a city</option>
-                                <option v-for="city in cities" :key="city.id" :value="city">{{ city.Name }}</option>
-                            </select><br>
-
-                            <label for="">Dia chi cu the</label><br>
-                            <input type="text" required v-model="hotelRequest.localization.street">
-                            <div class="img">
-                                <!-- <input 
-                                    type="file" 
-                                    ref="files" 
-                                    class="file-input"
-                                    @change="selectFile"
-                                    multiple
-                                /> -->
-                                <input id="image" v-on:change="selectFile" type="file">
-                            </div>
-                            <div v-if="files" class="field">
-                                <div v-for="(file, index) in files" :key="index" class="level">
-                                    <div class="level-left">
-                                        <img :src="convert(file)" alt="">
-                                    </div>
-                                    <div class="level-right">
-                                        <div class="level-item">
-                                            <a v-on:click="deleteImg(index)" class="delete">click</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit">Add</button>
-                        </form>
-                    </div>
-                </b-modal>
+                <h1>Danh sach cac khach san</h1>
+                <b-button id="show-btn" v-on:click="openAddHotelForm" v-b-modal="modalId(0)">Add new hotel</b-button>
             </div>
             
             <div class="hotel-list">
@@ -74,7 +12,6 @@
                     <ul class="hotel" v-for="(item, index) in listHotel" v-bind:key="item.id">
                         <li v-if="item.images.length > 0" id="imgHotel">
                             <img :src="'data:image/jpeg;base64,' + item.images[0].img">
-                            <!-- <img src="https://homestay.review/wp-content/uploads/2018/12/Belle-Amour-Hotel-%C4%90%C3%A0-L%E1%BA%A1t-10.jpg" alt=""> -->
                         </li>
                         <li v-else id="imgHotel">
                             <img src="https://homestay.review/wp-content/uploads/2018/12/Belle-Amour-Hotel-%C4%90%C3%A0-L%E1%BA%A1t-10.jpg" alt="">
@@ -92,10 +29,10 @@
                         <li id="btn">
                             <button v-on:click="viewroom(item.id)"  type="submit">View rooms</button>
                             <div class="chucnang">
-                                <b-button id="show-btn" v-on:click="editHotel(index)"  v-b-modal="modalId(index)">Add new hotel</b-button>
+                                <button id="show-btn" v-on:click="openEditHotel(index)"  v-b-modal="modalId(index)"><i class="fas fa-edit"></i></button>
                                 <b-modal :id="'modal'+ index" hide-footer>
                                     <div class="add">
-                                        <form @submit.prevent="editHotel" method="post" enctype="multipart/form-data">
+                                        <form @submit.prevent="addNewHotel(item.id)" method="post" enctype="multipart/form-data">
                                             <label for="">Ten Khach San</label><br>
                                             <input type="text" v-model="hotelRequest.name" required><br>
                                             <label for="">Standar</label><br>
@@ -132,7 +69,6 @@
                                             <input type="text" required v-model="hotelRequest.localization.street">
                                             <div class="img">
                                                 <input id="image" v-on:change="selectFile" type="file">
-                                                <!-- <input type="file" @change="previewFiles" multiple> -->
                                             </div>
                                             <div v-if="files" class="field">
                                                 <div v-for="(file, index) in files" :key="index" class="level">
@@ -146,27 +82,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            <!-- <div v-if="imgHotel" class="old-img">
-                                                <div v-for="(item,index) in imgHotel" class="level" :key="index" >
-                                                    <div class="level-left">
-                                                        <img :src="'data:image/jpeg;base64,' + item.img">
-                                                    </div>
-                                                    <div class="level-right">
-                                                        <div class="level-item">
-                                                            <a v-on:click="deleteImg1(index)" class="delete">click</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                            
                                             <button type="submit">Save</button>
                                         </form>
                                         
                                     </div>
                                 </b-modal>
-                                <a href="#"><i class="fas fa-edit"></i></a>
-                                <a href="#"><i class="far fa-trash-alt"></i></a>
+                                <button v-on:click="deHotel(item.id)"><i class="far fa-trash-alt"></i></button>
                             </div>
                         </li>
                     </ul>
@@ -180,7 +101,6 @@
 import axios from 'axios'
 import json from '../city.json'
 import DirectorHeader from './DirectorHeader.vue'
-// import VueUploadMultipleImage from 'vue-upload-multiple-image'
 
 export default {
     name: 'director',
@@ -248,7 +168,20 @@ export default {
             }
         },
 
-        addNewHotel() {
+        openAddHotelForm() {
+            this.files = []
+            this.hotelRequest.name = null
+            this.hotelRequest.standard = null
+            this.hotelRequest.localization.city = null
+            this.hotelRequest.localization.street = null
+
+            this.selectedProvince = null
+            this.selectedDistrict = null
+            this.selectedCity = null
+        },
+
+        addNewHotel(hotelId) {
+
             this.hotelRequest.localization.city = this.selectedProvince.Name;
             this.hotelRequest.localization.street += ' - ' + this.selectedCity.Name + ' - ' +  this.selectedDistrict.Name
             
@@ -259,16 +192,27 @@ export default {
                 console.warn(this.files[i])
             }
             formData.append('hotelRequest', JSON.stringify(this.hotelRequest))
-            this.axios.post('/director/hotel/new-hotel', formData,  {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-            }) 
-            .then((response) => {
-                console.warn(response);
-            })
 
-            this.$router.go()
+            if(hotelId == 100000) {
+                this.axios.post('director/hotel/new-hotel', formData,  {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                }) 
+                .then((response) => {
+                    console.warn(response);
+                })
+            } else {
+                this.axios.post(`director/hotel/${hotelId}/update/save`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                })
+                .then((response) => {
+                    console.warn(response);
+                })
+            }
+            // this.$router.go()
         },
 
         selectFile(e) {
@@ -282,14 +226,6 @@ export default {
             (this.files).splice(index, 1);
             console.warn(index)
             console.warn(this.files.length)
-            console.warn(typeof(this.files))
-        },
-
-        deleteImg1(index) {
-            (this.imgHotel).splice(index, 1);
-            console.warn(index)
-            console.warn(this.imgHotel.length)
-            console.warn(typeof(this.imgHotel))
         },
 
         modalId(index) {
@@ -303,7 +239,7 @@ export default {
             return theBlob;
         },
 
-        editHotel(index) {
+        openEditHotel(index) {
             this.files = []
             this.hotelRequest.name = this.listHotel[index].name
             this.hotelRequest.standard = this.listHotel[index].standard
@@ -319,7 +255,6 @@ export default {
                     break;
                 }
             }
-
             for(var j = 0; j < this.districts.length; j++) {
                 if(this.districts[j].Name == (this.address[2]).trim()) {
                     this.selectedDistrict.Id = this.districts[j].Id
@@ -329,7 +264,6 @@ export default {
                     break
                 }
             }
-
             for(var k = 0; k < this.cities.length; k++) {
                 if(this.cities[k].Name == (this.address[1]).trim()) {
                     this.selectedCity.Id = this.cities[k].Id
@@ -338,15 +272,10 @@ export default {
                     break
                 }
             }
-            this.hotelRequest.localization.street = this.address[0]
-
-
-            // -----------------------------------------------
+            this.hotelRequest.localization.street = (this.address[0]).trim()
             this.imgHotel = this.listHotel[index].images
-
             for(var p = 0; p < (this.listHotel[index].images).length; p++) {
                 var byteString = atob(this.listHotel[index].images[p].img);
-
                 var ia = new Uint8Array(byteString.length);
                 for (var l = 0; l < byteString.length; l++) {
                     ia[l] = byteString.charCodeAt(l);
@@ -354,8 +283,15 @@ export default {
                 var myFile = this.blobToFile(new Blob([ia], {type:'image/jpeg'}), "my-image.png");
                 this.files.push(myFile)
             }
-
         },
+
+        deleteHotel(hotelId) {
+            this.axios.delete(`director/hotel/${hotelId}/delete`)
+            .then((response) => {
+                console.warn(response.data)
+            })
+        },
+
 
         convert(file) {
             return URL.createObjectURL(file)
@@ -386,7 +322,6 @@ export default {
 
 <style scoped>
     .director .container {
-        /* padding-top: 12vh; */
         margin-left: 18vw;
     }
 
@@ -398,14 +333,13 @@ export default {
         position: fixed;
     }
     .add {                                             
-        
         width: 80%;
-        margin: 0 auto;
         font-family: 'Dancing Script', cursive;
     }
-    #show-btn, h1 {
-        /* float: right; */
+
+    .add-new-hotel {
         margin-left: 5vw;
+        margin-top: 5vh;
     }
 
     #show-btn {
@@ -418,7 +352,7 @@ export default {
 
     .add button {
         margin: 4vh 35% 2vh;
-        width: 30%;
+        width: 35%;
         border: 1px solid white;
         background-color: rgb(20, 20, 20);
         color: white;
@@ -484,7 +418,6 @@ export default {
     .hotel {
         display: flex;
         margin-top: 3vh;
-        /* background-color: aqua; */
         width: 70vw;
     }
 
@@ -506,16 +439,20 @@ export default {
         background-color: #92b6c5;
         border-radius: 10px;
         padding: 1vh;
-        width: 8vw
+        width: 10vw
     }
 
     .chucnang {
         margin-top: 14vh;
     }
 
-    .chucnang i {
-        margin: 0 1vw;
-        font-size: 2vw;
+    .chucnang button {
+        width: 4.5vw;
+    }
+
+    .chucnang #show-btn {
+        width: 4.5vw;
+        margin-right: 1vw;
     }
 
     .level-left img {

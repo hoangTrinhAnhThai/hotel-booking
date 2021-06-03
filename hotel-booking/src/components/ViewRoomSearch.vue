@@ -17,6 +17,7 @@
                         <li>
                             <div class="img">
                                 <div class="img2">
+                                    
                                     <img 
                                         style="border-top-left-radius: 15px; border-bottom-left-radius: 15px" 
                                         src="https://res.cloudinary.com/spacejoy/w_800/v1585045500/blog/article/5e79df773b09900028907d20/5e79dffc3b09900028907d22.jpg" alt="">
@@ -228,6 +229,7 @@ export default {
 
     .img {
         display: flex;
+        flex-wrap: nowrap;
     
     }
 
