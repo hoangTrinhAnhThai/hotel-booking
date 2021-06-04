@@ -28,7 +28,7 @@
                     </li>
                     <li>
                         <i class="fas fa-list"></i>
-                        <router-link to="/director/booking-history">Booking list</router-link>
+                        <router-link to="/director/hotel/booking">Booking list</router-link>
                     </li>
                 </ul>
             </div>

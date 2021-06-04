@@ -208,13 +208,10 @@ export default {
         async fetchDistricts() {
             this.cities = [];
             this.districts = this.selectedProvince.Districts
-            console.warn(this.selectedProvince)
         },
 
         async fetchCities() {
-            console.warn(this.selectedDistrict)
             this.cities = this.selectedDistrict.Wards
-            console.warn(this.selectedDistrict)
         },
 
         onlyNumber ($event) {
@@ -354,7 +351,7 @@ export default {
         },
         viewroom(hotelId) {
             localStorage.setItem('hotelId', hotelId)
-            this.$router.push(`/director-hotel/room/${hotelId}`)
+            this.$router.push(`/director/hotel/${hotelId}/room`)
         },
 
         convert(file) {

@@ -44,7 +44,7 @@
                         <div class="content">
                             <div class="phongtrong">
                                 <h2>Phong trong</h2>
-                                <div v-for="i in item.hotel.rooms" v-bind:key="i.id" class="showphong">
+                                <div v-for="(i, index) in item.hotel.rooms" v-bind:key="i.id" class="showphong">
                                     <div class="img">
                                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPpkYg1zz3HDe9JfM6qIP7IHMmj4PNUPJZhA&usqp=CAU" alt="">
                                     </div>

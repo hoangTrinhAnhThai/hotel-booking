@@ -100,7 +100,7 @@ export default {
             this.$router.push('/search/list-hotel/viewrooms')
         },
         handleSearch() {
-            this.axios.post('https://hotels-booking-server.herokuapp.com/search', this.search)
+            this.axios.post('search', this.search)
             .then((response) => {
                 localStorage.setItem("listSearch", JSON.stringify(response.data));
                 localStorage.setItem('search', JSON.stringify(this.search))
