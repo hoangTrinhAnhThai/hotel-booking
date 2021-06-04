@@ -24,7 +24,8 @@ import Director from './components/Director.vue'
 import ForgotPassword from './components/ForgotPassword.vue'
 import ResetPassword from './components/ResetPassword.vue'
 import Admin from './components/Admin.vue'
-import DirectorHotel from './components/DirectorHotel.vue'
+import DirectorRoom from './components/DirectorRoom.vue'
+
 
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -47,9 +48,7 @@ const routes= [
   {path: '/forgot-password', component: ForgotPassword},
   {path: '/reset-password/:tokenPassword', component: ResetPassword},
   {path: '/admin', component: Admin},
-  {path: '/director-hotel', component: DirectorHotel},
-
-
+  {path: '/director-hotel/room/:idHotel', component: DirectorRoom},
 
 
 

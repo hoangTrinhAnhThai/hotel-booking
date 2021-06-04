@@ -46,7 +46,6 @@
                                 <h2>Phong trong</h2>
                                 <div v-for="i in item.hotel.rooms" v-bind:key="i.id" class="showphong">
                                     <div class="img">
-                                        <!-- <img :src="'data:image/jpeg;base64,' + i.images[0].img"/> -->
                                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPpkYg1zz3HDe9JfM6qIP7IHMmj4PNUPJZhA&usqp=CAU" alt="">
                                     </div>
                                     <div class="infor">
@@ -227,35 +226,26 @@ export default {
         margin-top: 2vh;
     }
 
-    .img {
-        display: flex;
-        flex-wrap: nowrap;
-    
+    .view-room-search .img-hotel .img {
+        margin: 0 auto;
+        background-color:aqua;
     }
 
-    .img2 {
+    .view-room-search .img-hotel .img .img2 img{
+        width: 35vw;
+        float: left;
+        height: 45vh;
         margin-right: 1vw;
+
     }
 
-    .img2 img{
-        width: 40vw;
-        height: 48vh;
-    }
-    
-    .img2 .img4 {
-        display: flex;
-        flex-flow: column wrap;
+    .view-room-search .img-hotel .img .img4 img {
+        width: 17vw;
+        height: 21vh;
     }
 
-    .img2 .img4 img {
-        width: 20vw;
-        height: 23.2vh;
-        margin-right: 0.8vw;
-    }
-
-    .img2 .img4 .img4-2 {
-        margin-top: 1.5vh;
-
+    .view-room-search .img-hotel .img .img4 .img4-1 img {
+        margin-bottom: 3vh;
     }
 
     .phongtrong {
@@ -355,9 +345,6 @@ export default {
         border-radius: 10px;
     }
 
-    .bv-modal-example h1, h6 {
-        /* text-align: center */
-    }
 
 
 /* ------------- */

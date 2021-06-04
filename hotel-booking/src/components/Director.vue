@@ -4,9 +4,66 @@
         <div class="container">
             <div class="add-new-hotel">
                 <h1>Danh sach cac khach san</h1>
-                <b-button id="show-btn" v-on:click="openAddHotelForm" v-b-modal="modalId(0)">Add new hotel</b-button>
+                <b-button id="show-btn" v-on:click="openAddHotelForm" @click="$bvModal.show('bv-modal-example')">Add new hotel</b-button>
+                <b-modal id="bv-modal-example" hide-footer>
+                    <div class="add">
+                        <form @submit.prevent="addNewHotel(100000)" method="post" enctype="multipart/form-data">
+                            <label for="">Ten Khach San</label><br>
+                            <input type="text" v-model="hotelRequest.name" required><br>
+                            <label for="">Standar</label><br>
+                            <input required type="text" v-model="hotelRequest.standard" @keypress="onlyNumber"><br>
+
+                            <label for="">Province</label><br>
+                            <select required v-model="selectedProvince" @change="fetchDistricts" :disabled="!provinces.length">
+                                <option
+                                    v-for="province in provinces"
+                                    :key="province.id"
+                                    :value="province"
+                                >{{ province.Name }}</option>
+                            </select><br>
+                                            
+                            <label for="">Districts</label><br>
+                            <select required v-model="selectedDistrict" @change="fetchCities" :disabled="!districts.length">
+                                <option
+                                    v-for="district in districts"
+                                    :key="district.id"
+                                    :value="district"
+                                    >{{ district.Name }}</option>
+                            </select><br>
+
+                            <label for="">Ward</label><br>
+                            <select required v-model="selectedCity" :disabled="!cities.length">
+                                <option value="" selected disabled>Select a city</option>
+                                <option 
+                                    v-for="city in cities" 
+                                    :key="city.id" 
+                                    :value="city">{{ city.Name }}</option>
+                            </select><br>
+
+                            <label for="">Dia chi cu the</label><br>
+                            <input type="text" required v-model="hotelRequest.localization.street">
+                            <div class="img">
+                                <input id="image" v-on:change="selectFile" type="file">
+                            </div>
+                            <div v-if="files" class="field">
+                                <div v-for="(file, index) in files" :key="index" class="level">
+                                    <div class="level-left">
+                                        <img :src="convert(file)" alt="">
+                                    </div>
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <a v-on:click="deleteImg(index)" class="delete">click</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit">Save</button>
+                        </form>
+                                        
+                    </div>
+            </b-modal>
             </div>
-            
+
             <div class="hotel-list">
                 <div class="list">
                     <ul class="hotel" v-for="(item, index) in listHotel" v-bind:key="item.id">
@@ -29,8 +86,8 @@
                         <li id="btn">
                             <button v-on:click="viewroom(item.id)"  type="submit">View rooms</button>
                             <div class="chucnang">
-                                <button id="show-btn" v-on:click="openEditHotel(index)"  v-b-modal="modalId(index)"><i class="fas fa-edit"></i></button>
-                                <b-modal :id="'modal'+ index" hide-footer>
+                                <button id="show-btn" v-on:click="openEditHotel(index)"  v-b-modal="modalId(index)"><i class="fas fa-edit"></i></button>                                
+                                    <b-modal :id="'modal'+ index" hide-footer>
                                     <div class="add">
                                         <form @submit.prevent="addNewHotel(item.id)" method="post" enctype="multipart/form-data">
                                             <label for="">Ten Khach San</label><br>
@@ -87,7 +144,7 @@
                                         
                                     </div>
                                 </b-modal>
-                                <button v-on:click="deHotel(item.id)"><i class="far fa-trash-alt"></i></button>
+                                <button v-on:click="deleteHotel(item.id)"><i class="far fa-trash-alt"></i></button>
                             </div>
                         </li>
                     </ul>
@@ -288,10 +345,17 @@ export default {
         deleteHotel(hotelId) {
             this.axios.delete(`director/hotel/${hotelId}/delete`)
             .then((response) => {
-                console.warn(response.data)
+                console.warn(response.data.message)
+                if(response.data.message == 'Delete room successful') {
+                    this.$router.go()
+                }
             })
+            
         },
-
+        viewroom(hotelId) {
+            localStorage.setItem('hotelId', hotelId)
+            this.$router.push(`/director-hotel/room/${hotelId}`)
+        },
 
         convert(file) {
             return URL.createObjectURL(file)
@@ -339,15 +403,16 @@ export default {
 
     .add-new-hotel {
         margin-left: 5vw;
-        margin-top: 5vh;
     }
 
+    .add-new-hotel h1 {
+        padding-top: 5vh;
+    }
     #show-btn {
         width: 10vw;
     }
     .add form {
         margin: 2vh auto;
-        /* background-color: aqua */
     }
 
     .add button {
