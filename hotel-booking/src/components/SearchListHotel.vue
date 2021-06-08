@@ -1,5 +1,6 @@
 <template>
     <div class="search-list-hotel">
+        <page-loader v-bind:isloaded="isloaded"/>
         <!-- <header-comp/> -->
             <div class="left-container">
                 <div class="search">
@@ -37,6 +38,7 @@
             </div>
             <div class="right-container">
                 <h1>Cac khu vuc lan can</h1>
+                <h4 v-if="isHave">{{isHave}}</h4>
                 <div class="hotel-list">
                     <ul class="hotel" v-for="item in listHotel" v-bind:key="item.id">
                         <!-- <form action=""> -->
@@ -65,6 +67,7 @@
 
 <script>
 // import Header from './Header.vue'
+import PageLoader from './PageLoader.vue'
 
 export default {
     name: 'search-list-hotel',
@@ -81,18 +84,24 @@ export default {
                 end: null,
                 capacity: 1
             }, 
-            city: JSON.parse(localStorage.getItem('city'))
-
+            city: JSON.parse(localStorage.getItem('city')),
+            isloaded: null,
+            isHave: null
         }
     },
     mounted () {
+        this.isloaded = true
         this.$store.dispatch('headerShow', true)
-        this.axios.get('list-hotel/13')
-        .then((response)=> {
-            this.infImg.img = 'data:image/jpeg;base64,' + response.data.images[0].img;
-        })
+        // this.axios.get('list-hotel/13')
+        // .then((response)=> {
+        //     this.infImg.img = 'data:image/jpeg;base64,' + response.data.images[0].img;
+        // })
         this.search= JSON.parse(localStorage.getItem('search'))
         console.warn(this.listHotel)
+        if(this.listHotel.length == 0) {
+            this.isHave = 'KHONG CO HOTEL NAO'
+        }
+        this.isloaded = false
     },
     methods: {
         viewroom(idHotel) {
@@ -100,6 +109,7 @@ export default {
             this.$router.push('/search/list-hotel/viewrooms')
         },
         handleSearch() {
+            this.isloaded = true
             this.axios.post('search', this.search)
             .then((response) => {
                 localStorage.setItem("listSearch", JSON.stringify(response.data));
@@ -107,9 +117,18 @@ export default {
                 console.warn(JSON.parse(localStorage.getItem('listSearch')))
                 // this.$router.push('/search/list-hotel');
                 this.$router.go(this.$router.currentRoute)
-
+                this.isloaded = false
+            })
+            .catch((error) => {
+                console.warn(error)
+                this.isloaded = false
+                
             })
         }
+    },
+    components: {
+        'page-loader': PageLoader
+
     }
 
 }

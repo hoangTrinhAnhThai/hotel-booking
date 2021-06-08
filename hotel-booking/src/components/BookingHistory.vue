@@ -1,5 +1,6 @@
 <template>
     <div class="booking-history">
+        <page-loader v-bind:isloaded="isloaded"/>
         <div class="container">
             <h2>BOOKING HISTORY</h2>
             <br>
@@ -88,6 +89,8 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import PageLoader from './PageLoader.vue'
+
 Vue.use(VueAxios, axios)
 export default {
     name: 'booking-history',
@@ -98,15 +101,17 @@ export default {
             activeItem: 'incomplete',
             listBookingAfter: null, 
             listBookingBefore: null, 
-            listBookingCanceled: null
+            listBookingCanceled: null,
+            isloaded: null
         }
     }, 
     async created() {
-        
+        this.isloaded = true
         this.axios.get('user/history-booking-after')
             .then((response)=> {
                 this.listBookingAfter = response.data;
                 console.warn(response.data)
+                this.isloaded = false
             }),
         this.axios.get('user/history-booking-before')
             .then((response)=> {
@@ -118,6 +123,7 @@ export default {
                 this.listBookingCanceled = response.data; 
                 console.warn(response.data)
             })
+        
     }, 
     methods: {
         isActive (menuItem) {
@@ -127,13 +133,23 @@ export default {
             this.activeItem = menuItem
         },
         cancel(idBK) {
+            this.isloaded = true
             this.axios.delete(`user/cancelBooking/${idBK}`)
             .then((response) => {
                 console.warn(response.data)
+                this.isloaded = false
                 this.$router.go()
 
             })
+            .catch((error) => {
+                this.isloaded = false
+                console.error(error)
+            })
+            
         }
+    }, 
+    components: {
+        'page-loader': PageLoader
     }
 }
 </script>

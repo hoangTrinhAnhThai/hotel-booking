@@ -1,5 +1,6 @@
 <template>
     <div class="search-comp">
+        <page-loader v-bind:isloaded="isloaded"/>
         <div class="description">
             <h1>
                 You will be making a wise business decision when choosing the <span style="color: rgb(248,219,172)">IrtAoh --iah_thna</span>
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+import PageLoader from './PageLoader.vue'
 
 export default {
     name: 'search-comp',
@@ -58,15 +60,16 @@ export default {
                 end: null,
                 capacity: 1
             }, 
-            listSearch: {
-
-            },
+            listSearch: null,
+            isloaded: null
         }
     },
     components: {
+        'page-loader': PageLoader
         
     },
     mounted() {
+        
         this.$store.dispatch('headerShow', true)
         this.axios.get('all-cities')
         .then((response) => {

@@ -1,5 +1,6 @@
 <template>
     <div class="director">
+        <page-loader v-bind:isloaded="isloaded"/>
         <director-header/>
         <div class="container">
             <div class="add-new-hotel">
@@ -57,7 +58,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit">Save</button>
+                            <button type="submit" block @click="$bvModal.hide('bv-modal-example')">ADD</button>
                         </form>
                                         
                     </div>
@@ -139,12 +140,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit">Save</button>
+                                            <button type="submit" @click="$bvModal.hide('bv-modal-example')">Save</button>
                                         </form>
                                         
                                     </div>
                                 </b-modal>
-                                <button v-on:click="deleteHotel(item.id)"><i class="far fa-trash-alt"></i></button>
+                                <button v-on:click="deleteHotel(item.id)" v-b-modal="modalIdD(index)"><i class="far fa-trash-alt"></i></button>
+                                <b-modal :id="'modalD'+index" hide-footer title="Booking room">    
+                                    <div class="bv-modal-example">
+                                        <span v-bind="isDelete">{{isDelete}}</span>            
+                                    </div>
+                                </b-modal>
                             </div>
                         </li>
                     </ul>
@@ -155,15 +161,18 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import json from '../city.json'
 import DirectorHeader from './DirectorHeader.vue'
+import PageLoader from './PageLoader.vue'
+
 
 export default {
     name: 'director',
     data() {
         return {
-            
+            isloaded: false,
+            isDelete: null,
             hotelRequest: {
                 name: null,
                 standard: null,
@@ -235,7 +244,7 @@ export default {
         },
 
         addNewHotel(hotelId) {
-
+            this.isloaded = true
             this.hotelRequest.localization.city = this.selectedProvince.Name;
             this.hotelRequest.localization.street += ' - ' + this.selectedCity.Name + ' - ' +  this.selectedDistrict.Name
             
@@ -255,6 +264,9 @@ export default {
                 }) 
                 .then((response) => {
                     console.warn(response);
+                    this.isloaded = false
+                    this.$router.go()
+
                 })
             } else {
                 this.axios.post(`director/hotel/${hotelId}/update/save`, formData, {
@@ -264,6 +276,12 @@ export default {
                 })
                 .then((response) => {
                     console.warn(response);
+                    this.isloaded = false
+                    this.$router.go()
+                })
+                .catch(( error) => {
+                    console.error(error)
+                    this.isloaded = false
                 })
             }
             // this.$router.go()
@@ -284,6 +302,9 @@ export default {
 
         modalId(index) {
             return 'modal'+index
+        },
+        modalIdD(index) {
+            return 'modalD'+index
         },
 
         blobToFile(theBlob, fileName){
@@ -340,16 +361,20 @@ export default {
         },
 
         deleteHotel(hotelId) {
+            this.isloaded = true
             this.axios.delete(`director/hotel/${hotelId}/delete`)
             .then((response) => {
                 console.warn(response.data.message)
-                if(response.data.message == 'Delete room successful') {
+                if(response.data.message == 'Delete hotel successful') {
+                    this.isloaded = false
+                    this.isDelete = response.data.message;
                     this.$router.go()
                 }
             })
             
         },
         viewroom(hotelId) {
+            this.isloaded = true
             localStorage.setItem('hotelId', hotelId)
             this.$router.push(`/director/hotel/${hotelId}/room`)
         },
@@ -360,21 +385,33 @@ export default {
     },
     mounted() {
         this.fetchProvinces();
-        
     },
     components: {
-        'director-header': DirectorHeader
+        'director-header': DirectorHeader,
+        'page-loader': PageLoader
+
     },
     async created() {
+        this.isloaded = true
         this.$store.dispatch('headerShow', false)
         
-        const response = await axios.get('/director/hotel', {
+        this.axios.get('/director/hotel', {
             headers: {
                 Authorization: localStorage.getItem('token') 
             }
         })
-        this.listHotel = response.data
-        console.warn(this.listHotel)
+        .then((response) => {
+this.listHotel = response.data
+console.warn(this.listHotel)
+this.isloaded = false
+        })
+        .catch((error)=> {
+this.isloaded = false
+console.console(error)
+        })
+        
+        
+        
         
     },
     

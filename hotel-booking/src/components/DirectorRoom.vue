@@ -1,5 +1,6 @@
 <template>
     <div class="director-room">
+        <page-loader v-bind:isloaded="isloaded"/>
         <director-header/>
         <div class="rooms">
             <div class="img-hotel">
@@ -72,7 +73,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit">Save</button>
+                            <button type="submit" @click="$bvModal.hide('bv-modal-example')">Save</button>
                         </form>
                                         
                     </div>
@@ -121,7 +122,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit">Save</button>
+                            <button type="submit" @click="$bvModal.hide('modal' + index)">Save</button>
                         </form>
                                         
                     </div>
@@ -141,6 +142,7 @@
 
 <script>
 import DirectorHeader from './DirectorHeader.vue'
+import PageLoader from './PageLoader.vue'
 
 export default {
     name: 'director-room',
@@ -156,12 +158,16 @@ export default {
                 description: null,
                 capacity: null
             },
-            files: []
+            files: [],
+            isloaded: null
         }
     },
     methods: {
         modalId(index) {
             return 'modal' + index
+        },
+        modalIdD(index) {
+            return 'modalD' + index
         },
         onlyNumber ($event) {
             //console.log($event.keyCode); //keyCodes value
@@ -181,7 +187,7 @@ export default {
             this.roomRequest.description =null
         },
         addNewRoom(roomId) {
-
+            this.isloaded = true
             const formData = new FormData();
             for( var i = 0; i < this.files.length; i++ ){
                 formData.append('images', this.files[i]);
@@ -197,6 +203,8 @@ export default {
                 }) 
                 .then((response) => {
                     console.warn(response);
+                    this.isloaded = false
+                    this.$router.go()
                 })
             } else {
                 this.axios.post(`director/hotel/${this.hotelId}/${roomId}/update/save`, formData, {
@@ -206,6 +214,8 @@ export default {
                 })
                 .then((response) => {
                     console.warn(response);
+                    this.isloaded = false
+                    this.$router.go()
                 })
             }
             // this.$router.go()
@@ -251,9 +261,11 @@ export default {
             return theBlob;
         },
         deleteHotel(roomId) {
+            this.isloaded = true
             this.axios.delete(`director/hotel/${this.hotelId}/${roomId}/delete`)
             .then((response) => {
                 console.warn(response.data)
+                this.isloaded = false
             })
             // this.$router.go(0)
         },
@@ -261,16 +273,20 @@ export default {
     },
 
     async created() {
+        this.isloaded = true
         this.hotelId = localStorage.getItem('hotelId');
         console.warn(this.hotelId)
         this.axios.get(`director/hotel/${this.hotelId}`) 
         .then((response) => {
             this.hotel = response.data
             console.warn(response.data)
+            this.isloaded = false
         })
     },
     components: {
-        'director-header': DirectorHeader
+        'director-header': DirectorHeader,
+        'page-loader': PageLoader
+
     }
 }
 </script>

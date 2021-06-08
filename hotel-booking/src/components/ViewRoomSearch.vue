@@ -1,5 +1,6 @@
 <template>
     <div class="view-room-search">
+        <page-loader v-bind:isloaded="isloaded"/>
         <div class="img-hotel">
             <div 
                 class="room" 
@@ -144,6 +145,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import PageLoader from './PageLoader.vue'
 
 export default {
     name: 'view-room-search',
@@ -163,27 +165,44 @@ export default {
                 start: null,
                 end: null
             },
-            priceTotalB: null
+            priceTotalB: null,
+            isloaded: null
         }
     },
     methods: {
         handleSearch() {
+            this.isloaded = true
             this.axios.post('search', this.search)
             .then((response) => {
                 localStorage.setItem("listSearch", JSON.stringify(response.data));
                 localStorage.setItem('search', JSON.stringify(this.search))
                 this.$router.push('/search/list-hotel');
+                this.isloaded = false
+            })
+            .catch((error) => {
+                console.error(error)
+                this.isloaded = false
             })
         },
         modalId(i) {
             return 'modal' + i;
         },
         bookingroom(roomId) {
+            this.isloaded = true
             this.bookingRequest.idRoom = roomId;
             this.bookingRequest.start = this.search.start
             this.bookingRequest.end = this.search.end
             this.axios.post('user/booking', this.bookingRequest)
+            .then((response) => {
+                console.warn(response.data)
+                this.isloaded = false
+            })
+            .catch((error) => {
+                console.error(error)
+                this.isloaded = false
+            })
             // this.handleSearch();
+            
         },
 
         priceTotal(price) {
@@ -206,7 +225,10 @@ export default {
     },
     computed: {
         ...mapGetters(['user']),
-        
+    },
+    components: {
+        'page-loader': PageLoader
+
     }
 }
 </script>
