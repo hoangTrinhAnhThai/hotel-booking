@@ -21,13 +21,17 @@
                 <div class="from">
                     <div class="label">From</div>
                     <div class="render">
-                        <input type="date" v-model="search.start">
+                        
+                        <input 
+                            type="date" 
+                            v-model="search.start"
+                            :min="nowDate">
                     </div>
                 </div>
                 <div class="to">
                     <div class="label">To</div>
                     <div class="render">
-                        <input type="date" v-model="search.end">
+                        <input type="date" v-model="search.end" :min="search.start">
                     </div>
                 </div>
                 <div class="guest">
@@ -61,7 +65,8 @@ export default {
                 capacity: 1
             }, 
             listSearch: null,
-            isloaded: null
+            isloaded: null,
+            nowDate: null
         }
     },
     components: {
@@ -69,7 +74,7 @@ export default {
         
     },
     mounted() {
-        
+        console.warn(typeof("x"))
         this.$store.dispatch('headerShow', true)
         this.axios.get('all-cities')
         .then((response) => {
@@ -93,6 +98,8 @@ export default {
             
             mmF = mm;
         }
+        this.nowDate = yyyy +'-'+ mmF +'-' + ddF;
+        localStorage.setItem('nowDate', this.nowDate)
         this.search.start = yyyy +'-'+ mmF +'-' + ddF;
         switch(mm) {
             case 1:
@@ -139,11 +146,6 @@ export default {
              mm = '0'+mm;
         } 
         this.search.end = yyyy+'-'+mm+'-'+dd;
-        
-
-                    
-    // document.getElementById("idFdate").defaultValue =today+"";
-    
 
     },
     methods: {

@@ -91,7 +91,11 @@ export default {
                 } else {
                     this.$store.dispatch('user', response.data)
                     localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken);
-                    localStorage.setItem('nameUser', response.data.userDetail.nameUserDetail)
+                    var res = (response.data.userDetail.nameUserDetail).split(" ")
+                    console.warn(res)
+                    console.warn(res[res.length - 1])
+                    localStorage.setItem('nameUser', res[res.length - 1])
+                    console.warn(localStorage.getItem('nameUser'))
                     if(response.data.roles[0] == 'ROLE_USER') {
                         this.$router.push('/')
                     } else if(response.data.roles[0] == 'ROLE_DIRECTOR') {

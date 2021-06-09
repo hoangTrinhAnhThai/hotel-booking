@@ -8,7 +8,7 @@
             </router-link>
         </div>
         <div class="menu">
-            <ul>
+            <ul class="main-menu">
                 <li><router-link to="/">Home</router-link></li>
                 <li><router-link to="/blog">Blog</router-link></li>
                 <!-- <li>
@@ -18,14 +18,15 @@
                         <option value="ja">Japanese</option>
                     </select>
                 </li> -->
-                <span v-if="user">
-                    <li id="login"><router-link to="/user/account">Hi, {{user.username}}</router-link></li>
-                    <li id="signup" ><a href="javascript:void(0)" @click="handelLogoutClick">Logout</a></li>
-                </span>
-                <span v-if="!user">
-                    <li id="login"><router-link to="/login">Login</router-link></li>
-                    <li id="signup" ><router-link to="/signup">Signup</router-link></li>
-                </span>
+                    <li v-if="user" id="login">Hi, {{nameUser}}
+                        <ul class="sub-menu">
+                                <li><router-link to="/user/account">Account</router-link></li>
+                                <li  style="border-top: 0px"><router-link to="/user/booking-history">Booking History</router-link></li>
+                        </ul>
+                    </li>
+                    <li v-if="user" id="signup" ><a href="javascript:void(0)" @click="handelLogoutClick">Logout</a></li>
+                    <li v-if="!user" id="login"><router-link to="/login">Login</router-link></li>
+                    <li v-if="!user" id="signup" ><router-link to="/signup">Signup</router-link></li>
                 
                 <!-- <li id="fb">
                     <i class="fab fa-facebook"></i>
@@ -49,6 +50,7 @@ export default {
     data() {
         return {
             scrollPosition: null,
+            nameUser: localStorage.getItem('nameUser')
         }
     }, 
     methods: {
@@ -64,6 +66,7 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
+        console.error(this.nameUser)
     },
     computed: {
         ...mapGetters(['user']),
@@ -74,9 +77,7 @@ export default {
 
 <style scoped>
     .header-comp {
-        /* background-color: rgb(133,176,210); */
         font-size: 100%;
-        overflow: hidden;
         max-width: 100vw;
         position: fixed !important;
         width: 100vw;
@@ -93,7 +94,6 @@ export default {
     }
 
     .header-comp .menu {
-        /* margin-left: 55%; */
         margin-top: 2vh;
         float: right;
         margin-right: 2vw;
@@ -103,8 +103,8 @@ export default {
         list-style: none;
     }
 
-    .header-comp .menu ul li {
-        display: inline;
+    .header-comp .menu .main-menu>li {
+        display: inline-block;
         margin: 0 3vw;
     }
 
@@ -130,5 +130,43 @@ export default {
     .change_color {
        background-color:rgb(133,176,210);
        position: fixed;
+   }
+
+    #login {
+        position: relative;
+    }
+   .menu .sub-menu{
+       clear: both;
+       
+       list-style-type: none;
+       position: absolute;
+       margin-top: 0.8vh;
+       margin-left: -3.4vw;
+        width: 12vw;
+        font-size: 1.1vw;
+        text-align: left;
+        display: none;
+   }
+
+   .sub-menu li {
+       border: 0.1px solid rgb(151, 141, 141);
+        background-color: rgb(83, 145, 185);
+       padding: 1vh;
+       display: block;
+   }
+
+   .sub-menu li a {
+       color: white;
+   }
+
+   #login:hover {
+       border-radius: 0;
+       border: 0.1px solid rgb(151, 141, 141);
+       border-bottom: 0;
+       color: white;
+   }
+
+   #login:hover .sub-menu{
+       display: block;
    }
 </style>

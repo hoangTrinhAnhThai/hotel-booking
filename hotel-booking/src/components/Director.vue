@@ -69,10 +69,12 @@
                 <div class="list">
                     <ul class="hotel" v-for="(item, index) in listHotel" v-bind:key="item.id">
                         <li v-if="item.images.length > 0" id="imgHotel">
-                            <img :src="'data:image/jpeg;base64,' + item.images[0].img">
+                            <!-- <img :src="'data:image/jpeg;base64,' + item.images[0].img"> -->
+                            <img :src="currentImg(index)">
                         </li>
                         <li v-else id="imgHotel">
                             <img src="https://homestay.review/wp-content/uploads/2018/12/Belle-Amour-Hotel-%C4%90%C3%A0-L%E1%BA%A1t-10.jpg" alt="">
+                            
                         </li>
                         
                         <li style="flex: 0 35vw">
@@ -140,7 +142,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" @click="$bvModal.hide('bv-modal-example')">Save</button>
+                                            <button type="submit" @click="$bvModal.hide('modal' + index)">Save</button>
                                         </form>
                                         
                                     </div>
@@ -165,6 +167,7 @@
 import json from '../city.json'
 import DirectorHeader from './DirectorHeader.vue'
 import PageLoader from './PageLoader.vue'
+import { setInterval } from 'timers';
 
 
 export default {
@@ -185,6 +188,8 @@ export default {
             provinces: [],
             districts: [],
             cities: [],
+            timer: null,
+            currentIndex:0,
 
             selectedProvince: {
                 Districts: [],
@@ -381,10 +386,27 @@ export default {
 
         convert(file) {
             return URL.createObjectURL(file)
+        },
+
+        startSlide() {
+            this.timer = setInterval(this.next, 5000)
+        },
+        next() {
+            this.currentIndex +=1
+        },
+        prev() {
+            this.currentIndex -=1
+        },
+        currentImg(i) {
+            return 'data:image/jpeg;base64,' + this.listHotel[i].images[Math.abs(this.currentIndex) % this.listHotel[i].images.length].img;
         }
     },
     mounted() {
         this.fetchProvinces();
+        this.startSlide();
+    },
+    computed: {
+        
     },
     components: {
         'director-header': DirectorHeader,
@@ -401,13 +423,13 @@ export default {
             }
         })
         .then((response) => {
-this.listHotel = response.data
-console.warn(this.listHotel)
-this.isloaded = false
+            this.listHotel = response.data
+            console.warn(this.listHotel)
+            this.isloaded = false
         })
         .catch((error)=> {
-this.isloaded = false
-console.console(error)
+            this.isloaded = false
+            console.console(error)
         })
         
         

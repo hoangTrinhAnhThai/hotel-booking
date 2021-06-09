@@ -20,11 +20,11 @@
                         </div>
                         <div class="start">
                             <h6>Check-in</h6>
-                            <input type="date" name="" id="" v-model="search.start">
+                            <input type="date" name="" id="" v-model="search.start" :min="nowDate">
                         </div>
                         <div class="end">
                             <h6>Check-out</h6>
-                            <input type="date" name="" id="" v-model="search.end">
+                            <input type="date" name="" id="" v-model="search.end" :min="search.start">
                         </div>
                         <div class="capacity">
                             <h6>Capacity</h6>
@@ -40,10 +40,9 @@
                 <h1>Cac khu vuc lan can</h1>
                 <h4 v-if="isHave">{{isHave}}</h4>
                 <div class="hotel-list">
-                    <ul class="hotel" v-for="item in listHotel" v-bind:key="item.id">
-                        <!-- <form action=""> -->
+                    <ul class="hotel" v-for="(item,index) in listHotel" v-bind:key="item.id">
                             <li id="imgHotel">
-                                <img :src="infImg.img">
+                                <img :src="currentImg(index)">
                             </li>
                             <li style="flex: 0 35vw">
                                 <div class="content">
@@ -57,7 +56,6 @@
                             <li id="btn">
                                 <button v-on:click="viewroom(item.hotel.id)"  type="submit">View rooms</button>
                             </li>
-                        <!-- </form> -->
                         
                     </ul>
                 </div>
@@ -66,13 +64,13 @@
 </template>
 
 <script>
-// import Header from './Header.vue'
 import PageLoader from './PageLoader.vue'
 
 export default {
     name: 'search-list-hotel',
     data() {
         return {
+            nowDate: localStorage.getItem('nowDate'),
             listHotel: JSON.parse(localStorage.getItem("listSearch")),
             infImg: {
                 id: null,
@@ -86,22 +84,24 @@ export default {
             }, 
             city: JSON.parse(localStorage.getItem('city')),
             isloaded: null,
-            isHave: null
+            isHave: null,
+            timer: null,
+            currentIndex: 0,
+            imgs: null
         }
     },
     mounted () {
+        this.startSlide();
         this.isloaded = true
         this.$store.dispatch('headerShow', true)
-        // this.axios.get('list-hotel/13')
-        // .then((response)=> {
-        //     this.infImg.img = 'data:image/jpeg;base64,' + response.data.images[0].img;
-        // })
+
         this.search= JSON.parse(localStorage.getItem('search'))
         console.warn(this.listHotel)
         if(this.listHotel.length == 0) {
             this.isHave = 'KHONG CO HOTEL NAO'
         }
         this.isloaded = false
+        console.warn(this.nowDate)
     },
     methods: {
         viewroom(idHotel) {
@@ -115,8 +115,7 @@ export default {
                 localStorage.setItem("listSearch", JSON.stringify(response.data));
                 localStorage.setItem('search', JSON.stringify(this.search))
                 console.warn(JSON.parse(localStorage.getItem('listSearch')))
-                // this.$router.push('/search/list-hotel');
-                this.$router.go(this.$router.currentRoute)
+                this.$router.go(0)
                 this.isloaded = false
             })
             .catch((error) => {
@@ -124,6 +123,22 @@ export default {
                 this.isloaded = false
                 
             })
+        },
+        startSlide() {
+            this.timer = setInterval(this.next, 5000)
+        },
+        next() {
+            this.currentIndex +=1
+        },
+        prev() {
+            this.currentIndex -=1
+        },
+        currentImg(i) {
+            
+            // console.warn(this.listHotel[i].hotel)
+            // console.warn(this.listHotel[i].images.length)
+            // console.warn(this.listHotel[i].images[Math.abs(this.currentIndex) % this.listHotel[i].images.length].img)
+            return 'data:image/jpeg;base64,' + this.listHotel[i].hotel.images[Math.abs(this.currentIndex) % this.listHotel[i].hotel.images.length].img;
         }
     },
     components: {

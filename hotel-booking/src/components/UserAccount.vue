@@ -1,5 +1,7 @@
 <template>
     <div class="user-account">
+        <page-loader v-bind:isloaded="isloaded"/>
+
         <user-header/>
         <div class="container">
             <div class="container1">
@@ -12,25 +14,17 @@
                             <h4>Personal information</h4>
                             <div class="group1">
                                 <div class="name">
-                                <label for="name">Name</label><br>
-                                <input type="text" v-model="user.userDetail.nameUserDetail">
-                            </div>
-                            <div class="email">
-                                <label for="email">Email</label><br>
-                                <input type="text" name="" id="" v-model="user.email" >
-                            </div>
-                            <div class="numberphone">
-                                <label for="email">Phone</label><br>
-                                <input type="text" name="" id="" v-model="user.userDetail.phoneNumber">
-                            </div>
-                            <div class="birthday">
-                                <label for="email">Birthday</label><br>
-                                <input type="date" v-model="user.userDetail.birth">
-                            </div>
-                            </div>
-                            <div class="about-yourself">
-                                <label for="about-yourself">About Yourself</label><br>
-                                <textarea name="" id="" cols="40" rows="5"></textarea>
+                                    <label for="name">Name</label><br>
+                                    <input type="text" v-model="user.userDetail.nameUserDetail">
+                                </div>
+                                <div class="numberphone">
+                                    <label for="email">Phone</label><br>
+                                    <input type="text" name="" id="" v-model="user.userDetail.phoneNumber">
+                                </div>
+                                <div class="birthday">
+                                    <label for="email">Birthday</label><br>
+                                    <input type="date" v-model="user.userDetail.birth">
+                                </div>
                             </div>
                         </div>
                         <div class="avt">
@@ -83,6 +77,8 @@
 <script>
 import UserHeader from './UserHeader.vue'
 import {mapGetters} from 'vuex'
+import PageLoader from './PageLoader.vue'
+
 export default {
     name: 'user-account',
     data() {
@@ -98,7 +94,8 @@ export default {
                 oldPassword: null,
                 newPasswordAgain: null,
                 newPassword: null
-            }
+            },
+            isloaded: null
         }
     },
     components: {
@@ -120,6 +117,7 @@ export default {
     }, 
     methods: {
         changeInf() {
+            this.isloaded = true
             this.axios.post('update-information/save', this.user.userDetail, {
                 headers: {
                     Authorization: localStorage.getItem('token')
@@ -127,10 +125,17 @@ export default {
             })
             .then((result) => {
                 console.warn(result.data)
+                this.isloaded = false
+
+            })
+            .catch((error) => {
+                this.isloaded = false
+                console.warn(error)
             })
             localStorage.setItem('disableHeader', false);
         }, 
         changePassword() {
+            this.isloaded = true
             if(this.password.newPasswordAgain == this.password.newPassword) {
                 this.axios.post('update-information/save-password', this.password, {
                     headers: {
@@ -145,8 +150,10 @@ export default {
                     } else {
                         window.alert(result.data.message);
                     }
+                    this.isloaded = false
                 })
             } else {
+                this.isloaded = false
                 window.alert("new password is wrong");
             }
             
@@ -154,6 +161,10 @@ export default {
     },
     mounted: {
         ...mapGetters(['user'])
+    },
+    comments: {
+        'page-loader': PageLoader
+
     }
 }
 </script>
@@ -198,15 +209,11 @@ export default {
     }
 
     .group1 {
-        width: 48vw;
+        width: 70vw;
         display: flex;
         flex-wrap: wrap;
         float: left;
-        /* margin-top: 5vh; */
-    }
-
-    .about-yourself {
-        margin-top: 5px;
+        margin-bottom: 4vh;
     }
 
     label {
@@ -231,6 +238,11 @@ export default {
 
     .avt #text {
         margin: 1.2vh 2vw;
+    }
+
+    [type="file"] {
+        margin-top: 2.5vh;
+        margin-left: 2.8vw;
     }
 
     .save {

@@ -112,6 +112,10 @@ export default {
                 this.listBookingAfter = response.data;
                 console.warn(response.data)
                 this.isloaded = false
+            })
+            .catch((error)=> {
+                console.error(error)
+                this.isloaded = false
             }),
         this.axios.get('user/history-booking-before')
             .then((response)=> {

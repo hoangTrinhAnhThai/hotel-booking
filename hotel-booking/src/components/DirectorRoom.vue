@@ -42,42 +42,42 @@
                             <div class="phongtrong">
                                 <h2>Phong trong</h2>
                                 <b-button id="show-btn" v-on:click="openAddRoomForm" @click="$bvModal.show('bv-modal-example')">Add new hotel</b-button>
-                <b-modal id="bv-modal-example" hide-footer>
-                    <div class="add">
-                        <form @submit.prevent="addNewRoom(100000)" method="post" enctype="multipart/form-data">
-                            <label for="">Ten phong</label><br>
-                            <input type="text" v-model="roomRequest.name" required><br>
-                            <label for="">Type</label><br>
-                            <input required type="text" v-model="roomRequest.type"><br>
-                            <label for="">Capcity</label><br>
-                            <input required type="text" v-model="roomRequest.capacity" @keypress="onlyNumber"><br>
-                            <label for="">Price</label><br>
-                            <input required type="text" v-model="roomRequest.price" @keypress="onlyNumber"><br>
-                            <label for="">Area</label><br>
-                            <input required type="text" v-model="roomRequest.area" @keypress="onlyNumber"><br>
-                            <label for="">Description</label><br>
-                            <input required type="text" v-model="roomRequest.description" ><br>
+                                <b-modal id="bv-modal-example" hide-footer>
+                                    <div class="add">
+                                        <form @submit.prevent="addNewRoom(100000)" method="post" enctype="multipart/form-data">
+                                            <label for="">Ten phong</label><br>
+                                            <input type="text" v-model="roomRequest.name" required><br>
+                                            <label for="">Type</label><br>
+                                            <input required type="text" v-model="roomRequest.type"><br>
+                                            <label for="">Capcity</label><br>
+                                            <input required type="text" v-model="roomRequest.capacity" @keypress="onlyNumber"><br>
+                                            <label for="">Price</label><br>
+                                            <input required type="text" v-model="roomRequest.price" @keypress="onlyNumber"><br>
+                                            <label for="">Area</label><br>
+                                            <input required type="text" v-model="roomRequest.area" @keypress="onlyNumber"><br>
+                                            <label for="">Description</label><br>
+                                            <input required type="text" v-model="roomRequest.description" ><br>
 
-                            <div class="img">
-                                <input id="image" v-on:change="selectFile" type="file">
-                            </div>
-                            <div v-if="files" class="field">
-                                <div v-for="(file, index) in files" :key="index" class="level">
-                                    <div class="level-left">
-                                        <img :src="convert(file)" alt="">
+                                            <div class="img">
+                                                <input id="image" v-on:change="selectFile" type="file">
+                                            </div>
+                                            <div v-if="files" class="field">
+                                                <div v-for="(file, index) in files" :key="index" class="level">
+                                                    <div class="level-left">
+                                                        <img :src="convert(file)" alt="">
+                                                    </div>
+                                                    <div class="level-right">
+                                                        <div class="level-item">
+                                                            <a v-on:click="deleteImg(index)" class="delete">click</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" @click="$bvModal.hide('bv-modal-example')">Save</button>
+                                        </form>
+                                                        
                                     </div>
-                                    <div class="level-right">
-                                        <div class="level-item">
-                                            <a v-on:click="deleteImg(index)" class="delete">click</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" @click="$bvModal.hide('bv-modal-example')">Save</button>
-                        </form>
-                                        
-                    </div>
-            </b-modal>
+                                </b-modal>
                                 <div v-for="(i, index) in hotel.rooms" v-bind:key="i.id" class="showphong">
                                     <div class="img">
                                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPpkYg1zz3HDe9JfM6qIP7IHMmj4PNUPJZhA&usqp=CAU" alt="">
@@ -86,48 +86,48 @@
                                         <h3>{{i.name}}</h3>
                                         <h6>{{i.type}}</h6>
                                         <h6>{{i.description}}</h6>
-                                        <h6>{{i.price}}</h6>
+                                        <h6>{{formatPrice(i.price)}}</h6>
+                                        <!-- <h6>{{i.price}}</h6> -->
                                         <h6>Capacity: {{i.capacity}}</h6>
                                     </div>
                                     <div class="chucnang">
                                         <button id="show-btn" v-on:click="openEditRoom(index)" v-b-modal="modalId(index)"><i class="fas fa-edit"></i></button>
-                                            <b-modal :id="'modal'+ index" hide-footer>
-                    <div class="add">
-                        <form @submit.prevent="addNewRoom(i.id)" method="post" enctype="multipart/form-data">
-                            <label for="">Ten phong</label><br>
-                            <input type="text" v-model="roomRequest.name" required><br>
-                            <label for="">Type</label><br>
-                            <input required type="text" v-model="roomRequest.type"><br>
-                            <label for="">Capcity</label><br>
-                            <input required type="text" v-model="roomRequest.capacity" @keypress="onlyNumber"><br>
-                            <label for="">Price</label><br>
-                            <input required type="text" v-model="roomRequest.price" @keypress="onlyNumber"><br>
-                            <label for="">Area</label><br>
-                            <input required type="text" v-model="roomRequest.area" @keypress="onlyNumber"><br>
-                            <label for="">Description</label><br>
-                            <input required type="text" v-model="roomRequest.description" ><br>
+                                        <b-modal :id="'modal'+ index" hide-footer>
+                                            <div class="add">
+                                                <form @submit.prevent="addNewRoom(i.id)" method="post" enctype="multipart/form-data">
+                                                    <label for="">Ten phong</label><br>
+                                                    <input type="text" v-model="roomRequest.name" required><br>
+                                                    <label for="">Type</label><br>
+                                                    <input required type="text" v-model="roomRequest.type"><br>
+                                                    <label for="">Capcity</label><br>
+                                                    <input required type="text" v-model="roomRequest.capacity" @keypress="onlyNumber"><br>
+                                                    <label for="">Price</label><br>
+                                                    <input required type="text" v-model="roomRequest.price" @keypress="onlyNumber"><br>
+                                                    <label for="">Area</label><br>
+                                                    <input required type="text" v-model="roomRequest.area" @keypress="onlyNumber"><br>
+                                                    <label for="">Description</label><br>
+                                                    <input required type="text" v-model="roomRequest.description" ><br>
 
-                            <div class="img">
-                                <input id="image" v-on:change="selectFile" type="file">
-                            </div>
-                            <div v-if="files" class="field">
-                                <div v-for="(file, index) in files" :key="index" class="level">
-                                    <div class="level-left">
-                                        <img :src="convert(file)" alt="">
-                                    </div>
-                                    <div class="level-right">
-                                        <div class="level-item">
-                                            <a v-on:click="deleteImg(index)" class="delete">click</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" @click="$bvModal.hide('modal' + index)">Save</button>
-                        </form>
-                                        
-                    </div>
-            </b-modal>
-                                <button v-on:click="deleteHotel(i.id)"><i class="far fa-trash-alt"></i></button>
+                                                    <div class="img">
+                                                        <input id="image" v-on:change="selectFile" type="file">
+                                                    </div>
+                                                    <div v-if="files" class="field">
+                                                        <div v-for="(file, index) in files" :key="index" class="level">
+                                                            <div class="level-left">
+                                                                <img :src="convert(file)" alt="">
+                                                            </div>
+                                                            <div class="level-right">
+                                                                <div class="level-item">
+                                                                    <a v-on:click="deleteImg(index)" class="delete">click</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" @click="$bvModal.hide('modal' + index)">Save</button>
+                                                </form>
+                                            </div>
+                                        </b-modal>
+                                        <button v-on:click="deleteHotel(i.id)"><i class="far fa-trash-alt"></i></button>
 
                                     </div>
                                 </div>
@@ -269,6 +269,9 @@ export default {
             })
             // this.$router.go(0)
         },
+        formatPrice(price) {
+            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(price)
+        }
 
     },
 
@@ -282,7 +285,13 @@ export default {
             console.warn(response.data)
             this.isloaded = false
         })
+
+        
     },
+    computed: {
+        
+    },
+
     components: {
         'director-header': DirectorHeader,
         'page-loader': PageLoader

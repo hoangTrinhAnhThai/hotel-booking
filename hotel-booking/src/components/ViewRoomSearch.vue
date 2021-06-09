@@ -2,18 +2,14 @@
     <div class="view-room-search">
         <page-loader v-bind:isloaded="isloaded"/>
         <div class="img-hotel">
-            <div 
-                class="room" 
-                v-for="item in listHotel" 
-                v-bind:key="item.id"
-                >
-                    <div class="htel" v-if="item.hotel.id == idHotel">
+            <div class="room" >
+                    <div class="htel" v-if="hotel">
                         <ul>
                             <li>
-                            <h4>{{item.hotel.name}}</h4>
+                            <h4>{{hotel.name}}</h4>
                         </li>
                         <li>
-                            <h6>{{item.hotel.address.street}}, {{item.hotel.address.city}}</h6>
+                            <h6>{{hotel.address.street}}, {{hotel.address.city}}</h6>
                         </li>
                         <li>
                             <div class="img">
@@ -43,11 +39,11 @@
                         </li>
                         </ul>
                         <div class="content">
-                            <div class="phongtrong">
+                            <div v-if="hotel.rooms" class="phongtrong">
                                 <h2>Phong trong</h2>
-                                <div v-for="(i, index) in item.hotel.rooms" v-bind:key="i.id" class="showphong">
+                                <div v-for="(i, index) in hotel.rooms" v-bind:key="i.id" class="showphong">
                                     <div class="img">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPpkYg1zz3HDe9JfM6qIP7IHMmj4PNUPJZhA&usqp=CAU" alt="">
+                                        <img :src="currentImg(index)">
                                     </div>
                                     <div class="infor">
                                         <h3>{{i.name}}</h3>
@@ -120,11 +116,11 @@
                         </div>
                         <div class="start">
                             <h6>Check-in</h6>
-                            <input type="date" name="" id="" v-model="search.start">
+                            <input type="date" name="" id="" v-model="search.start" :min="nowDate">
                         </div>
                         <div class="end">
                             <h6>Check-out</h6>
-                            <input type="date" name="" id="" v-model="search.end">
+                            <input type="date" name="" id="" v-model="search.end" :min="search.start">
                         </div>
                         <div class="capacity">
                             <h6>Capacity</h6>
@@ -166,7 +162,11 @@ export default {
                 end: null
             },
             priceTotalB: null,
-            isloaded: null
+            isloaded: null,
+            timer: null,
+            currentIndex: 0,
+            hotel: null,
+            nowDate: localStorage.getItem('nowDate')
         }
     },
     methods: {
@@ -217,18 +217,37 @@ export default {
 
         formatPrice(price) {
             return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'VND' }).format(price)
+        },
+        startSlide() {
+            this.timer = setInterval(this.next, 5000)
+        },
+        next() {
+            this.currentIndex +=1
+        },
+        prev() {
+            this.currentIndex -=1
+        },
+        currentImg(i) {
+            console.warn(this.hotel)
+            return 'data:image/jpeg;base64,' + this.hotel.rooms[i].images[Math.abs(this.currentIndex) % this.hotel.rooms[i].images.length].img;
         }
     },
     mounted() {
         this.search= JSON.parse(localStorage.getItem('search'))
         this.$store.dispatch('headerShow', true)
+        this.startSlide();
     },
     computed: {
         ...mapGetters(['user']),
     },
     components: {
         'page-loader': PageLoader
-
+    },
+    async created() {
+        this.axios.get(`director/hotel/${this.idHotel}`)
+        .then((response) => {
+            this.hotel = response.data
+        })
     }
 }
 </script>
