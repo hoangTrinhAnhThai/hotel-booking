@@ -20,7 +20,7 @@
                 <ul>
                     <li>
                         <i class="	far fa-id-badge"></i>
-                        <router-link to="/director/account"> Account</router-link>
+                        <router-link to="/user/account"> Account</router-link>
                         </li>
                     <li>
                         <i class="fas fa-hotel"></i>

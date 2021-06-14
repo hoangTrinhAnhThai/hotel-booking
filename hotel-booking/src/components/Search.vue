@@ -74,7 +74,8 @@ export default {
         
     },
     mounted() {
-        console.warn(typeof("x"))
++
+
         this.$store.dispatch('headerShow', true)
         this.axios.get('all-cities')
         .then((response) => {

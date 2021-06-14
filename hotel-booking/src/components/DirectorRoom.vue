@@ -52,6 +52,7 @@
                                             <label for="">Capcity</label><br>
                                             <input required type="text" v-model="roomRequest.capacity" @keypress="onlyNumber"><br>
                                             <label for="">Price</label><br>
+                                            <input type="number" min="0.01" step="0.01" max="2500" value="25.67" />
                                             <input required type="text" v-model="roomRequest.price" @keypress="onlyNumber"><br>
                                             <label for="">Area</label><br>
                                             <input required type="text" v-model="roomRequest.area" @keypress="onlyNumber"><br>
