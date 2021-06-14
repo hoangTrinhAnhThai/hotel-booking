@@ -125,11 +125,13 @@ export default {
             })
             .then((result) => {
                 console.warn(result.data)
+                window.alert("successfully")
                 this.isloaded = false
 
             })
             .catch((error) => {
                 this.isloaded = false
+                window.alert("Error")
                 console.warn(error)
             })
             localStorage.setItem('disableHeader', false);
