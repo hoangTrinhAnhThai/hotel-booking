@@ -1,68 +1,68 @@
 <template>
     <div class="login">
-        <!-- <header-comp/> -->
-        <div class="login-comp">
-            <div class="form">
-                <h1>Sign In to IrtAoh</h1>
-                <div class="icon">
-                    <ul>
-                        <li id="fb">
-                            <i class="fab fa-facebook"></i>
-                        </li>
-                        <li id="google">
-                            <i class="fab fa-google-plus"></i>
-                        </li>
-                        <li id="ins">
-                            <i class="fab fa-instagram"></i>
-                        </li>
-                    </ul>
+        <div class="bg">
+            <h1 id="first">Hello, Friends</h1>
+            <h6>Enter your personal details and start joumay with us</h6>
+            
+            <div class="login-comp">
+                <div class="content">
                 </div>
-                <h6>Ensure your email for registration</h6>
-                <div class="inc">
-                    <!-- <span v-show="incorrect">Your username or password is incorrect!</span> -->
-                </div>
-                <form @submit.prevent="postDataLogin" method="post">
-                    <div class="login-form">
-                        <div class="email">
-                            <ul>
-                                <li>
-                                    <i class="fas fa-user"></i>
-                                </li>
-                                <li>
-                                    <input 
-                                        type="text" name="username" v-model="loginData.username" required
-                                    />
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="password">
-                            <ul>
-                                <li>
-                                    <i class="fas fa-lock"></i>
-                                </li>
-                                <li>
-                                    <input type="password" name="password" v-model="loginData.password" required id="">
-                                </li>
-                            </ul>
-                        </div>
-                        
-                        <div class="forgot-password">
-                            <h6><router-link to="/forgot-password">Forgot your password?</router-link></h6>
-                        </div>
-                        <div class="btn">
-                            <button type="submit">Login</button>
-                        </div>
+                <div class="form">
+                    <h1>Sign In to IrtAoh</h1>
+                    <div class="icon">
+                        <ul>
+                            <li id="fb">
+                                <i class="fab fa-facebook"></i>
+                            </li>
+                            <li id="google">
+                                <i class="fab fa-google-plus"></i>
+                            </li>
+                            <li id="ins">
+                                <i class="fab fa-instagram"></i>
+                            </li>
+                        </ul>
                     </div>
-                </form>
+                    <h6>Ensure your email for registration</h6>
+                    <div class="inc">
+                        <!-- <span v-show="incorrect">Your username or password is incorrect!</span> -->
+                    </div>
+                    <form @submit.prevent="postDataLogin" method="post">
+                        <div class="login-form">
+                            <div class="email">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-user"></i>
+                                    </li>
+                                    <li>
+                                        <input 
+                                            type="text" name="username" v-model="loginData.username" placeholder="username" required
+                                        />
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="password">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-lock"></i>
+                                    </li>
+                                    <li>
+                                        <input type="password" name="password" v-model="loginData.password" placeholder="password" required id="">
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="forgot-password">
+                                <h6><router-link to="/forgot-password">Forgot your password?</router-link></h6>
+                            </div>
+                            <div class="btn">
+                                <button type="submit">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="back">
-                <h1 id="first">Hello, Friends</h1>
-                <h6>Enter your personal details and start joumay with us</h6>
-                <span><router-link to="/signup">Signup</router-link></span>
-            </div>
+        </div>
     </div>
-</div>
-   
 </template>
 
 <script>
@@ -126,62 +126,55 @@ export default {
 
 <style scoped>
     
-    h1 {
-        font-weight: bolder;
+    
+    .bg {
+        background-image: linear-gradient(rgba(102, 100, 100, 0.7), rgba(30, 30, 31, 0.7)), url("https://demo.themovation.com/bellevue/apartments/wp-content/uploads/sites/11/2018/12/apartment-theme-home-12.jpg");
+        background-position: -50vh 45vw;
+        background-size: cover;
+        height: 100vh;
+        padding-top: 15vh; 
+        padding-left: 4vw;
+    }
+
+    .bg h1 {
+        font-weight: lighter;
+        letter-spacing: 0.5vw;
+        font-size: 3vw;
+    }
+
+    .bg h6 {
+        letter-spacing: 0.3vw;
+        font-weight: lighter;
+    }
+
+    .bg .content {
+        width: 55%;
+        display: flex;
     }
 
     .login-comp {
-        width: 55vw;
-        height: 58vh;
-        position: relative;
-        top: 20vh;
-        left: 22.5vw;
-        border-radius: 8px;
-        box-shadow: 8px 8px 3px grey;
+        display: flex;
     }
 
-    .login-comp .back {
-        width: 18vw;
-        height: 100%;
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
-        background-color: rgb(133,176,210);
-        float: left;
+
+    .login-comp .form{
         text-align: center;
+        margin-top: -8vh;
+        background-color: rgb(233, 230, 230);
+        padding: 5vh 2.5vw;
+        width: 35vw;
+        border-radius: 2px;
     }
 
-    .login-comp .back #first {
+
+    .login-comp h6 {
+        margin-bottom: 3vh;
         margin-top: 3vh;
     }
 
-    .login-comp .back h6 {
-        width: 13vw;
-        margin: 3vh auto;
-        margin-bottom: 5vh;
-    }
-
-    .login-comp .back span {
-        border-radius: 40px;
-        border: 1px solid white;
-        background-color: rgb(133,176,210);
-        color: white;
-        padding: 1vh;
-    }
-    .login-comp .back span a{
-         color: white;
-         text-decoration: none;
-     }
-
-    .login-comp .form {
-        width: 37vw;
-        height: 100%;
-        float: left;
-        text-align: center;
-        margin-top: 2vh;
-    }
-
     .login-comp .form h1 {
-        color: rgb(133,176,210);
+        color: rgb(43, 42, 41);
+        margin-left: 0;
     }
 
     .login-comp .form ul {
@@ -194,7 +187,7 @@ export default {
 
     .login-comp .form .login-form {
         text-align: left;
-        margin-top: 5vh;
+        margin-top: 3vh;
     }
 
     i {
@@ -204,7 +197,6 @@ export default {
     .icon i {
         font-size: 1.8vw;
         padding: 0.4vw;
-        /* margin: 0vh 0.5vw; */
         border: 1px solid black;
         border-radius: 50%;
     }
@@ -220,18 +212,23 @@ export default {
 
     [type="text"], [type="password"]  {
         border: 0;
-        border-bottom: 1px solid black;
-        width: 28vw;
+        border: 1px solid rgb(163, 161, 161);
+        width: 24vw;
+        margin-top: 3vh;
+        background: none;
+        padding: 1vh;
+        border-radius: 2px;
     }
 
     button {
-        border-radius: 40px;
+        border-radius: 2px;
         border: 1px solid white;
-        background-color: rgb(133,176,210);
+        background-color: rgb(244,54,79);
         color: white;
         padding: 1vh 3.2vh;
         text-align: center;
-        margin-left: 15.5vw;
+        margin: 0.5vh 3.58vw;
+        width: 24vw;
     }
 
     .forgot-password h6 {
@@ -240,6 +237,16 @@ export default {
 
     #incorrect {
         margin: 1vh auto;
+    }
+    ::placeholder {
+        font-size: 1.1vw;
+        font-family: 'Courier New', Courier, monospace;
+        letter-spacing: 0.2vw;
+    }
+
+    a {
+        text-decoration: none;
+        color: rgb(244,54,79);
     }
     
 </style>

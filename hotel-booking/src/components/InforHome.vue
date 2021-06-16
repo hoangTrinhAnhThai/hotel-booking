@@ -13,6 +13,8 @@
             </div>
         </div>
         <div class=contain2>
+            <h1>SELECT HOTEL</h1>
+            <h5>Hotel for traveller</h5>
             <carousel >
                 <slide v-for="i in images" :key="i.id">
                     <img :src="i"/>
@@ -151,15 +153,29 @@ export default {
 }
 
 .contain2 {
-    width: 80%;
+    width: 90%;
+    height: 88vh;
     margin: 10vh auto;
     background-color: rgb(212, 205, 205);
+    text-align: center;
+}
+
+.contain2 h1 {
+    font-size: 3.5vw;
+    font-weight: lighter;
+    letter-spacing: 0.8vw;
+    padding-top: 3vh;
+}
+.contain2 h5 {
+    font-weight: lighter;
+    letter-spacing: 0.3vw;
+    color: rgb(180,147,76);
 }
 
 .contain2 img {
-    width: 32vw;
-    height: 60vh;
-    padding-top: 8vh;
-    margin-left: 4vw;
+    width: 40vw;
+    height: 54vh;
+    padding-top: 3vh;
+    /* margin-left: 2.5vw; */
 }
 </style>

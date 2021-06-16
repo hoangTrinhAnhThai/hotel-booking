@@ -123,6 +123,15 @@ export default {
         transition: 300ms;
     }
 
+    .change_color .menu ul li::after {
+        content: '';
+        width: 0px;
+        height: 1px;
+        display: block;
+        background: black;
+        transition: 300ms;
+    }
+
     .header-comp .menu ul li:hover::after {
         width: 100%;
     }
@@ -136,6 +145,10 @@ export default {
 
     #login:hover, #signup:hover {
         background-color: rgb(63, 62, 62);
+    }
+
+    .change_color #login:hover, .change_color #signup:hover {
+        background-color: rgb(207, 204, 204);
     }
 
     .change_color {

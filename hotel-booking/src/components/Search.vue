@@ -228,7 +228,7 @@ export default {
 
     .search-comp .search-form .label {
         font-size: 14px;
-        color: grey;
+        color: rgb(202, 199, 199);
         margin-bottom: 1vh;
     }
 

@@ -1,31 +1,31 @@
 <template>
     <div class="signup">
-        <!-- <header-comp/> -->
-        <div class="login-comp">
-        <div class="back">
-            <h1 id="first">Welcome</h1>
-            <h1> Back!</h1>
+        <div class="bg">
+            <h1 id="first">Welcome Back!</h1>
             <h6>To Keep connect with us plaese login with your personal infor</h6>
-            <span><router-link to="/login">Signin</router-link></span>
-
-        </div>
-        <div class="form">
-            <h1>Create Account</h1>
-            <!-- <div class="icon">
-                <ul>
-                    <li id="fb">
-                        <i class="fab fa-facebook"></i>
-                    </li>
-                    <li id="google">
-                        <i class="fab fa-google-plus"></i>
-                    </li>
-                    <li id="ins">
-                        <i class="fab fa-instagram"></i>
-                    </li>
-                </ul>
-            </div> -->
-            <h6>Ensure your email for registration</h6>
-            <form @submit.prevent="postDataSignup" method="post">
+            <div class="login-comp">
+                <div class="content">
+                </div>
+                <div class="form">
+                    <h1>CREATE NEW ACCOUNT</h1>
+                    <div class="icon">
+                        <ul>
+                            <li id="fb">
+                                <i class="fab fa-facebook"></i>
+                            </li>
+                            <li id="google">
+                                <i class="fab fa-google-plus"></i>
+                            </li>
+                            <li id="ins">
+                                <i class="fab fa-instagram"></i>
+                            </li>
+                        </ul>
+                    </div>
+                    <h6>Ensure your email for registration</h6>
+                    <div class="inc">
+                        <!-- <span v-show="incorrect">Your username or password is incorrect!</span> -->
+                    </div>
+                    <form @submit.prevent="postDataSignup" method="post">
                 
                 <div class="login-form">
                     <div class="full-name">
@@ -34,11 +34,9 @@
                                 <i class="fas fa-id-card"></i>
                             </li>
                             <li>
-                                <input type="text" v-model="fullName.lastName" name="" id="lastName" placeholder="last name" required>
+                                <input type="text" v-model="register.userDetail.nameUserDetail" placeholder="last name" required>
                             </li>
-                            <li>
-                                <input type="text" v-model="fullName.firstName" name="" id="firstName" placeholder="first name" required>
-                            </li>
+                            
                         </ul>
                     </div>  
                     
@@ -98,8 +96,9 @@
                     </div>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
     </div>
 </template>
 
@@ -167,71 +166,54 @@ export default {
 </script>
 
 <style scoped>
+    .bg {
+        background-image: linear-gradient(rgba(102, 100, 100, 0.7), rgba(30, 30, 31, 0.7)), url("https://demo.themovation.com/bellevue/apartments/wp-content/uploads/sites/11/2018/12/apartment-theme-home-12.jpg");
+        background-position: -50vh 45vw;
+        background-size: cover;
+        height: 100vh;
+        padding-top: 15vh; 
+        padding-left: 4vw;
+    }
+
+    .bg h1 {
+        font-weight: lighter;
+        letter-spacing: 0.5vw;
+        font-size: 3vw;
+    }
+
+    .bg h6 {
+        letter-spacing: 0.3vw;
+        font-weight: lighter;
+    }
+
+    .bg .content {
+        width: 55%;
+        display: flex;
+    }
+
     .login-comp {
-        width: 60vw;
-        height: 80vh;
-        position: relative;
-        top: 12vh;
-        left: 22.5vw;
-        border-radius: 8px;
-        box-shadow: 8px 8px 3px grey;
-    }
-    h1 {
-        font-weight: bolder;
+        display: flex;
     }
 
-    .login-comp .back {
-        width: 20vw;
-        height: 100%;
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
-        background-color: rgb(133,176,210);
-        float: left;
+
+    .login-comp .form{
         text-align: center;
+        margin-top: -8vh;
+        background-color: rgb(233, 230, 230);
+        padding: 5vh 2.5vw;
+        width: 35vw;
+        border-radius: 2px;
     }
 
-    .login-comp .back span {
-        border-radius: 40px;
-        border: 1px solid white;
-        background-color: rgb(133,176,210);
-        color: white;
-        padding: 1vh 1.2vh;
-    }
 
-    .login-comp .back span a{
-         color: white;
-         text-decoration: none;
-     }
-
-    .login-comp .back #first {
-        margin-top: 17vh;
-    }
-
-    .login-comp .back h6 {
-        /* width: 15vw; */
-        margin: 3vh auto;
-        margin-bottom: 5vh;
-    }
-
-    .login-comp .back input {
-        border-radius: 40px;
-        border: 1px solid white;
-        background-color: rgb(133,176,210);
-        color: white;
-        padding: 1vh;
-        
-    }
-
-    .login-comp .form {
-        width: 40vw;
-        height: 100%;
-        float: left;
-        text-align: center;
-        margin-top: 2vh;
+    .login-comp h6 {
+        margin-bottom: 3vh;
+        margin-top: 3vh;
     }
 
     .login-comp .form h1 {
-        color: rgb(133,176,210);
+        color: rgb(43, 42, 41);
+        margin-left: 0;
     }
 
     .login-comp .form ul {
@@ -244,21 +226,8 @@ export default {
 
     .login-comp .form .login-form {
         text-align: left;
-        margin-top: 8vh;
+        margin-top: 3vh;
     }
-
-    .login-comp .form .login-form .full-name {
-        margin-left: -0.65vw;
-    }
-    .login-comp .form .login-form .full-name #lastName, #firstName {
-        width: 15vw;
-        /* margin-left: 2.3vw; */
-        margin-left: -0.5vw;
-    }
-    .login-comp .form .login-form .full-name #lastName {
-        margin-right: 2.2vw;
-    }
-    
 
     i {
         margin-right: 1vw;
@@ -267,7 +236,6 @@ export default {
     .icon i {
         font-size: 1.8vw;
         padding: 0.4vw;
-        /* margin: 0vh 0.5vw; */
         border: 1px solid black;
         border-radius: 50%;
     }
@@ -277,37 +245,43 @@ export default {
         padding: 1.2vh 0.3vw 1vh;
     }
 
-    #ins i {
-        padding: 0.9vh 0.55vw;
-    }
 
-    [type="text"]  {
+    [type="text"], [type="password"], [type="date"] {
         border: 0;
-        border-bottom: 0.5px solid rgb(145, 142, 142);
-        width: 31.8vw;
-        font-family: 'Courier New', Courier, monospace
-
+        border: 1px solid rgb(163, 161, 161);
+        width: 24vw;
+        margin-top: 1vh;
+        background: none;
+        padding: 1vh;
+        border-radius: 2px;
     }
 
-    [type="button"], button {
-        border-radius: 40px;
+    button {
+        border-radius: 2px;
         border: 1px solid white;
-        background-color: rgb(133,176,210);
+        background-color: rgb(244,54,79);
         color: white;
-        padding: 1vh 1.2vh;
+        padding: 1vh 3.2vh;
         text-align: center;
-        margin-left: 15.5vw;
+        margin: 0.5vh 3.58vw;
+        width: 24vw;
     }
 
-    ::placeholder {
-        font-size: 1.2vw;
-        color: rgb(158, 152, 152);
-        font-family: 'Courier New', Courier, monospace
+    .forgot-password h6 {
+        text-align: center;
     }
-    [type="date"] {
-        border: 0;
-        width: 32vw;
-        margin-top: 1.5vh;
-        border-bottom: 0.5px solid rgb(145, 142, 142);
+
+    #incorrect {
+        margin: 1vh auto;
+    }
+    ::placeholder {
+        font-size: 1.1vw;
+        font-family: 'Courier New', Courier, monospace;
+        letter-spacing: 0.2vw;
+    }
+
+    a {
+        text-decoration: none;
+        color: rgb(244,54,79);
     }
 </style>
