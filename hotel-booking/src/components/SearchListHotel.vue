@@ -40,24 +40,30 @@
                 <h1>Cac khu vuc lan can</h1>
                 <h4 v-if="isHave">{{isHave}}</h4>
                 <div class="hotel-list">
-                    <ul class="hotel" v-for="(item,index) in listHotel" v-bind:key="item.id">
+                    
+                    <ul class="hotel" v-for="(item,index) in listHotel" v-bind:key="item.id" >
                             <li id="imgHotel">
-                                <img :src="currentImg(index)">
+                                <img :src="currentImg(index)" v-on:click="viewroom(item.hotel.id)"> <br/>
+                                <button id="prev" class="prev" @click="prev">&#10094;</button> 
+                                <button id="next" class="next" @click="next">&#10095;</button>
                             </li>
-                            <li style="flex: 0 35vw">
+                            <li v-on:click="viewroom(item.hotel.id)" style="flex: 0 32vw">
                                 <div class="content">
                                     <ul>
                                         <li id="nameHotel">{{item.hotel.name}}</li>
                                         <li>{{item.hotel.address.street}} - {{item.hotel.address.city}}</li>
-                                        <li>{{item.hotel.standar}}</li>
+                                        <br><br>
+                                        <li><i class='fas fa-star' style='color:red'></i>   {{item.hotel.standard}}</li>
+
                                     </ul>
                                 </div>
-                            </li>
+                            </li> <br/>
+
                             <li id="btn">
-                                <button v-on:click="viewroom(item.hotel.id)"  type="submit">View rooms</button>
+                                <!-- <button v-on:click="viewroom(item.hotel.id)"  type="submit">View rooms</button> -->
                             </li>
-                        
                     </ul>
+                    
                 </div>
             </div>
     </div>
@@ -152,11 +158,12 @@ export default {
 <style scoped>
 
     .search-list-hotel img {
-        height: 25vh;
-        width: 15vw;
+        height: 33vh;
+        width: 20vw;
+        border-radius: 20px;
     }
 
-     .left-container {
+    .left-container {
         width: 25vw;
         margin-left: 2.5vw;
         float: left;
@@ -198,25 +205,30 @@ export default {
     .right-container {
         margin-left: 3vw;
         margin-top: 13vh;
-        max-width: 73.5vw;
+        max-width: 75vw;
         float: left;
+        font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
     }
 
     ul {    
         list-style: none;
-        
     }
     
     .hotel-list > ul {
-        border: 1px solid #92b6c5;
-        padding: 2vh 3vw 5vh;
+        border: 1px solid #e2ebf0;
+        padding: 1vh 3vw 0;
+        border-radius: 20px;
     }
 
     .hotel {
         display: flex;
         margin-top: 3vh;
         /* background-color: aqua; */
-        width: 64vw;
+        width: 62vw;
+    }
+
+    .hotel .content {
+        font-size: 1.1vw
     }
 
     ul li {
@@ -232,5 +244,28 @@ export default {
         background-color: #92b6c5;
         border-radius: 10px;
         padding: 1vh;
+    }
+
+    #imgHotel button {
+        height: 4vh;
+        width: 1.8vw;
+        background-color: white;
+        border-radius: 50%;
+        padding: 0 0.5vw;
+        position: relative;
+        top: -48%;
+        display: none;
+    }
+    #imgHotel:hover button {
+        display: inline;
+    }
+
+    #imgHotel #next {
+        left: 82%;
+    }
+
+    #imgHotel button:hover {
+        height: 4.1vh;
+        width: 1.82vw;
     }
 </style>

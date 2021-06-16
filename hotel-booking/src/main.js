@@ -6,6 +6,7 @@ import store from './vuex'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import './city.json'
 import VueLazyload from 'vue-lazyload'
+import VueCarousel from 'vue-carousel';
 
 import Home from './components/Home.vue'
 import Login from './components/Login.vue'
@@ -63,6 +64,7 @@ Vue.use(VueRouter);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueLazyload)
+Vue.use(VueCarousel);
 Vue.config.productionTip = false
 
 const router = new VueRouter({

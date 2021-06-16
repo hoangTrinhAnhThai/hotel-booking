@@ -4,7 +4,14 @@
         <div class="description">
             <h1>
                 You will be making a wise business decision when choosing the <span style="color: rgb(248,219,172)">IrtAoh --iah_thna</span>
+            
             </h1>
+            <div class="line">
+                ___ <br>
+                <span style="color: rgb(248,219,172)">________________</span> <br>
+                ___<br>
+            </div>
+
         </div>
         <form @submit.prevent="handleSearch" method="post">
             <div class="search-form">
@@ -41,7 +48,7 @@
                     </div>
                 </div>
                 <div class="search">
-                    <button type="submit">Search</button>
+                    <button type="submit"><i class='fas fa-search' style='font-size:2vw'></i></button>
                 </div>
                 
             </div>
@@ -169,46 +176,84 @@ export default {
 
     .search-comp {
         color: black;
-        background-image: url("https://wall.vn/wp-content/uploads/2019/11/hinh-anh-phong-canh-da-lat-1.jpg");
-        background-position: center;
+        background-image: linear-gradient(rgba(29, 28, 28, 0.7), rgba(36, 35, 35, 0.7)), url("https://demo.themovation.com/bellevue/apartments/wp-content/uploads/sites/11/2018/12/apartment-theme-home-18.jpg");
+        background-color: #232323;
+        background-position: bottom center;
         background-size: cover;
         height: 100vh;
-        max-width: 100vw;
         /* position: relative; */
     }
 
     .search-comp .description {
         color: white;
-        width: 70vw;
-        padding-top: 15vh;
+        text-align: center;
+        width: 65vw;
+        margin: 0 auto;
+        padding-top: 25vh;
         padding-left: 5vw;
+    }
+
+    .search-comp .description h1 {
+        font-size: 3vw
+    }
+
+    .search-comp .description .line {
+        font-weight: bolder;
+        font-size: 2vw;
+        margin-top: -2vh;
+        line-height: 1vh;
     }
 
     .search-comp .search-form {
         overflow: hidden;
-        width: 55vw;
-        margin-top: 13vh;
-        margin-left: 42vw;
-        background-color: white;
-        padding: 3vh 0vw;
+        width: 62vw;
+        text-align: center;
+        margin: 10vh auto;
         border-radius: 4px;
+        border: 1px solid grey;
+        border-radius: 20px;
     }
 
     .search-comp .search-form .where, .from, .to, .guest, .search {
         float: left;
-        margin-left: 2vw;
+        margin-left: 3%;   
+        background-color: none;
+        padding: 1vh 1vw 2vh;
+        text-align: center
+    }
+
+    .search-comp .search-form .where, .from, .to, .guest {
+        /* padding: 2vh 0; */
+    }
+
+    .search-comp .search-form .label {
+        font-size: 14px;
+        color: grey;
+        margin-bottom: 1vh;
     }
 
     .search-comp .search-form select {
         width: 11vw;
         border: 0;
+        background: none;
+        color: white;
+        font-size: 1rem;
+
+    }
+
+    .search-comp .search-form select option {
+        background-color: none;
+        color: black;
+        font-size: 0.8rem;
+
     }
 
     [type="date"] {
-        background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  95% 50% no-repeat ;
+        color: white;
+        background: url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  95% 50% no-repeat ;
         border: 0;
-        width: 11vw;
-        /* margin-left: -4vw;  */
+        width: 8.5rem;
+        font-size: 1rem;
     }
 
     [type="date"]::-webkit-inner-spin-button {
@@ -220,18 +265,26 @@ export default {
     }
 
     [type="number"] {
-        width: 3vw;
+        color: white;
+        background: rgba(34, 34, 34, 0.5);
+        width: 3.2vw;
         border: 0;
+        font-size: 1rem;
+
     }
 
-    [type="button"] {
-        width: 6vw;
-        text-align: center;
-        padding-left: 0.5vw;
-        margin-top: 1.5vh;
-        height: 2.5vw;
-        background-color:  rgb(133, 179, 209);
-        border-radius: 4px;
+    [type="submit"] {
+        border: 0;
+        background: none;
+        height: 9.2vh;
+        width: 5vw;
+        color: white;
     }
+
+    [type="submit"]:hover {
+        color: rgb(182, 173, 173);
+        font-size: 2.2vw;
+    }
+     
 
 </style>

@@ -18,7 +18,7 @@
                         <option value="ja">Japanese</option>
                     </select>
                 </li> -->
-                    <li v-if="user" id="login">Hi, {{nameUser}}
+                    <li v-if="user" id="loginS">Hi, {{nameUser}}
                         <ul class="sub-menu">
                                 <li><router-link to="/user/account">Account</router-link></li>
                                 <li  style="border-top: 0px"><router-link to="/user/booking-history">Booking History</router-link></li>
@@ -67,6 +67,7 @@ export default {
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
         console.error(this.nameUser)
+        this.nameUser =localStorage.getItem('nameUser')
     },
     computed: {
         ...mapGetters(['user']),
@@ -88,8 +89,8 @@ export default {
         margin-left: 4vw;
     }
 
-    .header-comp .logo a {
-        color: black;
+    .header-comp a {
+        color: white;
         text-decoration: none;
     }
 
@@ -109,39 +110,59 @@ export default {
     }
 
     .header-comp .menu ul li a {
-        color: black;
+        color: white;
         text-decoration: none;
     }
 
-    .header-comp .menu ul li:hover {
-        border-bottom: 1px solid white;
+    .header-comp .menu ul li::after {
+        content: '';
+        width: 0px;
+        height: 1px;
+        display: block;
+        background: white;
+        transition: 300ms;
     }
 
-    #login, #signup {
-        border: 1px solid black;
+    .header-comp .menu ul li:hover::after {
+        width: 100%;
+    }
+
+    #login, #signup, #loginS {
+        color: white;
+        border: 1px solid white;
         padding: 4px 10px;
         border-radius: 15px;
     }
 
     #login:hover, #signup:hover {
-        background-color: rgb(83, 145, 185);
+        background-color: rgb(63, 62, 62);
     }
 
     .change_color {
-       background-color:rgb(133,176,210);
+        color: white;
+       background-color:white;
        position: fixed;
    }
 
-    #login {
+   .change_color a, .change_color .menu ul li a {
+       color: black;
+   }
+
+   .change_color .menu ul #signup, .change_color .menu ul #login, .change_color .menu ul #loginS {
+       color: black;
+       border: 1px solid black;
+   }
+
+    #loginS {
+        padding: 0.8vh 0.5vw;
         position: relative;
     }
    .menu .sub-menu{
        clear: both;
-       
        list-style-type: none;
        position: absolute;
        margin-top: 0.8vh;
-       margin-left: -3.4vw;
+       margin-left: -3.15vw;
         width: 12vw;
         font-size: 1.1vw;
         text-align: left;
@@ -150,7 +171,7 @@ export default {
 
    .sub-menu li {
        border: 0.1px solid rgb(151, 141, 141);
-        background-color: rgb(83, 145, 185);
+        background-color: black;
        padding: 1vh;
        display: block;
    }
@@ -159,14 +180,15 @@ export default {
        color: white;
    }
 
-   #login:hover {
+   #loginS:hover {
+
        border-radius: 0;
-       border: 0.1px solid rgb(151, 141, 141);
+       /* border: 0.1px solid rgb(151, 141, 141); */
        border-bottom: 0;
        color: white;
    }
 
-   #login:hover .sub-menu{
+   #loginS:hover .sub-menu{
        display: block;
    }
 </style>
