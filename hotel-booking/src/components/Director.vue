@@ -271,7 +271,6 @@ export default {
                     console.warn(response);
                     this.isloaded = false
                     this.$router.go()
-
                 })
             } else {
                 this.axios.post(`director/hotel/${hotelId}/update/save`, formData, {
