@@ -1,5 +1,7 @@
 <template>
     <div class="signup">
+        <page-loader v-bind:isloaded="isloaded"/>
+
         <div class="bg">
             <h1 id="first">Welcome Back!</h1>
             <h6>To Keep connect with us plaese login with your personal infor</h6>
@@ -27,75 +29,82 @@
                     </div>
                     <form @submit.prevent="postDataSignup" method="post">
                 
-                <div class="login-form">
-                    <div class="full-name">
-                        <ul>
-                            <li id="ins">
-                                <i class="fas fa-id-card"></i>
-                            </li>
-                            <li>
-                                <input type="text" v-model="register.userDetail.nameUserDetail" placeholder="last name" required>
-                            </li>
+                        <div class="login-form">
+                            <div class="full-name">
+                                <ul>
+                                    <li id="ins">
+                                        <i class="fas fa-id-card"></i>
+                                    </li>
+                                    <li>
+                                        <input type="text" v-model="register.userDetail.nameUserDetail" placeholder="full name" required>
+                                    </li>
+                                    
+                                </ul>
+                            </div>  
                             
-                        </ul>
-                    </div>  
-                    
-                    <div class="name">
-                        <ul>
-                            <li>
-                                <i class="fas fa-user-alt"></i>
-                            </li>
-                            <li>
-                                <input type="text" v-model="register.username" placeholder="username" required>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="email">
-                        <ul>
-                            <li>
-                                <i class="fas fa-envelope"></i>
-                            </li>
-                            <li>
-                                <input type="text" v-model="register.email" name="" id="" placeholder="email" required>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="password">
-                        <ul>
-                            <li>
-                                <i class="fas fa-lock"></i>
-                            </li>
-                            <li>
-                                <input type="text" v-model="register.password" name="" id="" placeholder="password" required>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="phonenumber">
-                        <ul>
-                            <li>
-                                <i class="fas fa-phone"></i>
-                            </li>
-                            <li>
-                                <input type="text" v-model="register.userDetail.phoneNumber" name="" id="" placeholder="phonenumber" required>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="birth">
-                        <ul>
-                            <li>
-                                <i class="fas fa-calendar"></i>
-                            </li>
-                            <li>
-                                <input type="date" v-model="register.userDetail.birth" name="" id="" placeholder="birthday" required>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="btn">
-                        <button @click="validate" type="submit">SIGN UP</button>
-                    </div>
-                </div>
-            </form>
+                            <div class="name">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-user-alt"></i>
+                                    </li>
+                                    <li>
+                                        <input type="text" v-model="register.username" placeholder="username" required>
+                                        <span v-show="isUsername">Username is exist</span>
+
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="email">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-envelope"></i>
+                                    </li>
+                                    <li>
+                                        <input type="text" v-model="register.email" name="" id="" placeholder="email" required>
+                                        <span v-show="isEmail">Email is exsit</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="password">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-lock"></i>
+                                    </li>
+                                    <li>
+                                        <input type="text" v-model="register.password" name="" id="" placeholder="password" required>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="phonenumber">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-phone"></i>
+                                    </li>
+                                    <li>
+                                        <input type="text" v-model="register.userDetail.phoneNumber" name="" id="" placeholder="phonenumber" required>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="birth">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-calendar"></i>
+                                    </li>
+                                    <li>
+                                        <input type="date" v-model="register.userDetail.birth" name="" id="" placeholder="birthday" required>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn">
+                                <button type="submit">SIGN UP</button>
+                            </div>
+                            <div class="forgot-password">
+                                <span style="margin-left: 16vw; color: black">Or</span>
+                                <h6><router-link to="/login">You had a account? Go to login</router-link></h6>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -104,63 +113,53 @@
 
 <script>
 // import Header from './Header.vue'
+import PageLoader from './PageLoader.vue'
 
 export default {
     name: 'signup',
     data() {
         return {
-            fullName: {
-                lastName: null,
-                firstName: null
-            },
             register: {
                 username: null,
                 password: null,
                 email: null,
                 role: ['user'],
                 userDetail: {
-                    // nameUserDetail: this.fullName.firstName + " "  + this.fullName.lastName,
                     nameUserDetail: null,
                     birth: null,
                     phoneNumber: null
                 }
             },
-            errors: [],
+            isEmail: false,
+            isUsername: false,
+            isloaded: false
 
         }
     },
     methods: {
-        async postDataSignup() {
-            this.$store.dispatch('headerShow', true)
-            if (this.name && this.age) {
-            return true;
-        }
-
-        this.errors = [];
-
-        if (!this.register.username) {
-            this.errors.push('Name required.');
-        }
-        if (!this.register.password) {
-            this.errors.push('password required.');
-        }
-            this.register.userDetail.nameUserDetail = this.fullName.lastName + ' ' + this.fullName.firstName;
-                this.axios.post("signup/", this.register)
-                .then((response) => {
-                    console.warn(response)
+        postDataSignup() {
+            this.isloaded = true
+            this.isEmail = false
+            this.isUsername = false
+            this.axios.post("signup/", this.register)
+            .then((response) => {
+                console.warn(response.data.message)
+                if(response.data.message === 'username is taken') {
+                    this.isUsername = true;
+                } else if (response.data.message === 'email is taken') {
+                    this.isEmail = true
+                } else {
                     window.alert('Sign up successfully!!' + '\n' + 'Login?')
                     this.$router.push('/login')
-                })
-            },
-        validate() {
-          this.isValidationAllowed = true
+                }
+                this.isloaded = false
+            })
         }
     },
-    computed: {
-        validated() {
-            return this.isValidationAllowed && !this.searchTerm
+    components: {
+        'page-loader': PageLoader
+
     }
-  },
 
 }
 </script>
@@ -267,10 +266,6 @@ export default {
         width: 24vw;
     }
 
-    .forgot-password h6 {
-        text-align: center;
-    }
-
     #incorrect {
         margin: 1vh auto;
     }
@@ -283,5 +278,14 @@ export default {
     a {
         text-decoration: none;
         color: rgb(244,54,79);
+        margin-left: 4vw;
     }
+
+    span {
+        color: rgb(228, 102, 102);
+        margin-left: 2.3vw;
+        font-size: 1.1vw;
+    }
+
+
 </style>

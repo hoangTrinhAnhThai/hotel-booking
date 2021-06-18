@@ -1,5 +1,6 @@
 <template>
     <div class="reset-password">
+        <page-loader v-bind:isloaded="isloaded"/>
         <div class="container">
             <div  class="content">
                 <form @submit.prevent="newPasswordF">
@@ -17,6 +18,8 @@
 </template>
 
 <script>
+import PageLoader from './PageLoader.vue'
+
 export default {
     name: 'reset-password',
     data() {
@@ -42,6 +45,9 @@ export default {
     async created() {
         this.tokenPassword = localStorage.getItem('tokenPassword');
         this.incorrect = false;
+    },
+    components: {
+        'page-loader': PageLoader
     }
 }
 </script>

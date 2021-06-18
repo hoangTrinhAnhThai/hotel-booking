@@ -34,6 +34,8 @@ export default {
 </script>
 
 <style scoped>
-
+.header-comp a{
+  color: red;
+}
 
 </style>

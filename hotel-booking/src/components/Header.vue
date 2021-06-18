@@ -1,5 +1,5 @@
 <template>
-        <div class="header-comp" :class="{change_color: scrollPosition > 20}" v-if="headerShow">
+        <div class="header-comp" :class="{change_color: scrollPosition > 20}">
         <div class="logo">
             <router-link to="/">
                 <span style="font-size: 30px">IrtAoh</span>
@@ -198,7 +198,7 @@ export default {
        border-radius: 0;
        /* border: 0.1px solid rgb(151, 141, 141); */
        border-bottom: 0;
-       color: white;
+       color: rgb(218, 214, 214);
    }
 
    #loginS:hover .sub-menu{

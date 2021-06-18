@@ -1,5 +1,7 @@
 <template>
     <div class="login">
+        <page-loader v-bind:isloaded="isloaded"/>
+
         <div class="bg">
             <h1 id="first">Hello, Friends</h1>
             <h6>Enter your personal details and start joumay with us</h6>
@@ -28,7 +30,7 @@
                     </div>
                     <form @submit.prevent="postDataLogin" method="post">
                         <div class="login-form">
-                            <div class="email">
+                            <div class="username">
                                 <ul>
                                     <li>
                                         <i class="fas fa-user"></i>
@@ -50,12 +52,13 @@
                                     </li>
                                 </ul>
                             </div>
+                            <span  v-show="incorrect">Username or password is incorrect!!</span>
                             
-                            <div class="forgot-password">
-                                <h6><router-link to="/forgot-password">Forgot your password?</router-link></h6>
-                            </div>
                             <div class="btn">
                                 <button type="submit">Login</button>
+                            </div>
+                            <div class="forgot-password">
+                                <h6><router-link to="/forgot-password">Forgot your password?</router-link></h6>
                             </div>
                         </div>
                     </form>
@@ -66,8 +69,7 @@
 </template>
 
 <script>
-// import Header from './Header.vue'
-// import axios from 'axios'
+import PageLoader from './PageLoader.vue'
 
 export default {
     name: 'login-comp',
@@ -76,26 +78,29 @@ export default {
             loginData: {
                 username: null,
                 password: null,
-                incorrect: null
-            }
+                
+            },
+            incorrect: false,
+            isloaded: false
         }
     },
     methods: {
         postDataLogin() {
+            this.isloaded = true
+            this.incorrect = false
             this.axios.post("signin/", this.loginData)
             .then((response) => {
                     console.warn(response.data.message)
                 if(response.data.message == 'incorrect') {
                     this.incorrect = true;
-                    window.alert('incorrect')
+                    // window.alert('incorrect')
+                    console.warn('incorrect')
                 } else {
                     this.$store.dispatch('user', response.data)
                     localStorage.setItem('token', response.data.tokenType + ' '+ response.data.accessToken);
+                    console.warn(localStorage.getItem('token'))
                     var res = (response.data.userDetail.nameUserDetail).split(" ")
-                    console.warn(res)
-                    console.warn(res[res.length - 1])
                     localStorage.setItem('nameUser', res[res.length - 1])
-                    console.warn(localStorage.getItem('nameUser'))
                     if(response.data.roles[0] == 'ROLE_USER') {
                         this.$router.push('/')
                     } else if(response.data.roles[0] == 'ROLE_DIRECTOR') {
@@ -107,14 +112,13 @@ export default {
                         console.warn('error')
                     }
                 }
-                    
-                
+                this.isloaded = false
             })
         }
     },
     components: {
         // 'header-comp' : Header
-
+        'page-loader': PageLoader
     },
     async created() {
         this.$store.dispatch('headerShow', true);
@@ -227,7 +231,7 @@ export default {
         color: white;
         padding: 1vh 3.2vh;
         text-align: center;
-        margin: 0.5vh 3.58vw;
+        margin: 2vh 3.58vw;
         width: 24vw;
     }
 
@@ -244,9 +248,17 @@ export default {
         letter-spacing: 0.2vw;
     }
 
+    .login-form span {
+        color: red;
+        font-size: 1.1vw;
+        margin-left: 7.5vw;
+        /* margin-bottom: 5vh; */
+    }
+
     a {
         text-decoration: none;
         color: rgb(244,54,79);
+        margin-left: 4vw;
     }
     
 </style>
