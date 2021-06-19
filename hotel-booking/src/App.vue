@@ -3,6 +3,7 @@
     <header-comp/>
     <router-view/>
     <!-- <director-comp/> -->
+    <footer-comp/>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import axios from 'axios'
 import Header from './components/Header.vue'
 // import PageLoader from './components/PageLoader.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'App',
@@ -26,6 +28,7 @@ export default {
   },
   components: {
     'header-comp': Header,
+    'footer-comp': Footer
     // 'director-comp': Director,
     // 'page-loader': PageLoader
   }
