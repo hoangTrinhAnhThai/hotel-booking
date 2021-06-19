@@ -2,11 +2,13 @@
     <div class="search-list-hotel">
         <page-loader v-bind:isloaded="isloaded"/>
         <!-- <header-comp/> -->
+        <div class="contain">
             <div class="left-container">
                 <div class="search">
                     <form @submit.prevent="handleSearch" method="post">
                         <h5>Search</h5>
                         <div class="where">
+                            
                             <h6>Destination</h6>
                             <!-- <input type="search" name="" id="" v-model="search.cityName"> -->
                             <div class="render">
@@ -66,6 +68,7 @@
                     
                 </div>
             </div>
+        </div>
     </div>
 </template>
 
@@ -157,17 +160,31 @@ export default {
 
 <style scoped>
 
+    .search-list-hotel {
+        background-image: linear-gradient(rgba(17, 17, 17, 0.7), rgba(17, 17, 17, 0.7)), url('https://preview.colorlib.com/theme/theriver/images/about.jpg.webp');
+        background-color:grey;
+        height: 200vh;
+        /* opacity: 0.28; */
+        /* position: absolute; */
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        color: white;
+        
+    }
+
     .search-list-hotel img {
-        height: 33vh;
+        height: 100%;
         width: 20vw;
         border-radius: 20px;
+        margin: 0;
     }
 
     .left-container {
         width: 25vw;
         margin-left: 2.5vw;
         float: left;
-        padding-top: 14vh;
+        padding-top: 18vh;
         border-right: 1px solid rgb(235, 231, 231);
     } 
 
@@ -175,6 +192,7 @@ export default {
         margin-left: 2.3vw;
         background-color: #e6dd9d;
         margin-right: 2vw;
+        color: black
     }
 
     .left-container .search form {
@@ -204,7 +222,7 @@ export default {
 
     .right-container {
         margin-left: 3vw;
-        margin-top: 13vh;
+        margin-top: 17vh;
         max-width: 75vw;
         float: left;
         font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
@@ -232,7 +250,8 @@ export default {
     }
 
     ul li {
-        margin-top: 3vh;
+        margin: 2vh 0 2.2vh;
+        padding: 0
     }
 
     #nameHotel {
@@ -243,7 +262,11 @@ export default {
         border: 0.5px solid gray;
         background-color: #92b6c5;
         border-radius: 10px;
-        padding: 1vh;
+        /* padding: 1vh; */
+    }
+    #imgHotel {
+        /* margin: 0; */
+        padding: 0;
     }
 
     #imgHotel button {
@@ -256,8 +279,11 @@ export default {
         top: -48%;
         display: none;
     }
-    #imgHotel:hover button {
-        display: inline;
+    #imgHotel button {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
     #imgHotel #next {
