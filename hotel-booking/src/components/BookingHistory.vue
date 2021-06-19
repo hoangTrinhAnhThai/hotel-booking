@@ -1,5 +1,6 @@
 <template>
     <div class="booking-history">
+        <div class="header"></div>
         <page-loader v-bind:isloaded="isloaded"/>
         <div class="container">
             <h2>BOOKING HISTORY</h2>
@@ -25,7 +26,7 @@
                             <th>Capacity</th>
                             <th>Start</th>
                             <th>End</th>
-                            <th></th>
+                            <th>Cancel</th>
                         </tr>
                         <tr v-for="(item, index) in listBookingAfter" v-bind:key="item.id">
                             <td>{{index + 1}}</td>
@@ -159,6 +160,14 @@ export default {
 </script>
 
 <style scoped> 
+.container{
+    margin: 5vh;
+}
+.header{
+        background-color: rgba(41, 46, 49,.9);
+        height: 60px;
+        width: 100%;
+    }
     table {
         width: 72.5vw;
         /* background-color: aqua; */
@@ -172,5 +181,12 @@ export default {
 
     th {
         background-color: rgb(133,176,210);
+    }
+    button{
+        color: #fff;
+        font-size: 17px;
+        background-color: rgba(209, 51, 51,.9);
+        border-radius: 3px;
+        margin: 2px 0 ;
     }
 </style>

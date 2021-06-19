@@ -1,5 +1,8 @@
 <template>
     <div class="admin">
+        <div class="header">
+
+        </div>
         <li id="btn">
                             <button v-on:click="viewroom(item.id)"  type="submit">View rooms</button>
                             <div class="chucnang">
@@ -258,6 +261,11 @@ methods: {
 }
 </script>
 
-<style>
+<style scoped>
+.header{
+   background-color: rgba(41, 46, 49,.9);
+        height: 60px;
+        width: 100%;
+}
+</style>>
 
-</style>

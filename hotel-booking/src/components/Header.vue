@@ -27,9 +27,21 @@
           <ul class="sub-menu">
             <li><router-link to="/user/account">Account</router-link></li>
             <li style="border-top: 0px">
-              <router-link to="/user/booking-history"
+              <router-link to="/user/booking-history" v-if="user.roles[0] == 'ROLE_USER'"
                 >Booking History</router-link
               >
+                <router-link to="/director" v-if="user.roles[0] == 'ROLE_DIRECTOR'"
+                >Your Hotel</router-link
+              >
+              <router-link to="/#" v-if="user.roles[0] == 'ROLE_ADMIN'"
+                >Active Director</router-link
+              >
+            </li>
+            <li v-if="user.roles[0] != 'ROLE_USER'" style="border-top: 0px">
+              <router-link to="/director/hotel/booking" v-if="user.roles[0] == 'ROLE_DIRECTOR'"
+                >Booking List</router-link>
+                 <router-link to="/#" v-if="user.roles[0] == 'ROLE_ADMIN'"
+                >Statistic Hotel</router-link>
             </li>
           </ul>
         </li>
@@ -80,7 +92,7 @@ export default {
       this.$router.push("/");
     },
       changeBackground() {
-          console.log(window.scrollY)
+          // console.log(window.scrollY)
       if (window.scrollY >= 50) {
         return this.isActive = true;
       } else {

@@ -1,5 +1,8 @@
 <template>
     <div class="user-account">
+        <div class="header">
+
+        </div>
         <page-loader v-bind:isloaded="isloaded"/>
         <!-- <user-header/> -->
         <div class="contain">
@@ -13,6 +16,7 @@
                             v-on:click="handleClickInputFile"
                             class="avatar">Change avatar
                         </span>
+                        <br>
                         <input type="file" 
                             @change="onFileChange" 
                             ref="fileInputAvt"
@@ -25,8 +29,8 @@
                 <span v-if="user.role == 'ROLE_USER'">Tai khoan nguoi dung</span> <br>
                 <span v-if="user.role == 'ROLE_DIRECTOR'">Tai khoan chu khach san</span> <br>
                 <span v-if="user.role == 'ROLE_ADMIN'">Tai khoan quan tri vien</span> <br>
-                <span v-if="!user.locked">Tai khoan da duoc duyet</span> <br>
-                <span v-if="user.locked">Tai khoan chua duoc duyet</span>
+                <span v-if="user.locked && user.role == 'ROLE_DIRECTOR'" style="color: green">Tai khoan da duoc duyet</span>
+                <span v-if="!user.locked && user.role == 'ROLE_DIRECTOR' "  style="color: red">Tai khoan chua duoc duyet</span>
 
             </div>
         </div>
@@ -225,13 +229,16 @@ export default {
 <style scoped>
     
     .user-account {
-        /* margin-top: 5vh; */
-        height: 10vh;
-        background-color: rgba(17, 17, 17, 0.7);
+        /* background-color: rgb(17, 17, 17); */
+    }
+    .header{
+        background-color: rgba(41, 46, 49,.9);
+        height: 60px;
+        width: 100%;
     }
 
     .contain {
-        padding-top: 15vh;
+        padding-top: 5vh;
         display: flex;
         width: 85%;
         margin: 0 auto;
@@ -242,7 +249,7 @@ export default {
         flex-basis: 30%;
         border-radius: 10px;
         border: 1px solid rgb(201, 198, 198);
-        height: 85vh;
+        height: 75vh;
     }
 
     .inf .img {

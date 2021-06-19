@@ -1,7 +1,6 @@
 <template>
  <footer>
       <div class="footer-container">
-
         <div class="footer-content about-us">
           <div class="footer-title">ABOUT US</div>
           <hr class="hr" />

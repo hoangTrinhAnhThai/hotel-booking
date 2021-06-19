@@ -1,6 +1,6 @@
 <template>
     <div class="user-booking-history">
-        <user-header/>
+        <!-- <user-header/> -->
         <booking-history/>
     </div>
 </template>
@@ -9,13 +9,13 @@
 
 // import axios from 'axios'
 // import VueAxios from 'vue-axios'
-import UserHeader from './UserHeader.vue'
+// import UserHeader from './UserHeader.vue'
 import BookingHistory from './BookingHistory.vue'
 
 export default {
     name: 'user-booking-history',
     components: {
-        'user-header': UserHeader,
+        // 'user-header': UserHeader,
         'booking-history': BookingHistory
     },
     async created() {
@@ -26,17 +26,10 @@ export default {
 
 <style scoped>
 
-    .user-header {
-        float: left;
-        width: 20vw;
-        height: 100vh;
-        background-color: rgb(114,167,207);
-        position: fixed;
-    }
 
     .booking-history {
-         width: 74vw;
-        position: absolute;
-        left: 24vw;
+         width: 100%;
+        height: 100vh;
+        left: 5vw;
     }
 </style>

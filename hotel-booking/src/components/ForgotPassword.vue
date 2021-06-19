@@ -70,9 +70,9 @@ export default {
 
     .bg {
         background-image: linear-gradient(rgba(102, 100, 100, 0.7), rgba(30, 30, 31, 0.7)), url("https://demo.themovation.com/bellevue/apartments/wp-content/uploads/sites/11/2018/12/apartment-theme-home-12.jpg");
-        background-position: -50vh 45vw;
+        background-position: -50vh 46vw;
         background-size: cover;
-        height: 100vh;
+        height: 95vh;
         padding-top: 15vh; 
         padding-left: 4vw;
     }
@@ -80,7 +80,7 @@ export default {
     .bg h1 {
         font-weight: lighter;
         letter-spacing: 0.5vw;
-        font-size: 3vw;
+        font-size: 2vw;
     }
 
     .bg h6 {
@@ -103,14 +103,14 @@ export default {
         background-color: rgb(233, 230, 230);
         padding: 5vh 2.5vw;
         width: 35vw;
-        border-radius: 2px;
+        border-radius: 10px;
     }
 
     .form h1, h5{
         text-align: center;
     }
     .form button, input, span {
-        margin: 5vh 3vw;
+        margin: 5vh 3vw 3vh;
     }
 
 
@@ -133,7 +133,7 @@ export default {
         padding: 1vh 3.2vh;
         text-align: center;
         width: 24vw;
-        margin: 5vh auto;
+        margin: 2vh auto;
     }
 
     #incorrect {

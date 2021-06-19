@@ -1,7 +1,10 @@
 <template>
     <div class="director">
         <page-loader v-bind:isloaded="isloaded"/>
-        <director-header/>
+        <!-- <director-header/> -->
+        <div class="header">
+
+        </div>
         <div class="container">
             <div class="add-new-hotel">
                 <h1>Danh sach cac khach san</h1>
@@ -165,7 +168,7 @@
 <script>
 // import axios from 'axios'
 import json from '../city.json'
-import DirectorHeader from './DirectorHeader.vue'
+// import DirectorHeader from './DirectorHeader.vue'
 import PageLoader from './PageLoader.vue'
 import { setInterval } from 'timers';
 
@@ -408,7 +411,7 @@ export default {
         
     },
     components: {
-        'director-header': DirectorHeader,
+        // 'director-header': DirectorHeader,
         'page-loader': PageLoader
 
     },
@@ -441,16 +444,16 @@ export default {
 
 <style scoped>
     .director .container {
-        margin-left: 18vw;
+        margin-left: 5vw;
+        height: 100vh;
     }
 
-    .director-header {
-        float: left;
-        width: 20vw;
-        height: 100vh;
-        background-color: rgb(114,167,207);
-        position: fixed;
-    }
+
+   .header{
+        background-color: rgba(41, 46, 49,.9);
+        height: 60px;
+        width: 100%;
+   }
     .add {                                             
         width: 80%;
         font-family: 'Dancing Script', cursive;
