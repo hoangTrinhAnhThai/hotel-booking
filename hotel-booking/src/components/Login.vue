@@ -104,18 +104,17 @@ export default {
       this.isloaded = true;
       this.incorrect = false;
       this.axios.post("signin/", this.loginData).then((response) => {
-        console.warn(response.data.message);
         if (response.data.message == "incorrect") {
           this.incorrect = true;
           // window.alert('incorrect')
           console.warn("incorrect");
         } else {
           this.$store.dispatch("user", response.data);
+          console.warn(response.data)
           localStorage.setItem(
             "token",
             response.data.tokenType + " " + response.data.accessToken
           );
-          console.warn(localStorage.getItem("token"));
           var res = response.data.userDetail.nameUserDetail.split(" ");
           localStorage.setItem("nameUser", res[res.length - 1]);
           if (response.data.roles[0] == "ROLE_USER") {

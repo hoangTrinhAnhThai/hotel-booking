@@ -24,24 +24,49 @@
                 </li> -->
         <li v-if="user" id="loginS">
           Hi, {{ nameUser }}
-          <ul class="sub-menu">
+          
+          <!-- <ul v-if="user.roles[0] == 'ROLE_USER' || user.roles[0].name == 'ROLE_USER'" class="sub-menu">
             <li><router-link to="/user/account">Account</router-link></li>
             <li style="border-top: 0px">
-              <router-link to="/user/booking-history" v-if="user.roles[0] == 'ROLE_USER'"
+              <router-link to="/user/booking-history" v-if="user.roles[0] == 'ROLE_USER' || user.roles[0].name == 'ROLE_USER'"
                 >Booking History</router-link
               >
-                <router-link to="/director" v-if="user.roles[0] == 'ROLE_DIRECTOR'"
+                <router-link to="/director" v-if="user.roles[0].name == 'ROLE_DIRECTOR'||user.roles[0] == 'ROLE_DIRECTOR'"
                 >Your Hotel</router-link
               >
-              <router-link to="/admin/thongke" v-if="user.roles[0] == 'ROLE_ADMIN'"
+              <router-link to="/admin/thongke" v-if="user.roles[0].name == 'ROLE_ADMIN'||user.roles[0] == 'ROLE_ADMIN'"
                 >Active Director</router-link
               >
             </li>
-            <li v-if="user.roles[0] != 'ROLE_USER'" style="border-top: 0px">
-              <router-link to="/director/hotel/booking" v-if="user.roles[0] == 'ROLE_DIRECTOR'"
+            <li v-if="user.roles[0].name != 'ROLE_USER' || user.roles[0] != 'ROLE_USER'" style="border-top: 0px">
+              <router-link to="/director/hotel/booking" v-if="user.roles[0].name == 'ROLE_DIRECTOR' || user.roles[0] == 'ROLE_DIRECTOR'"
                 >Booking List</router-link>
-                 <router-link to="#" v-if="user.roles[0] == 'ROLE_ADMIN'"
+                 <router-link to="#" v-if="user.roles[0].name == 'ROLE_ADMIN'||user.roles[0] == 'ROLE_ADMIN'"
                 >Statistic Hotel</router-link>
+            </li>
+          </ul> -->
+          <ul v-if="user.roles[0] == 'ROLE_USER' || user.roles[0].name == 'ROLE_USER'" class="sub-menu">
+            <li><router-link to="/user/account">Account</router-link></li>
+            <li style="border-top: 0px">
+              <router-link to="/user/booking-history">Booking History</router-link> 
+            </li>
+          </ul>
+          <ul v-if="user.roles[0] == 'ROLE_DIRECTOR' || user.roles[0].name == 'ROLE_DIRECTOR'" class="sub-menu">
+            <li><router-link to="/user/account">Account</router-link></li>
+            <li style="border-top: 0px">
+                <router-link to="/director">Your Hotel</router-link>
+            </li>
+            <li style="border-top: 0px">
+              <router-link to="/director/hotel/booking">Booking List</router-link>
+            </li>
+          </ul>
+          <ul v-if="user.roles[0] == 'ROLE_ADMIN' || user.roles[0].name == 'ROLE_ADMIN'" class="sub-menu">
+            <li><router-link to="/user/account">Account</router-link></li>
+            <li style="border-top: 0px">
+              <router-link to="/admin/thongke">Active Director</router-link>
+            </li>
+            <li style="border-top: 0px">
+                 <router-link to="#">Statistic Hotel</router-link>
             </li>
           </ul>
         </li>
@@ -92,7 +117,6 @@ export default {
       this.$router.push("/");
     },
       changeBackground() {
-          // console.log(window.scrollY)
       if (window.scrollY >= 50) {
         return this.isActive = true;
       } else {
