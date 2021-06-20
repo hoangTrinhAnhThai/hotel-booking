@@ -213,7 +213,7 @@ export default {
     ),
     url("https://preview.colorlib.com/theme/theriver/images/about.jpg.webp");
   background-color: grey;
-  height: 120vh;
+  min-height: 120vh;
   /* opacity: 0.28; */
   /* position: absolute; */
   background-repeat: no-repeat;

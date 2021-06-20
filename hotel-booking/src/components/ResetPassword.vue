@@ -1,19 +1,52 @@
 <template>
     <div class="reset-password">
         <page-loader v-bind:isloaded="isloaded"/>
-        <div class="container">
-            <div  class="content">
-                <form @submit.prevent="newPasswordF">
-                    <h1>RESET PASSWORD</h1>
-                    <h5>Enter your new password</h5>
+    <div class="bg">
+      <h1 id="first">Hello, Friends</h1>
+      <h6>Enter your personal details and start joumay with us</h6>
+
+      <div class="login-comp">
+        <div class="content"></div>
+        <div class="form">
+          <h1>Reset password</h1>
+          <h6>Ensure your email for registration</h6>
+          <div class="inc">
+            <!-- <span v-show="incorrect">Your username or password is incorrect!</span> -->
+          </div>
+          <form @submit.prevent="newPasswordF" method="post">
+            <div class="login-form">
+              <div class="username">
+                <ul>
+                  <li>
+                    <i class="fas fa-user"></i>
+                  </li>
+                  <li>
                     <input type="text" required v-model="newPassword" placeholder="Enter your new password"> <br>
+                  </li>
+                </ul>
+              </div>
+              <div class="password">
+                <ul>
+                  <li>
+                    <i class="fas fa-lock"></i>
+                  </li>
+                  <li>
                     <input type="text" required v-model="newPasswordAgain" placeholder="Enter your new password again"> <br>
-                    <span v-show="incorrect">Your email is incorrect!!</span>
-                    <button type="submit">Continue</button>
-                </form>  
-                
+                  </li>
+                </ul>
+              </div>
+              <span v-show="incorrect"
+                >Username or password is incorrect!!</span
+              >
+
+              <div class="btn">
+                <button type="submit">Confirm password</button>
+              </div>
             </div>
+          </form>
         </div>
+      </div>
+    </div>
     </div>
 </template>
 
@@ -53,42 +86,141 @@ export default {
 </script>
 
 <style scoped>
+
 .reset-password {
-        width: 40vw;
-        height: 58vh;
-        position: relative;
-        top: 20vh;
-        left: 30vw;
-        border-radius: 8px;
-        border: 1px solid rgb(211, 207, 207);
-        box-shadow: 8px 8px 3px grey;
-        text-align: center;
-    }
+    min-height: 100vh
+}
 
-    .reset-password h1 {
-        margin: 5vh auto 1.5vh;
-    }
+.bg {
+  background-image: linear-gradient(
+      rgba(102, 100, 100, 0.7),
+      rgba(30, 30, 31, 0.7)
+    ),
+    url("https://demo.themovation.com/bellevue/apartments/wp-content/uploads/sites/11/2018/12/apartment-theme-home-12.jpg");
+  background-position: -50vh 45.5vw;
+  background-size: cover;
+  height: 100vh;
+  padding-top: 15vh;
+  padding-left: 4vw;
+}
 
-    .reset-password h5 {
-        margin: 0 auto 3vh;
-    }
+.bg h1 {
+  font-weight: lighter;
+  letter-spacing: 0.5vw;
+  font-size: 2.5vw;
+}
 
-    .reset-password input, button {
-        width: 75%;
-        height: 7vh;
-        margin: 2vh auto;
-        border: 1px solid rgb(175, 173, 173);
-        border-radius: 5px;
-        padding: 0 1vw;
-    }
+.bg h6 {
+  letter-spacing: 0.3vw;
+  font-weight: lighter;
+}
 
-    .reset-password button {
-        background-color: rgb(133,176,210);
-    }
+.bg .content {
+  width: 55%;
+  display: flex;
+}
 
-    .reset-password form span {
-        color: red;
-        font-weight: bold;
-    }
+.login-comp {
+  display: flex;
+}
 
+.login-comp .form {
+  text-align: center;
+  margin-top: -8vh;
+  background-color: rgba(233, 230, 230,.7);
+  padding: 5vh 2.5vw;
+  width: 35vw;
+  border-radius: 10px;
+}
+
+.login-comp h6 {
+  margin-bottom: 3vh;
+  margin-top: 3vh;
+}
+
+.login-comp .form h1 {
+  color: rgb(43, 42, 41);
+  margin-left: 0;
+}
+
+.login-comp .form ul {
+  list-style: none;
+}
+
+.login-comp .form ul li {
+  display: inline;
+}
+
+.login-comp .form .login-form {
+  text-align: left;
+  margin-top: 3vh;
+}
+
+i {
+  margin-right: 1vw;
+}
+
+.icon i {
+  font-size: 1.4vw;
+  padding: 0.4vw;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+/* 
+#google i {
+  font-size: 1.6vw;
+  padding: 1.2vh 0.3vw 1vh;
+} */
+
+#ins i {
+  padding: 0.9vh 0.55vw;
+}
+
+[type="text"],
+[type="password"] {
+  border: 0;
+  border: 1px solid rgb(163, 161, 161);
+  width: 24vw;
+  margin-top: 3vh;
+  background: none;
+  padding: 1vh;
+  border-radius: 2px;
+}
+
+button {
+  border-radius: 2px;
+  border: 1px solid white;
+  background-color: rgb(244, 54, 79);
+  color: white;
+  padding: 1vh 3.2vh;
+  text-align: center;
+  margin: 2vh 3.58vw;
+  width: 24vw;
+}
+
+.forgot-password h6 {
+  text-align: center;
+}
+
+#incorrect {
+  margin: 1vh auto;
+}
+::placeholder {
+  font-size: 1.1vw;
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 0.2vw;
+}
+
+.login-form span {
+  color: red;
+  font-size: 1.1vw;
+  margin-left: 7.5vw;
+  /* margin-bottom: 5vh; */
+}
+
+a {
+  text-decoration: none;
+  color: rgb(244, 54, 79);
+  margin-left: 4vw;
+}
 </style>

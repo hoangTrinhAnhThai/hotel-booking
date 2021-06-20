@@ -4,7 +4,7 @@
 
     <div class="bg">
       <h1 id="first">Welcome Back!</h1>
-      <h6>To Keep connect with us plaese login with your personal infor</h6>
+      <h6>To Keep connect with us please login <br> with your personal infor</h6>
       <div class="login-comp">
         <!-- <div class="content"></div> -->
         <div class="form">
@@ -202,9 +202,9 @@ export default {
       rgba(30, 30, 31, 0.7)
     ),
     url("https://demo.themovation.com/bellevue/apartments/wp-content/uploads/sites/11/2018/12/apartment-theme-home-12.jpg");
-  background-position: -50vh 46vw;
-  background-size: cover;
-  height: 95vh;
+    background-position: -50vh 45.5vw;
+  background-size: contain;
+  min-height: 100vh;
   padding-top: 15vh;
   padding-left: 4vw;
   
@@ -222,7 +222,7 @@ export default {
 }
 
 .bg .content {
-  width: 55%;
+  width: 80%;
   display: flex;
 }
 
@@ -234,15 +234,17 @@ export default {
 
 .login-comp .form {
   text-align: center;
-  margin-top: 2vh;
-  background-color: rgb(233, 230, 230,.9);
-  padding: 3vh 2.5vw;
-  width: 60vw;
+  margin-top: -15vh;
+  margin-left: 25vw;
+  background-color: rgba(233, 230, 230,.7);
+  padding: 3vh 1vw;
+  width: 55vw;
+  height: 80vh;
   border-radius: 10px;
 }
 
 .login-comp h6 {
-  margin-bottom: 3vh;
+  margin-bottom: 8vh;
   margin-top: 3vh;
 }
 
@@ -292,7 +294,7 @@ i {
   border: 1px solid rgb(163, 161, 161);
   width: 24vw;
   margin-top: 1vh;
-  background: none;
+  /* background: none; */
   padding: 1vh;
   border-radius: 2px;
 }
@@ -302,7 +304,7 @@ button {
   border: 1px solid white;
   background-color: rgb(244, 54, 79);
   color: white;
-  padding: 1vh 3.2vh;
+  padding: 1vh 3vh;
   text-align: center;
   margin: 0.5vh 3.58vw;
   width: 24vw;
@@ -320,7 +322,7 @@ button {
 a {
   text-decoration: none;
   color: rgb(244, 54, 79);
-  margin-left: 4vw;
+  /* margin-left: 4vw; */
 }
 
 span {
@@ -330,7 +332,7 @@ span {
 }
 .fild ul li input{
     width: 80%;
-      height: 4vh;
+    height: 6vh;
 }
 .fild ul li {
     display: flex;

@@ -440,9 +440,14 @@ export default {
 </script>
 
 <style scoped>
+
+    .director {
+        min-height: 100vh;
+    }
     .director .container {
         margin-left: 5vw;
-        height: 100vh;
+        /* height: 100vh; */
+        margin-bottom: 5vh;
     }
 
 

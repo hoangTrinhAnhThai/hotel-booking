@@ -71,9 +71,13 @@
               </div>
               <div class="forgot-password">
                 <h6>
+                  
                   <router-link to="/forgot-password"
                     >Forgot your password?</router-link
                   >
+                  <!-- <router-link to="/reset-password"
+                    >Forgot your password?</router-link
+                  > -->
                 </h6>
               </div>
             </div>
@@ -144,15 +148,16 @@ export default {
 </script>
 
 <style scoped>
+
 .bg {
   background-image: linear-gradient(
       rgba(102, 100, 100, 0.7),
       rgba(30, 30, 31, 0.7)
     ),
     url("https://demo.themovation.com/bellevue/apartments/wp-content/uploads/sites/11/2018/12/apartment-theme-home-12.jpg");
-  background-position: -50vh 46vw;
+  background-position: -50vh 45.5vw;
   background-size: cover;
-  height: 95vh;
+  height: 100vh;
   padding-top: 15vh;
   padding-left: 4vw;
 }

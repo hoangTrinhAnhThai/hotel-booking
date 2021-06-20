@@ -253,7 +253,7 @@ export default {
   list-style-type: none;
   position: absolute;
   margin-top: 0.8vh;
-  margin-left: -3.15vw;
+  margin-left: -2.935vw;
   width: 12vw;
   font-size: 1.1vw;
   text-align: left;
