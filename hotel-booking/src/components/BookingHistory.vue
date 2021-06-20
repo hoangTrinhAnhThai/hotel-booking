@@ -183,10 +183,13 @@ export default {
         background-color: rgb(133,176,210);
     }
     button{
-        color: #fff;
+        color: rgb(170, 0, 0);
         font-size: 17px;
-        background-color: rgba(209, 51, 51,.9);
+        background-color: #fff;
         border-radius: 3px;
         margin: 2px 0 ;
+        color: rgb(170, 0, 0);
+        border:1px solid rgb(170, 0, 0);
+        font-weight: 400;
     }
 </style>

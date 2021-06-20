@@ -1,6 +1,6 @@
 <template>
     <div class="director-booking">
-        <director-header/>
+        <!-- <director-header/> -->
         <div class="booking">
             <div class="hotelSelection">
                 <select v-model="selectedHotel">
@@ -27,7 +27,7 @@
                         <th>Start</th>
                         <th>End</th>
                         <th>Total price</th>
-                        <th></th>
+                    
                     </tr>
                     <tr v-for="(booking, index) in bookings" :key="booking.id">
                         <td>{{index + 1}}</td>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import DirectorHeader from './DirectorHeader.vue'
+// import DirectorHeader from './DirectorHeader.vue'
 
 export default {
     name: 'director-booking',
@@ -110,7 +110,7 @@ export default {
 
     },
     components: {
-        'director-header': DirectorHeader
+        // 'director-header': DirectorHeader
     }
 }
 </script>

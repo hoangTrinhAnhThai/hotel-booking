@@ -434,9 +434,6 @@ export default {
             console.console(error)
         })
         
-        
-        
-        
     },
     
 }

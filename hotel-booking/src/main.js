@@ -27,6 +27,7 @@ import ResetPassword from './components/ResetPassword.vue'
 import Admin from './components/Admin.vue'
 import DirectorRoom from './components/DirectorRoom.vue'
 import DirectorBooking from './components/DirectorBooking.vue'
+import AdminStatistic from './components/AdminStatistic.vue'
 
 
 
@@ -52,6 +53,7 @@ const routes= [
   {path: '/admin', component: Admin},
   {path: '/director/hotel/:idHotel/room', component: DirectorRoom},
   {path: '/director/hotel/booking', component: DirectorBooking},
+  {path: '/admin/thongke', component: AdminStatistic}
 
 
 

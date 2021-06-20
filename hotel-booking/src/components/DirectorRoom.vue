@@ -1,7 +1,7 @@
 <template>
     <div class="director-room">
         <page-loader v-bind:isloaded="isloaded"/>
-        <director-header/>
+        <!-- <director-header/> -->
         <div class="rooms">
             <div class="img-hotel">
                     <div class="htel" v-if="hotel">
@@ -142,7 +142,7 @@
 </template>
 
 <script>
-import DirectorHeader from './DirectorHeader.vue'
+// import DirectorHeader from './DirectorHeader.vue'
 import PageLoader from './PageLoader.vue'
 
 export default {
@@ -294,7 +294,7 @@ export default {
     },
 
     components: {
-        'director-header': DirectorHeader,
+        // 'director-header': DirectorHeader,
         'page-loader': PageLoader
 
     }

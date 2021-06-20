@@ -33,14 +33,14 @@
                 <router-link to="/director" v-if="user.roles[0] == 'ROLE_DIRECTOR'"
                 >Your Hotel</router-link
               >
-              <router-link to="/#" v-if="user.roles[0] == 'ROLE_ADMIN'"
+              <router-link to="/admin/thongke" v-if="user.roles[0] == 'ROLE_ADMIN'"
                 >Active Director</router-link
               >
             </li>
             <li v-if="user.roles[0] != 'ROLE_USER'" style="border-top: 0px">
               <router-link to="/director/hotel/booking" v-if="user.roles[0] == 'ROLE_DIRECTOR'"
                 >Booking List</router-link>
-                 <router-link to="/#" v-if="user.roles[0] == 'ROLE_ADMIN'"
+                 <router-link to="#" v-if="user.roles[0] == 'ROLE_ADMIN'"
                 >Statistic Hotel</router-link>
             </li>
           </ul>
